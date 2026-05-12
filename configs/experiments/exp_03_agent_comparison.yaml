@@ -1,0 +1,15 @@
+experiment_id: exp_03_agent_comparison
+name: Agent B comparison
+description: Compare deterministic RuleAgent with the ChatGPTAgent placeholder adapter.
+maps_path: configs/tasks/navigation_maps.yaml
+agent_a: userlm
+max_turns: 24
+max_invalid_moves: 4
+parameter_grid:
+  agent_b: [rule, chatgpt]
+  map_complexity: [simple, complex]
+  ambiguity_level: [0.0, 0.2]
+  language_noise: [0.0]
+  memory_context_limit: [full, short]
+  prompt_strategy: [direct]
+  seed: [1, 2]

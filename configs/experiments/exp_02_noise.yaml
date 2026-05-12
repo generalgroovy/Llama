@@ -1,0 +1,16 @@
+experiment_id: exp_02_noise
+name: Noise and ambiguity sensitivity
+description: Baseline agents under varied language noise and ambiguity.
+maps_path: configs/tasks/navigation_maps.yaml
+agent_a: userlm
+agent_b: rule
+max_turns: 24
+max_invalid_moves: 4
+parameter_grid:
+  agent_b: [rule]
+  map_complexity: [simple, complex]
+  ambiguity_level: [0.0, 0.3]
+  language_noise: [0.0, 0.3]
+  memory_context_limit: [full]
+  prompt_strategy: [direct]
+  seed: [1, 2]

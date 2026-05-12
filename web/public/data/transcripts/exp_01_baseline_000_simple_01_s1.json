@@ -1,0 +1,609 @@
+{
+  "run_id": "exp_01_baseline_000_simple_01_s1",
+  "experiment_id": "exp_01_baseline",
+  "seed": 1,
+  "config": {
+    "source_config": "configs\\experiments\\exp_01_baseline.yaml",
+    "parameters": {
+      "agent_b": "rule",
+      "map_complexity": "simple",
+      "ambiguity_level": 0.0,
+      "language_noise": 0.0,
+      "memory_context_limit": "full",
+      "prompt_strategy": "direct",
+      "seed": 1
+    },
+    "max_turns": 20,
+    "max_invalid_moves": 3
+  },
+  "agent_a": {
+    "name": "UserLM",
+    "metadata": {
+      "role": "instruction_generator",
+      "seed": 1
+    }
+  },
+  "agent_b": {
+    "name": "RuleAgent",
+    "metadata": {
+      "role": "deterministic_sds",
+      "seed": 1
+    }
+  },
+  "task": {
+    "map_id": "simple_01",
+    "width": 4,
+    "height": 4,
+    "start": [
+      0,
+      0
+    ],
+    "goal": [
+      3,
+      3
+    ],
+    "landmarks": {
+      "fountain": [
+        1,
+        1
+      ],
+      "library": [
+        3,
+        3
+      ]
+    },
+    "obstacles": [],
+    "complexity": "simple"
+  },
+  "turns": [
+    {
+      "turn_id": 0,
+      "speaker": "UserLM",
+      "text": "go east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          0,
+          0
+        ],
+        "distance_to_goal": 6,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          0,
+          0
+        ],
+        "distance_to_goal": 6,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 1,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          0,
+          0
+        ],
+        "distance_to_goal": 6,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 2,
+      "speaker": "UserLM",
+      "text": "go east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 3,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 4,
+      "speaker": "UserLM",
+      "text": "go east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 5,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: east",
+      "interpreted_action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 6,
+      "speaker": "UserLM",
+      "text": "go south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 7,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 8,
+      "speaker": "UserLM",
+      "text": "go south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 9,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 10,
+      "speaker": "UserLM",
+      "text": "go south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    },
+    {
+      "turn_id": 11,
+      "speaker": "RuleAgent",
+      "text": "Interpreted action: south",
+      "interpreted_action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          3
+        ],
+        "distance_to_goal": 0,
+        "success": true
+      },
+      "valid_action": true,
+      "repair_or_clarification": false
+    }
+  ],
+  "state_trace": [
+    {
+      "map_id": "simple_01",
+      "position": [
+        0,
+        0
+      ],
+      "distance_to_goal": 6,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        1,
+        0
+      ],
+      "distance_to_goal": 5,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        2,
+        0
+      ],
+      "distance_to_goal": 4,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        3,
+        0
+      ],
+      "distance_to_goal": 3,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        3,
+        1
+      ],
+      "distance_to_goal": 2,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        3,
+        2
+      ],
+      "distance_to_goal": 1,
+      "success": false
+    },
+    {
+      "map_id": "simple_01",
+      "position": [
+        3,
+        3
+      ],
+      "distance_to_goal": 0,
+      "success": true
+    }
+  ],
+  "action_trace": [
+    {
+      "action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          0,
+          0
+        ],
+        "distance_to_goal": 6,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "valid_action": true,
+      "error": null
+    },
+    {
+      "action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          1,
+          0
+        ],
+        "distance_to_goal": 5,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "valid_action": true,
+      "error": null
+    },
+    {
+      "action": "east",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          2,
+          0
+        ],
+        "distance_to_goal": 4,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "valid_action": true,
+      "error": null
+    },
+    {
+      "action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          0
+        ],
+        "distance_to_goal": 3,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "valid_action": true,
+      "error": null
+    },
+    {
+      "action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          1
+        ],
+        "distance_to_goal": 2,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "valid_action": true,
+      "error": null
+    },
+    {
+      "action": "south",
+      "state_before": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          2
+        ],
+        "distance_to_goal": 1,
+        "success": false
+      },
+      "state_after": {
+        "map_id": "simple_01",
+        "position": [
+          3,
+          3
+        ],
+        "distance_to_goal": 0,
+        "success": true
+      },
+      "valid_action": true,
+      "error": null
+    }
+  ],
+  "final_state": {
+    "map_id": "simple_01",
+    "position": [
+      3,
+      3
+    ],
+    "distance_to_goal": 0,
+    "success": true
+  },
+  "success": true,
+  "errors": [],
+  "metrics": {
+    "task_success": 1.0,
+    "path_distance_error": 0,
+    "turn_count": 12,
+    "token_count": 30,
+    "repair_count": 0,
+    "clarification_count": 0,
+    "contradiction_count": 0,
+    "semantic_action_consistency": 1.0,
+    "invalid_action_count": 0,
+    "robustness_by_condition": {
+      "condition": {
+        "ambiguity_level": 0.0,
+        "language_noise": 0.0,
+        "agent_b": "rule",
+        "map_complexity": "simple"
+      },
+      "success": 1.0,
+      "distance_error": 0
+    }
+  }
+}

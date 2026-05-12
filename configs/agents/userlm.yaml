@@ -1,0 +1,5 @@
+agent:
+  type: userlm
+  name: UserLM
+  role: instruction_generator
+  notes: Synthetic user model that emits navigation instructions toward the goal.

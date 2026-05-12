@@ -1,0 +1,184 @@
+{
+  "aggregate": {
+    "task_success": 1.0,
+    "path_distance_error": 0.0,
+    "turn_count": 10.0,
+    "token_count": 25.0,
+    "repair_count": 0.0,
+    "clarification_count": 0.0,
+    "contradiction_count": 0.0,
+    "semantic_action_consistency": 1.0,
+    "invalid_action_count": 0.0
+  },
+  "reliability": {
+    "metric_correlation_with_task_success": {
+      "clarification_count": 0.0,
+      "contradiction_count": 0.0,
+      "invalid_action_count": 0.0,
+      "path_distance_error": 0.0,
+      "repair_count": 0.0,
+      "semantic_action_consistency": 0.0,
+      "task_success": 0.0,
+      "token_count": 0.0,
+      "turn_count": 0.0
+    },
+    "variance_across_seeds": {
+      "clarification_count": 0.0,
+      "contradiction_count": 0.0,
+      "invalid_action_count": 0.0,
+      "path_distance_error": 0.0,
+      "repair_count": 0.0,
+      "semantic_action_consistency": 0.0,
+      "task_success": 0.0,
+      "token_count": 30.0,
+      "turn_count": 4.8
+    },
+    "sensitivity_to_map_complexity": {
+      "simple": 1.0
+    },
+    "sensitivity_to_noise_ambiguity": {
+      "noise=0.0|ambiguity=0.0": 1.0
+    },
+    "ranking_stability_across_agent_b": [
+      {
+        "agent_b": "RuleAgent",
+        "mean_task_success": 1.0,
+        "rank": 1
+      }
+    ]
+  },
+  "run_metrics": [
+    {
+      "run_id": "exp_01_baseline_000_simple_01_s1",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 12,
+      "token_count": 30,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    },
+    {
+      "run_id": "exp_01_baseline_000_simple_02_s1",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 8,
+      "token_count": 20,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    },
+    {
+      "run_id": "exp_01_baseline_001_simple_01_s2",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 12,
+      "token_count": 30,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    },
+    {
+      "run_id": "exp_01_baseline_001_simple_02_s2",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 8,
+      "token_count": 20,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    },
+    {
+      "run_id": "exp_01_baseline_002_simple_01_s3",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 12,
+      "token_count": 30,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    },
+    {
+      "run_id": "exp_01_baseline_002_simple_02_s3",
+      "task_success": 1.0,
+      "path_distance_error": 0,
+      "turn_count": 8,
+      "token_count": 20,
+      "repair_count": 0,
+      "clarification_count": 0,
+      "contradiction_count": 0,
+      "semantic_action_consistency": 1.0,
+      "invalid_action_count": 0,
+      "robustness_by_condition": {
+        "condition": {
+          "ambiguity_level": 0.0,
+          "language_noise": 0.0,
+          "agent_b": "rule",
+          "map_complexity": "simple"
+        },
+        "success": 1.0,
+        "distance_error": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+agent:
+  type: chatgpt
+  name: ChatGPTAgent
+  role: llm_sds_placeholder
+  live_api: false
+  notes: Placeholder adapter. Future live integration should be enabled explicitly through environment-backed config.
