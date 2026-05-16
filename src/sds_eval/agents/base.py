@@ -11,10 +11,14 @@ class AgentContext:
     run_id: str
     turn_id: int
     state: dict[str, Any]
-    task: dict[str, Any]
+    task: dict[str, Any] = field(default_factory=dict)
     history: list[dict[str, Any]] = field(default_factory=list)
     last_instruction: str | None = None
     parameters: dict[str, Any] = field(default_factory=dict)
+    private_context: dict[str, Any] = field(default_factory=dict)
+    shared_state: dict[str, Any] = field(default_factory=dict)
+    speaker_role: str = "agent"
+    system_profile: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

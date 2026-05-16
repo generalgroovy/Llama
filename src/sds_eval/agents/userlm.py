@@ -3,20 +3,10 @@ from __future__ import annotations
 import random
 
 from sds_eval.agents.base import AgentAdapter, AgentContext, AgentResponse
-from sds_eval.task.navigation_env import ACTION_DELTAS
-
-
-ACTION_WORDS = {
-    "north": "go north",
-    "south": "go south",
-    "east": "go east",
-    "west": "go west",
-    "stay": "stay",
-}
 
 
 class UserLMAgent(AgentAdapter):
-    """Synthetic user agent that emits route instructions toward the goal."""
+    """Synthetic user agent that communicates goals and constraints only."""
 
     def __init__(self, name: str = "UserLM", metadata: dict | None = None):
         super().__init__(name, metadata or {"role": "instruction_generator"})
@@ -27,44 +17,44 @@ class UserLMAgent(AgentAdapter):
         self._rng.seed(seed)
 
     def respond(self, context: AgentContext) -> AgentResponse:
-        state = tuple(context.state["position"])
-        goal = tuple(context.task["goal"])
-        blocked = {tuple(item) for item in context.task.get("obstacles", [])}
-        width = context.task["width"]
-        height = context.task["height"]
-        action = _greedy_valid_action(state, goal, width, height, blocked)
+        private = context.private_context
+        shared = context.shared_state
+        goal_label = private.get("goal_label", "goal")
+        goal = private.get("goal")
+        constraints = list(private.get("constraints", ["avoid_blocked"]))
         ambiguity = float(context.parameters.get("ambiguity_level", 0.0))
         noise = float(context.parameters.get("language_noise", 0.0))
-        text = ACTION_WORDS.get(action, "stay")
-        if ambiguity and self._rng.random() < ambiguity:
-            text = "move closer to the target landmark"
+
+        known_goal = shared.get("b_belief", {}).get("goal")
+        if context.state.get("success"):
+            text = "Goal reached. Stop."
+            dialogue_act = "stop"
+            intent = "finish_task"
+        elif not known_goal:
+            dialogue_act = "goal_request"
+            intent = "communicate_goal_and_constraints"
+            text = f"Goal: {goal_label}. Constraints: {', '.join(constraints)}. Please plan the next step."
+            if ambiguity and self._rng.random() < ambiguity:
+                text = "I need to get there while respecting the constraints. Please plan the next step."
+        else:
+            dialogue_act = "confirmation"
+            intent = "continue_shared_plan"
+            text = f"Confirmed. Continue toward {goal_label} while respecting {', '.join(constraints)}."
+            if ambiguity and self._rng.random() < ambiguity:
+                text = "Confirmed. Continue with the agreed plan."
         if noise and self._rng.random() < noise:
             text = f"{text} please maybe"
-        return AgentResponse(text=text, interpreted_action=action, metadata={"intended_action": action})
-
-
-def _greedy_valid_action(
-    state: tuple[int, int],
-    goal: tuple[int, int],
-    width: int,
-    height: int,
-    blocked: set[tuple[int, int]],
-) -> str:
-    sx, sy = state
-    gx, gy = goal
-    candidates: list[str] = []
-    if gx > sx:
-        candidates.append("east")
-    if gx < sx:
-        candidates.append("west")
-    if gy > sy:
-        candidates.append("south")
-    if gy < sy:
-        candidates.append("north")
-    candidates.extend(["north", "east", "south", "west"])
-    for action in candidates:
-        dx, dy = ACTION_DELTAS[action]
-        nxt = (sx + dx, sy + dy)
-        if 0 <= nxt[0] < width and 0 <= nxt[1] < height and nxt not in blocked:
-            return action
-    return "stay"
+        mentioned_goal = None if text.lower().startswith("i need") else goal_label
+        return AgentResponse(
+            text=text,
+            interpreted_action=None,
+            metadata={
+                "dialogue_act": dialogue_act,
+                "intent": intent,
+                "mentioned_goal": mentioned_goal,
+                "mentioned_constraints": constraints if "constraint" in text.lower() or "avoid" in text.lower() else [],
+                "private_goal": goal,
+                "private_constraints": constraints,
+                "uses_network_topology": False,
+            },
+        )

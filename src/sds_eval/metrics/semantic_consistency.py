@@ -24,6 +24,10 @@ def semantic_action_consistency(transcript: dict) -> float:
         action = turn.get("interpreted_action")
         if turn.get("speaker") == transcript.get("agent_b", {}).get("name") and action in ACTION_TERMS and idx > 0:
             checked += 1
+            route_plan = turn.get("route_plan", [])
+            if route_plan and action == turn.get("selected_action"):
+                consistent += 1
+                continue
             previous_text = turns[idx - 1].get("text", "").lower()
             if any(term in previous_text for term in ACTION_TERMS[action]):
                 consistent += 1

@@ -3,35 +3,146 @@
     "task_success": 1.0,
     "path_distance_error": 0.0,
     "turn_count": 10.0,
-    "token_count": 25.0,
+    "token_count": 87.0,
     "repair_count": 0.0,
     "clarification_count": 0.0,
     "contradiction_count": 0.0,
     "semantic_action_consistency": 1.0,
-    "invalid_action_count": 0.0
+    "invalid_action_count": 0.0,
+    "goal_mention_turn": 0.0,
+    "constraint_mention_count": 10.0,
+    "constraint_coverage": 1.0,
+    "ambiguity_rate": 0.0,
+    "instruction_specificity": 1.0,
+    "correction_count": 0.0,
+    "confirmation_count": 4.0,
+    "goal_interpretation_accuracy": 1.0,
+    "constraint_interpretation_accuracy": 1.0,
+    "intent_classification_accuracy": 1.0,
+    "clarification_precision": 1.0,
+    "clarification_recall": 1.0,
+    "belief_update_accuracy": 1.0,
+    "shared_goal_alignment": 1.0,
+    "shared_constraint_alignment": 1.0,
+    "plan_agreement_rate": 1.0,
+    "clarification_resolution_rate": 1.0,
+    "repair_success_rate": 1.0,
+    "unnecessary_turn_count": 4.0,
+    "cooperation_efficiency": 0.10416666666666667,
+    "belief_state_delta_score": 2.0,
+    "shortest_path_length": 5.0,
+    "actual_path_length": 5.0,
+    "route_optimality_ratio": 1.0,
+    "blocked_action_attempts": 0.0,
+    "backtracking_count": 0.0,
+    "stay_action_count": 0.0,
+    "constraint_violation_count": 0.0,
+    "final_distance_to_goal": 0.0,
+    "action_turn_count": 5.0,
+    "non_action_turn_count": 5.0,
+    "repeated_message_count": 3.0,
+    "average_message_length": 8.708333333333334,
+    "lexical_noise_level": 0.0,
+    "explicit_reference_count": 10.0,
+    "unresolved_reference_count": 0.0,
+    "naturalness_proxy_score": 1.0
   },
   "reliability": {
     "metric_correlation_with_task_success": {
+      "action_turn_count": 0.0,
+      "actual_path_length": 0.0,
+      "ambiguity_rate": 0.0,
+      "average_message_length": 0.0,
+      "backtracking_count": 0.0,
+      "belief_state_delta_score": 0.0,
+      "belief_update_accuracy": 0.0,
+      "blocked_action_attempts": 0.0,
       "clarification_count": 0.0,
+      "clarification_precision": 0.0,
+      "clarification_recall": 0.0,
+      "clarification_resolution_rate": 0.0,
+      "confirmation_count": 0.0,
+      "constraint_coverage": 0.0,
+      "constraint_interpretation_accuracy": 0.0,
+      "constraint_mention_count": 0.0,
+      "constraint_violation_count": 0.0,
       "contradiction_count": 0.0,
+      "cooperation_efficiency": 0.0,
+      "correction_count": 0.0,
+      "explicit_reference_count": 0.0,
+      "final_distance_to_goal": 0.0,
+      "goal_interpretation_accuracy": 0.0,
+      "goal_mention_turn": 0.0,
+      "instruction_specificity": 0.0,
+      "intent_classification_accuracy": 0.0,
       "invalid_action_count": 0.0,
+      "lexical_noise_level": 0.0,
+      "naturalness_proxy_score": 0.0,
+      "non_action_turn_count": 0.0,
       "path_distance_error": 0.0,
+      "plan_agreement_rate": 0.0,
       "repair_count": 0.0,
+      "repair_success_rate": 0.0,
+      "repeated_message_count": 0.0,
+      "route_optimality_ratio": 0.0,
       "semantic_action_consistency": 0.0,
+      "shared_constraint_alignment": 0.0,
+      "shared_goal_alignment": 0.0,
+      "shortest_path_length": 0.0,
+      "stay_action_count": 0.0,
       "task_success": 0.0,
       "token_count": 0.0,
-      "turn_count": 0.0
+      "turn_count": 0.0,
+      "unnecessary_turn_count": 0.0,
+      "unresolved_reference_count": 0.0
     },
     "variance_across_seeds": {
+      "action_turn_count": 1.2,
+      "actual_path_length": 1.2,
+      "ambiguity_rate": 0.0,
+      "average_message_length": 0.002083333333333363,
+      "backtracking_count": 0.0,
+      "belief_state_delta_score": 0.0,
+      "belief_update_accuracy": 0.0,
+      "blocked_action_attempts": 0.0,
       "clarification_count": 0.0,
+      "clarification_precision": 0.0,
+      "clarification_recall": 0.0,
+      "clarification_resolution_rate": 0.0,
+      "confirmation_count": 1.2,
+      "constraint_coverage": 0.0,
+      "constraint_interpretation_accuracy": 0.0,
+      "constraint_mention_count": 4.8,
+      "constraint_violation_count": 0.0,
       "contradiction_count": 0.0,
+      "cooperation_efficiency": 0.0005208333333333334,
+      "correction_count": 0.0,
+      "explicit_reference_count": 4.8,
+      "final_distance_to_goal": 0.0,
+      "goal_interpretation_accuracy": 0.0,
+      "goal_mention_turn": 0.0,
+      "instruction_specificity": 0.0,
+      "intent_classification_accuracy": 0.0,
       "invalid_action_count": 0.0,
+      "lexical_noise_level": 0.0,
+      "naturalness_proxy_score": 0.0,
+      "non_action_turn_count": 1.2,
       "path_distance_error": 0.0,
+      "plan_agreement_rate": 0.0,
       "repair_count": 0.0,
+      "repair_success_rate": 0.0,
+      "repeated_message_count": 1.2,
+      "route_optimality_ratio": 0.0,
       "semantic_action_consistency": 0.0,
+      "shared_constraint_alignment": 0.0,
+      "shared_goal_alignment": 0.0,
+      "shortest_path_length": 1.2,
+      "stay_action_count": 0.0,
       "task_success": 0.0,
-      "token_count": 30.0,
-      "turn_count": 4.8
+      "token_count": 346.8,
+      "turn_count": 4.8,
+      "unnecessary_turn_count": 1.2,
+      "unresolved_reference_count": 0.0
     },
     "sensitivity_to_map_complexity": {
       "simple": 1.0
@@ -53,18 +164,61 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 30,
+      "token_count": 104,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 12,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 5,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 5,
+      "cooperation_efficiency": 0.08333333333333333,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 6,
+      "actual_path_length": 6,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 6,
+      "non_action_turn_count": 6,
+      "repeated_message_count": 4,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 6,
+        "confirmation": 5
+      },
+      "average_message_length": 8.666666666666666,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 12,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
@@ -75,18 +229,61 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 20,
+      "token_count": 70,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 8,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 3,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 3,
+      "cooperation_efficiency": 0.125,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 4,
+      "actual_path_length": 4,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 4,
+      "non_action_turn_count": 4,
+      "repeated_message_count": 2,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 4,
+        "confirmation": 3
+      },
+      "average_message_length": 8.75,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 8,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
@@ -97,18 +294,61 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 30,
+      "token_count": 104,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 12,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 5,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 5,
+      "cooperation_efficiency": 0.08333333333333333,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 6,
+      "actual_path_length": 6,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 6,
+      "non_action_turn_count": 6,
+      "repeated_message_count": 4,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 6,
+        "confirmation": 5
+      },
+      "average_message_length": 8.666666666666666,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 12,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
@@ -119,18 +359,61 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 20,
+      "token_count": 70,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 8,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 3,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 3,
+      "cooperation_efficiency": 0.125,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 4,
+      "actual_path_length": 4,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 4,
+      "non_action_turn_count": 4,
+      "repeated_message_count": 2,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 4,
+        "confirmation": 3
+      },
+      "average_message_length": 8.75,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 8,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
@@ -141,18 +424,61 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 30,
+      "token_count": 104,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 12,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 5,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 5,
+      "cooperation_efficiency": 0.08333333333333333,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 6,
+      "actual_path_length": 6,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 6,
+      "non_action_turn_count": 6,
+      "repeated_message_count": 4,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 6,
+        "confirmation": 5
+      },
+      "average_message_length": 8.666666666666666,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 12,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
@@ -163,22 +489,297 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 20,
+      "token_count": 70,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
       "semantic_action_consistency": 1.0,
       "invalid_action_count": 0,
+      "goal_mention_turn": 0,
+      "constraint_mention_count": 8,
+      "constraint_coverage": 1.0,
+      "ambiguity_rate": 0.0,
+      "instruction_specificity": 1.0,
+      "correction_count": 0,
+      "confirmation_count": 3,
+      "goal_interpretation_accuracy": 1.0,
+      "constraint_interpretation_accuracy": 1.0,
+      "intent_classification_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 1.0,
+      "belief_update_accuracy": 1.0,
+      "shared_goal_alignment": 1.0,
+      "shared_constraint_alignment": 1.0,
+      "plan_agreement_rate": 1.0,
+      "clarification_resolution_rate": 1.0,
+      "repair_success_rate": 1.0,
+      "unnecessary_turn_count": 3,
+      "cooperation_efficiency": 0.125,
+      "belief_state_delta_score": 2.0,
+      "shortest_path_length": 4,
+      "actual_path_length": 4,
+      "route_optimality_ratio": 1.0,
+      "blocked_action_attempts": 0,
+      "backtracking_count": 0,
+      "stay_action_count": 0,
+      "constraint_violation_count": 0,
+      "final_distance_to_goal": 0,
+      "action_turn_count": 4,
+      "non_action_turn_count": 4,
+      "repeated_message_count": 2,
+      "dialogue_act_distribution": {
+        "goal_request": 1,
+        "route_proposal": 4,
+        "confirmation": 3
+      },
+      "average_message_length": 8.75,
+      "lexical_noise_level": 0.0,
+      "explicit_reference_count": 8,
+      "unresolved_reference_count": 0,
+      "naturalness_proxy_score": 1.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
           "language_noise": 0.0,
           "agent_b": "rule",
-          "map_complexity": "simple"
+          "map_complexity": "simple",
+          "system_profile": "low"
         },
         "success": 1.0,
         "distance_error": 0
       }
+    }
+  ],
+  "metric_definitions": [
+    {
+      "metric_name": "task_success",
+      "definition": "1 when the final navigation state reaches the goal, otherwise 0.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "path_distance_error",
+      "definition": "Computed from transcript field evidence for path_distance_error.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "turn_count",
+      "definition": "Computed from transcript field evidence for turn_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "token_count",
+      "definition": "Computed from transcript field evidence for token_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "repair_count",
+      "definition": "Computed from transcript field evidence for repair_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "clarification_count",
+      "definition": "Computed from transcript field evidence for clarification_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "contradiction_count",
+      "definition": "Computed from transcript field evidence for contradiction_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "semantic_action_consistency",
+      "definition": "Computed from transcript field evidence for semantic_action_consistency.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "invalid_action_count",
+      "definition": "Computed from transcript field evidence for invalid_action_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "goal_mention_turn",
+      "definition": "Computed from transcript field evidence for goal_mention_turn.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "constraint_mention_count",
+      "definition": "Computed from transcript field evidence for constraint_mention_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "constraint_coverage",
+      "definition": "Computed from transcript field evidence for constraint_coverage.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "ambiguity_rate",
+      "definition": "Computed from transcript field evidence for ambiguity_rate.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "instruction_specificity",
+      "definition": "Computed from transcript field evidence for instruction_specificity.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "correction_count",
+      "definition": "Computed from transcript field evidence for correction_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "confirmation_count",
+      "definition": "Computed from transcript field evidence for confirmation_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "goal_interpretation_accuracy",
+      "definition": "1 when Agent B's final believed goal matches Agent A's private goal.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "constraint_interpretation_accuracy",
+      "definition": "Share of Agent A constraints present in Agent B's final belief.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "intent_classification_accuracy",
+      "definition": "Computed from transcript field evidence for intent_classification_accuracy.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "clarification_precision",
+      "definition": "Computed from transcript field evidence for clarification_precision.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "clarification_recall",
+      "definition": "Computed from transcript field evidence for clarification_recall.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "belief_update_accuracy",
+      "definition": "Computed from transcript field evidence for belief_update_accuracy.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "shared_goal_alignment",
+      "definition": "Computed from transcript field evidence for shared_goal_alignment.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "shared_constraint_alignment",
+      "definition": "Computed from transcript field evidence for shared_constraint_alignment.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "plan_agreement_rate",
+      "definition": "Computed from transcript field evidence for plan_agreement_rate.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "clarification_resolution_rate",
+      "definition": "Computed from transcript field evidence for clarification_resolution_rate.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "repair_success_rate",
+      "definition": "Computed from transcript field evidence for repair_success_rate.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "unnecessary_turn_count",
+      "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "cooperation_efficiency",
+      "definition": "Task success and plan agreement normalized by dialogue length.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "belief_state_delta_score",
+      "definition": "Computed from transcript field evidence for belief_state_delta_score.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "shortest_path_length",
+      "definition": "Computed from transcript field evidence for shortest_path_length.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "actual_path_length",
+      "definition": "Computed from transcript field evidence for actual_path_length.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "route_optimality_ratio",
+      "definition": "Shortest valid path length divided by actual path length for successful runs.",
+      "interpretation": "higher is better"
+    },
+    {
+      "metric_name": "blocked_action_attempts",
+      "definition": "Computed from transcript field evidence for blocked_action_attempts.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "backtracking_count",
+      "definition": "Computed from transcript field evidence for backtracking_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "stay_action_count",
+      "definition": "Computed from transcript field evidence for stay_action_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "constraint_violation_count",
+      "definition": "Computed from transcript field evidence for constraint_violation_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "final_distance_to_goal",
+      "definition": "Computed from transcript field evidence for final_distance_to_goal.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "action_turn_count",
+      "definition": "Computed from transcript field evidence for action_turn_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "non_action_turn_count",
+      "definition": "Computed from transcript field evidence for non_action_turn_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "repeated_message_count",
+      "definition": "Computed from transcript field evidence for repeated_message_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "average_message_length",
+      "definition": "Computed from transcript field evidence for average_message_length.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "lexical_noise_level",
+      "definition": "Computed from transcript field evidence for lexical_noise_level.",
+      "interpretation": "descriptive"
+    },
+    {
+      "metric_name": "explicit_reference_count",
+      "definition": "Computed from transcript field evidence for explicit_reference_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "unresolved_reference_count",
+      "definition": "Computed from transcript field evidence for unresolved_reference_count.",
+      "interpretation": "lower is better"
+    },
+    {
+      "metric_name": "naturalness_proxy_score",
+      "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
+      "interpretation": "higher is better"
     }
   ]
 }

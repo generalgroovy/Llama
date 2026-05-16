@@ -8,6 +8,7 @@ import yaml
 from sds_eval.agents import AGENT_TYPES, UserLMAgent
 from sds_eval.dialogue.manager import DialogueManager
 from sds_eval.experiments.parameter_grid import expand_grid
+from sds_eval.experiments.profiles import resolve_system_profile
 from sds_eval.experiments.seed_control import set_seed
 from sds_eval.task.map_loader import load_maps
 from sds_eval.task.navigation_env import NavigationEnvironment
@@ -20,6 +21,7 @@ def run_experiment(config_path: str | Path) -> dict:
     maps_path = root / config.get("maps_path", "configs/tasks/navigation_maps.yaml")
     maps = load_maps(maps_path)
     experiment_id = config["experiment_id"]
+    system_profile = resolve_system_profile(config.get("system_profile", "low"), config.get("system_profile_overrides", {}))
     runs = []
     for index, params in enumerate(expand_grid(config.get("parameter_grid", {}))):
         seed = int(params.get("seed", config.get("seed", 0)))
@@ -32,8 +34,11 @@ def run_experiment(config_path: str | Path) -> dict:
             run_config = {
                 "source_config": str(config_path),
                 "parameters": params,
-                "max_turns": config.get("max_turns", 20),
-                "max_invalid_moves": config.get("max_invalid_moves", 3),
+                "system_profile": system_profile["name"],
+                "system_profile_overrides": config.get("system_profile_overrides", {}),
+                "knowledge_split": config.get("knowledge_split", _default_knowledge_split()),
+                "max_turns": config.get("max_turns", system_profile["max_turns"]),
+                "max_invalid_moves": config.get("max_invalid_moves", system_profile["max_invalid_moves"]),
             }
             manager = DialogueManager(
                 agent_a=UserLMAgent(),
@@ -43,8 +48,8 @@ def run_experiment(config_path: str | Path) -> dict:
                 run_id=run_id,
                 seed=seed,
                 config=run_config,
-                max_turns=int(config.get("max_turns", 20)),
-                max_invalid_moves=int(config.get("max_invalid_moves", 3)),
+                max_turns=int(config.get("max_turns", system_profile["max_turns"])),
+                max_invalid_moves=int(config.get("max_invalid_moves", system_profile["max_invalid_moves"])),
             )
             runs.append(manager.run())
     return {
@@ -72,3 +77,10 @@ def _select_maps(maps: dict, params: dict) -> list:
         selected = [nav_map for nav_map in maps.values() if nav_map.complexity == complexity]
         return selected or list(maps.values())
     return list(maps.values())
+
+
+def _default_knowledge_split() -> dict:
+    return {
+        "agent_a": {"knows_goal": True, "knows_constraints": True, "knows_network": False},
+        "agent_b": {"knows_goal_initially": False, "knows_constraints_initially": False, "knows_network": True},
+    }

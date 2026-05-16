@@ -4,6 +4,8 @@ This repository implements a reproducible bachelor thesis software project for e
 
 Agent A is `UserLM`, a synthetic instruction generator. Agent B is swappable by configuration, currently using `RuleAgent` for deterministic experiments and `ChatGPTAgent` as a placeholder adapter for future live LLM integration.
 
+The current experiment model enforces asymmetric knowledge: Agent A receives the goal and constraints but not the network topology, while Agent B receives the map/network data but must infer the goal and constraints from Agent A's dialogue.
+
 ## Architecture
 
 The project is split into two deployable parts:
@@ -12,6 +14,19 @@ The project is split into two deployable parts:
 - `web`: Vite + React + TypeScript dashboard that reads static JSON files from `web/public/data`.
 
 GitHub Pages can only host static assets. For that reason, Python experiments run locally or in CI and export JSON artifacts. The deployed dashboard does not require, start, or call a Python backend.
+
+## System Profiles
+
+Experiments are configurable for low-end and high-end systems. The default is `low`.
+
+- `low`: deterministic BFS planner, standard metric detail, no expensive bootstrap reliability.
+- `high`: larger turn budgets and extended reliability options for stronger local or CI machines.
+
+Set the profile in an experiment config:
+
+```yaml
+system_profile: low
+```
 
 ## Local Setup
 
@@ -55,8 +70,18 @@ Implemented metrics include:
 - semantic action consistency
 - invalid action count
 - robustness by condition
+- goal and constraint communication coverage
+- Agent B interpretation accuracy
+- belief update accuracy
+- shared goal and constraint alignment
+- route optimality ratio
+- constraint violation count
+- dialogue-act distribution
+- naturalness proxy score
 
 Reliability analysis exports metric correlation with task success, variance across seeds, sensitivity to map complexity, sensitivity to noise and ambiguity, and ranking stability across Agent B variants.
+
+Every exported run also contains a failure explanation, route summary, cooperation summary, and per-metric interpretation fields so dashboard results can be traced back to transcript evidence.
 
 ## Export Web Data
 
@@ -70,6 +95,7 @@ This writes:
 - `web/public/data/runs.json`
 - `web/public/data/metrics.json`
 - `web/public/data/transcripts/*.json`
+- `web/public/data/explanations/*.json`
 
 ## Frontend
 
@@ -86,7 +112,7 @@ cd web
 npm run build
 ```
 
-The dashboard provides experiment selection, run-level and aggregate metrics, Agent B comparison, transcript inspection, map replay, and reliability summaries.
+The dashboard provides experiment selection, run-level and aggregate metrics, Agent B comparison, knowledge split inspection, run explanations, transcript inspection with dialogue acts, map replay, route optimality, metric definitions, and reliability summaries.
 
 ## GitHub Pages
 

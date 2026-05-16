@@ -17,6 +17,9 @@ export default function MapReplay({ transcript }: { transcript: Transcript | nul
   return (
     <section>
       <h2>Map Replay</h2>
+      <p className="empty">
+        Shortest {transcript.route_summary?.shortest_path_length ?? 'n/a'} / actual {transcript.route_summary?.actual_path_length ?? 'n/a'} steps
+      </p>
       <div className="map" style={{ gridTemplateColumns: `repeat(${transcript.task.width}, 2.4rem)` }}>
         {cells.map((cell) => (
           <div className={`cell ${cell.blocked ? 'blocked' : ''} ${cell.path ? 'path' : ''}`} key={cell.key}>

@@ -2,6 +2,16 @@ experiment_id: exp_02_noise
 name: Noise and ambiguity sensitivity
 description: Baseline agents under varied language noise and ambiguity.
 maps_path: configs/tasks/navigation_maps.yaml
+system_profile: low
+knowledge_split:
+  agent_a:
+    knows_goal: true
+    knows_constraints: true
+    knows_network: false
+  agent_b:
+    knows_goal_initially: false
+    knows_constraints_initially: false
+    knows_network: true
 agent_a: userlm
 agent_b: rule
 max_turns: 24
@@ -13,4 +23,6 @@ parameter_grid:
   language_noise: [0.0, 0.3]
   memory_context_limit: [full]
   prompt_strategy: [direct]
+  constraint_type: [avoid_blocked]
+  network_change: [none]
   seed: [1, 2]

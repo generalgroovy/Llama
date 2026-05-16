@@ -2,6 +2,16 @@ experiment_id: exp_03_agent_comparison
 name: Agent B comparison
 description: Compare deterministic RuleAgent with the ChatGPTAgent placeholder adapter.
 maps_path: configs/tasks/navigation_maps.yaml
+system_profile: low
+knowledge_split:
+  agent_a:
+    knows_goal: true
+    knows_constraints: true
+    knows_network: false
+  agent_b:
+    knows_goal_initially: false
+    knows_constraints_initially: false
+    knows_network: true
 agent_a: userlm
 max_turns: 24
 max_invalid_moves: 4
@@ -12,4 +22,6 @@ parameter_grid:
   language_noise: [0.0]
   memory_context_limit: [full, short]
   prompt_strategy: [direct]
+  constraint_type: [avoid_blocked]
+  network_change: [none]
   seed: [1, 2]

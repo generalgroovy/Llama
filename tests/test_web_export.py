@@ -19,6 +19,9 @@ def test_web_export_generation(tmp_path):
         "success": True,
         "errors": [],
         "metrics": {"task_success": 1.0, "turn_count": 2},
+        "failure_analysis": {"failure_category": "success", "failure_explanation": "ok"},
+        "route_summary": {"shortest_path_length": 1, "actual_path_length": 1},
+        "system_profile": {"name": "low"},
     }
     source = tmp_path / "runs.json"
     source.write_text(json.dumps({"experiment": {"experiment_id": "exp"}, "runs": [run]}), encoding="utf-8")
@@ -29,3 +32,4 @@ def test_web_export_generation(tmp_path):
     assert (out / "runs.json").exists()
     assert (out / "metrics.json").exists()
     assert (out / "transcripts" / "run_1.json").exists()
+    assert (out / "explanations" / "run_1.json").exists()

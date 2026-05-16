@@ -11,8 +11,10 @@ export default function TranscriptViewer({ transcript }: { transcript: Transcrip
             <header>
               <strong>{turn.speaker}</strong>
               <span>#{turn.turn_id}</span>
+              {turn.dialogue_act && <span>{turn.dialogue_act}</span>}
               {turn.interpreted_action && <span>{turn.interpreted_action}</span>}
               {!turn.valid_action && <span className="bad">invalid</span>}
+              {turn.ambiguity_detected && <span className="bad">ambiguous</span>}
             </header>
             <p>{turn.text}</p>
           </article>

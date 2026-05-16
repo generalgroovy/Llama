@@ -8,6 +8,19 @@
       "name": "Baseline navigation reliability",
       "description": "UserLM cooperates with the deterministic RuleAgent on simple maps.",
       "maps_path": "configs/tasks/navigation_maps.yaml",
+      "system_profile": "low",
+      "knowledge_split": {
+        "agent_a": {
+          "knows_goal": true,
+          "knows_constraints": true,
+          "knows_network": false
+        },
+        "agent_b": {
+          "knows_goal_initially": false,
+          "knows_constraints_initially": false,
+          "knows_network": true
+        }
+      },
       "agent_a": "userlm",
       "agent_b": "rule",
       "max_turns": 20,
@@ -30,6 +43,9 @@
         ],
         "prompt_strategy": [
           "direct"
+        ],
+        "constraint_type": [
+          "avoid_blocked"
         ],
         "seed": [
           1,

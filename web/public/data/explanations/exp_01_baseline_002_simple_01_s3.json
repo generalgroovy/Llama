@@ -1,0 +1,652 @@
+{
+  "failure_category": "success",
+  "failure_explanation": "The agents reached the goal without recorded constraint violations.",
+  "key_events": [
+    {
+      "turn_id": 0,
+      "speaker": "UserLM",
+      "dialogue_act": "goal_request",
+      "text": "Goal: library. Constraints: avoid_blocked, prefer_shortest. Please plan the next step."
+    }
+  ],
+  "route_summary": {
+    "shortest_path": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "shortest_path_length": 6,
+    "actual_path": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "actual_path_length": 6,
+    "planner_diagnostics": {
+      "planner": "bfs",
+      "expanded_nodes": 16,
+      "path_found": true,
+      "constraints": [
+        "avoid_blocked",
+        "prefer_shortest"
+      ]
+    }
+  },
+  "cooperation_summary": {
+    "final_shared_goal": [
+      3,
+      3
+    ],
+    "final_shared_constraints": [
+      "avoid_blocked",
+      "prefer_shortest"
+    ],
+    "unresolved_ambiguities": 0,
+    "agent_a_knows_network": false,
+    "agent_b_knows_network": true
+  },
+  "metric_breakdown": [
+    {
+      "metric_name": "task_success",
+      "value": 1.0,
+      "definition": "1 when the final navigation state reaches the goal, otherwise 0.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "path_distance_error",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for path_distance_error.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "turn_count",
+      "value": 12,
+      "definition": "Computed from transcript field evidence for turn_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "token_count",
+      "value": 104,
+      "definition": "Computed from transcript field evidence for token_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "repair_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for repair_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "clarification_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for clarification_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "contradiction_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for contradiction_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "semantic_action_consistency",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for semantic_action_consistency.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "invalid_action_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for invalid_action_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "goal_mention_turn",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for goal_mention_turn.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "constraint_mention_count",
+      "value": 12,
+      "definition": "Computed from transcript field evidence for constraint_mention_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "constraint_coverage",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for constraint_coverage.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "ambiguity_rate",
+      "value": 0.0,
+      "definition": "Computed from transcript field evidence for ambiguity_rate.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "instruction_specificity",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for instruction_specificity.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "correction_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for correction_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "confirmation_count",
+      "value": 5,
+      "definition": "Computed from transcript field evidence for confirmation_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "goal_interpretation_accuracy",
+      "value": 1.0,
+      "definition": "1 when Agent B's final believed goal matches Agent A's private goal.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "constraint_interpretation_accuracy",
+      "value": 1.0,
+      "definition": "Share of Agent A constraints present in Agent B's final belief.",
+      "numerator": 2,
+      "denominator": 2,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "intent_classification_accuracy",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for intent_classification_accuracy.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "clarification_precision",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for clarification_precision.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "clarification_recall",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for clarification_recall.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "belief_update_accuracy",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for belief_update_accuracy.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "shared_goal_alignment",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for shared_goal_alignment.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "shared_constraint_alignment",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for shared_constraint_alignment.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "plan_agreement_rate",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for plan_agreement_rate.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "clarification_resolution_rate",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for clarification_resolution_rate.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "repair_success_rate",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for repair_success_rate.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "unnecessary_turn_count",
+      "value": 5,
+      "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "cooperation_efficiency",
+      "value": 0.08333333333333333,
+      "definition": "Task success and plan agreement normalized by dialogue length.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "belief_state_delta_score",
+      "value": 2.0,
+      "definition": "Computed from transcript field evidence for belief_state_delta_score.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "shortest_path_length",
+      "value": 6,
+      "definition": "Computed from transcript field evidence for shortest_path_length.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "actual_path_length",
+      "value": 6,
+      "definition": "Computed from transcript field evidence for actual_path_length.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "route_optimality_ratio",
+      "value": 1.0,
+      "definition": "Shortest valid path length divided by actual path length for successful runs.",
+      "numerator": 6,
+      "denominator": 6,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "blocked_action_attempts",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for blocked_action_attempts.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "backtracking_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for backtracking_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "stay_action_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for stay_action_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "constraint_violation_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for constraint_violation_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "final_distance_to_goal",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for final_distance_to_goal.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "action_turn_count",
+      "value": 6,
+      "definition": "Computed from transcript field evidence for action_turn_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "non_action_turn_count",
+      "value": 6,
+      "definition": "Computed from transcript field evidence for non_action_turn_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "repeated_message_count",
+      "value": 4,
+      "definition": "Computed from transcript field evidence for repeated_message_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "average_message_length",
+      "value": 8.666666666666666,
+      "definition": "Computed from transcript field evidence for average_message_length.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "lexical_noise_level",
+      "value": 0.0,
+      "definition": "Computed from transcript field evidence for lexical_noise_level.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "explicit_reference_count",
+      "value": 12,
+      "definition": "Computed from transcript field evidence for explicit_reference_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "unresolved_reference_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for unresolved_reference_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "naturalness_proxy_score",
+      "value": 1.0,
+      "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_002_simple_01_s3"
+      ],
+      "warning": "sample size is one run"
+    }
+  ]
+}

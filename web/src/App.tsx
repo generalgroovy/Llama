@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import AgentComparison from './components/AgentComparison';
 import ExperimentSelector from './components/ExperimentSelector';
+import FailurePanel from './components/FailurePanel';
+import KnowledgePanel from './components/KnowledgePanel';
 import MapReplay from './components/MapReplay';
+import MetricDefinitions from './components/MetricDefinitions';
 import MetricDashboard from './components/MetricDashboard';
 import ReliabilityTable from './components/ReliabilityTable';
 import TranscriptViewer from './components/TranscriptViewer';
@@ -31,6 +34,7 @@ export default function App() {
     () => (selectedExperiment === 'all' ? runs : runs.filter((run) => run.experiment_id === selectedExperiment)),
     [runs, selectedExperiment]
   );
+  const selectedRun = runs.find((run) => run.run_id === selectedRunId);
 
   useEffect(() => {
     const selected = runs.find((run) => run.run_id === selectedRunId);
@@ -66,11 +70,14 @@ export default function App() {
       />
       <MetricDashboard runs={visibleRuns} />
       <AgentComparison runs={visibleRuns} />
+      <FailurePanel run={selectedRun} />
+      <KnowledgePanel transcript={transcript} />
       <div className="split">
         <MapReplay transcript={transcript} />
         <TranscriptViewer transcript={transcript} />
       </div>
       <ReliabilityTable metrics={metrics} />
+      <MetricDefinitions metrics={metrics} />
     </main>
   );
 }

@@ -71,11 +71,24 @@ select {
 }
 
 .metric,
-.turn {
+.turn,
+.explanation,
+.knowledge-grid > div {
   background: #ffffff;
   border: 1px solid #d8dedb;
   border-radius: 8px;
   padding: 0.85rem;
+}
+
+.knowledge-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
 }
 
 .metric span,
