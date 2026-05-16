@@ -1,19 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
-import AgentComparison from './components/AgentComparison';
+import { useEffect, useState } from 'react';
+import ConversationMetricsCard from './components/ConversationMetricsCard';
 import ExperimentSelector from './components/ExperimentSelector';
-import FailurePanel from './components/FailurePanel';
-import KnowledgePanel from './components/KnowledgePanel';
-import MapReplay from './components/MapReplay';
-import MetricDefinitions from './components/MetricDefinitions';
-import MetricDashboard from './components/MetricDashboard';
-import ReliabilityTable from './components/ReliabilityTable';
-import TranscriptViewer from './components/TranscriptViewer';
-import { loadDashboardData, loadTranscript, type Experiment, type MetricsFile, type RunSummary, type Transcript } from './lib/loadData';
+import NetworkDataCard from './components/NetworkDataCard';
+import { loadDashboardData, loadTranscript, type Experiment, type RunSummary, type Transcript } from './lib/loadData';
 
 export default function App() {
   const [experiments, setExperiments] = useState<Experiment[]>([]);
   const [runs, setRuns] = useState<RunSummary[]>([]);
-  const [metrics, setMetrics] = useState<MetricsFile>({ aggregate: {}, reliability: {}, run_metrics: [] });
   const [selectedExperiment, setSelectedExperiment] = useState('all');
   const [selectedRunId, setSelectedRunId] = useState('');
   const [transcript, setTranscript] = useState<Transcript | null>(null);
@@ -24,16 +17,11 @@ export default function App() {
       .then((data) => {
         setExperiments(data.experiments);
         setRuns(data.runs);
-        setMetrics(data.metrics);
         setSelectedRunId(data.runs[0]?.run_id ?? '');
       })
       .catch((err: Error) => setError(err.message));
   }, []);
 
-  const visibleRuns = useMemo(
-    () => (selectedExperiment === 'all' ? runs : runs.filter((run) => run.experiment_id === selectedExperiment)),
-    [runs, selectedExperiment]
-  );
   const selectedRun = runs.find((run) => run.run_id === selectedRunId);
 
   useEffect(() => {
@@ -68,16 +56,10 @@ export default function App() {
         onExperimentChange={changeExperiment}
         onRunChange={setSelectedRunId}
       />
-      <MetricDashboard runs={visibleRuns} />
-      <AgentComparison runs={visibleRuns} />
-      <FailurePanel run={selectedRun} />
-      <KnowledgePanel transcript={transcript} />
-      <div className="split">
-        <MapReplay transcript={transcript} />
-        <TranscriptViewer transcript={transcript} />
+      <div className="dashboard-grid">
+        <ConversationMetricsCard run={selectedRun} transcript={transcript} />
+        <NetworkDataCard transcript={transcript} />
       </div>
-      <ReliabilityTable metrics={metrics} />
-      <MetricDefinitions metrics={metrics} />
     </main>
   );
 }
