@@ -4,7 +4,7 @@ import re
 from typing import Any
 
 from sds_eval.agents.base import AgentAdapter, AgentContext, AgentResponse
-from sds_eval.task.planner import next_action_for_path, shortest_path
+from sds_eval.task.planner import next_action_for_path, route_advice_text, shortest_path, summarize_route_segments
 
 
 class RuleAgent(AgentAdapter):
@@ -56,6 +56,7 @@ class RuleAgent(AgentAdapter):
             )
 
         path, diagnostics = shortest_path(network, context.state["position"], goal, constraints)
+        full_path, full_diagnostics = shortest_path(network, network.get("start", context.state["position"]), goal, constraints)
         if not path:
             return AgentResponse(
                 text="No valid route satisfies the communicated constraints.",
@@ -74,19 +75,23 @@ class RuleAgent(AgentAdapter):
             )
 
         action = next_action_for_path(path)
-        label = _goal_label(goal, network)
+        route_segments = summarize_route_segments(network, full_path or path)
+        route_advice = route_advice_text(route_segments)
+        text = "Continue on the agreed line route." if context.shared_state.get("route_advice") else route_advice
         return AgentResponse(
-            text=f"Route step: {action} toward {label}. Planned remaining steps: {max(0, len(path) - 1)}.",
+            text=text,
             interpreted_action=action,
             metadata={
                 "dialogue_act": "route_proposal",
-                "intent": "calculate_and_execute_next_route_step",
+                "intent": "calculate_line_route",
                 "interpreted_goal": goal,
                 "interpreted_constraints": constraints,
                 "proposed_action": action,
                 "selected_action": action,
                 "route_plan": path,
-                "route_diagnostics": diagnostics,
+                "route_segments": route_segments,
+                "route_advice": route_advice,
+                "route_diagnostics": {**diagnostics, "full_route": full_diagnostics},
                 "constraint_satisfied": True,
                 "belief_state_before": belief_before,
                 "belief_state_after": belief_after,
@@ -98,9 +103,18 @@ class RuleAgent(AgentAdapter):
 
 def _resolve_goal(text: str, network: dict[str, Any]) -> list[int] | None:
     lowered = text.lower()
-    for label, position in network.get("landmarks", {}).items():
-        if label.lower() in lowered:
+    stations = network.get("stations") or network.get("landmarks", {})
+    for label, position in stations.items():
+        label_text = label.lower()
+        if f"get off at {label_text}" in lowered or f"to {label_text}" in lowered:
             return list(position)
+    mentions = [
+        (lowered.rfind(label.lower()), position)
+        for label, position in stations.items()
+        if label.lower() in lowered
+    ]
+    if mentions:
+        return list(max(mentions, key=lambda item: item[0])[1])
     match = re.search(r"\[(\d+),\s*(\d+)\]", lowered)
     if match:
         return [int(match.group(1)), int(match.group(2))]
@@ -118,7 +132,7 @@ def _resolve_constraints(text: str) -> list[str]:
 
 
 def _goal_label(goal: list[int], network: dict[str, Any]) -> str:
-    for label, position in network.get("landmarks", {}).items():
+    for label, position in (network.get("stations") or network.get("landmarks", {})).items():
         if list(position) == list(goal):
             return label
     return str(goal)

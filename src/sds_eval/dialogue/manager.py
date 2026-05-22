@@ -8,8 +8,9 @@ from sds_eval.analysis.explanations import analyze_run
 from sds_eval.dialogue.state import DialogueState
 from sds_eval.experiments.profiles import resolve_system_profile
 from sds_eval.metrics.metric_registry import compute_all_metrics
+from sds_eval.pipeline import SpeechPipeline, merge_pipeline_config
 from sds_eval.task.navigation_env import NavigationEnvironment
-from sds_eval.task.planner import path_length, shortest_path
+from sds_eval.task.planner import path_length, route_advice_text, shortest_path, station_label, summarize_route_segments
 
 
 class DialogueManager:
@@ -50,8 +51,11 @@ class DialogueManager:
         turns: list[dict[str, Any]] = []
         action_trace: list[dict[str, Any]] = []
         state_trace: list[dict[str, Any]] = [self.environment.reset()]
+        audio_recordings: list[dict[str, Any]] = []
         task = self.environment.map.to_dict()
         params = self.config.get("parameters", {})
+        speech_pipeline_config = merge_pipeline_config(self.config.get("speech_pipeline", {}))
+        speech_pipeline = SpeechPipeline(speech_pipeline_config, self.run_id)
         agent_a_private = _agent_a_private_knowledge(task, params)
         agent_b_private = _agent_b_private_knowledge(task)
         shared_state = {
@@ -78,8 +82,18 @@ class DialogueManager:
                 system_profile=self.system_profile,
             )
             user_response = self.agent_a.respond(agent_a_context)
-            last_instruction = user_response.text
-            turns.append(_turn(dialogue_state.turn_id, self.agent_a.name, user_response.text, None, self.environment.state(), self.environment.state(), True, user_response.metadata))
+            user_pipeline = speech_pipeline.process_turn(dialogue_state.turn_id, self.agent_a.name, user_response)
+            if user_pipeline.audio_path:
+                audio_recordings.append(_audio_record(dialogue_state.turn_id, self.agent_a.name, user_pipeline))
+            last_instruction = user_pipeline.recognized_text
+            user_metadata = {
+                **user_response.metadata,
+                "pipeline_events": user_pipeline.events,
+                "recognized_text": user_pipeline.recognized_text,
+                "audio_path": user_pipeline.audio_path,
+                "audio_duration_seconds": user_pipeline.audio_duration_seconds,
+            }
+            turns.append(_turn(dialogue_state.turn_id, self.agent_a.name, user_pipeline.text, None, self.environment.state(), self.environment.state(), True, user_metadata))
             dialogue_state.turn_id += 1
 
             agent_b_private["current_position"] = self.environment.state()["position"]
@@ -97,10 +111,15 @@ class DialogueManager:
                 system_profile=self.system_profile,
             )
             sds_response = self.agent_b.respond(agent_b_context)
+            sds_pipeline = speech_pipeline.process_turn(dialogue_state.turn_id, self.agent_b.name, sds_response)
+            if sds_pipeline.audio_path:
+                audio_recordings.append(_audio_record(dialogue_state.turn_id, self.agent_b.name, sds_pipeline))
             shared_state["b_belief"] = dict(sds_response.metadata.get("belief_state_after", shared_state.get("b_belief", {})))
             shared_state["known_goal"] = shared_state["b_belief"].get("goal")
             shared_state["known_constraints"] = shared_state["b_belief"].get("constraints", [])
             shared_state["agreed_plan"] = sds_response.metadata.get("route_plan", [])
+            shared_state["route_segments"] = sds_response.metadata.get("route_segments", [])
+            shared_state["route_advice"] = sds_response.metadata.get("route_advice")
             if sds_response.metadata.get("ambiguity_detected"):
                 shared_state["unresolved_ambiguities"] += 1
 
@@ -111,12 +130,16 @@ class DialogueManager:
                 dialogue_state.errors.append(step.error or "invalid action")
             action_metadata = {
                 **sds_response.metadata,
+                "pipeline_events": sds_pipeline.events,
+                "recognized_text": sds_pipeline.recognized_text,
+                "audio_path": sds_pipeline.audio_path,
+                "audio_duration_seconds": sds_pipeline.audio_duration_seconds,
                 "selected_action": action,
                 "constraint_satisfied": sds_response.metadata.get("constraint_satisfied", step.valid_action),
                 "repair_or_clarification": action == "clarify" or not step.valid_action or sds_response.metadata.get("repair_or_clarification", False),
                 "errors": [step.error] if step.error else [],
             }
-            turns.append(_turn(dialogue_state.turn_id, self.agent_b.name, sds_response.text, action, step.state_before, step.state_after, step.valid_action, action_metadata))
+            turns.append(_turn(dialogue_state.turn_id, self.agent_b.name, sds_pipeline.text, action, step.state_before, step.state_after, step.valid_action, action_metadata))
             action_trace.append(asdict(step))
             state_trace.append(step.state_after)
             dialogue_state.turn_id += 1
@@ -125,11 +148,18 @@ class DialogueManager:
                 break
 
         shortest, diagnostics = shortest_path(task, task["start"], task["goal"], agent_a_private["constraints"])
+        shortest_segments = summarize_route_segments(task, shortest)
+        actual_path = [state["position"] for state in state_trace]
+        actual_segments = summarize_route_segments(task, actual_path)
         route_summary = {
             "shortest_path": shortest,
             "shortest_path_length": path_length(shortest),
-            "actual_path": [state["position"] for state in state_trace],
+            "shortest_route_segments": shortest_segments,
+            "shortest_route_advice": route_advice_text(shortest_segments),
+            "actual_path": actual_path,
             "actual_path_length": max(0, len(self.environment.path) - 1),
+            "actual_route_segments": actual_segments,
+            "actual_route_advice": route_advice_text(actual_segments),
             "planner_diagnostics": diagnostics,
         }
         transcript = {
@@ -138,6 +168,7 @@ class DialogueManager:
             "seed": self.seed,
             "config": self.config,
             "system_profile": self.system_profile,
+            "speech_pipeline": speech_pipeline_config,
             "knowledge_split": self.config.get("knowledge_split", _default_knowledge_split()),
             "agent_a": self.agent_a.describe(),
             "agent_b": self.agent_b.describe(),
@@ -147,12 +178,14 @@ class DialogueManager:
                 "map_id": task["map_id"],
                 "node_count": task["width"] * task["height"] - len(task.get("obstacles", [])),
                 "blocked_node_count": len(task.get("obstacles", [])),
+                "line_count": len(task.get("transit_lines", {})),
             },
             "shared_dialogue_state": shared_state,
             "task": task,
             "turns": turns,
             "state_trace": state_trace,
             "action_trace": action_trace,
+            "audio_recordings": audio_recordings,
             "route_summary": route_summary,
             "final_state": self.environment.state(),
             "success": self.environment.state()["success"],
@@ -179,9 +212,11 @@ def _turn(
         "turn_id": turn_id,
         "speaker": speaker,
         "text": text,
+        "recognized_text": metadata.get("recognized_text", text),
         "dialogue_act": metadata.get("dialogue_act", "action_execution" if action else "message"),
         "intent": metadata.get("intent"),
         "mentioned_goal": metadata.get("mentioned_goal"),
+        "mentioned_origin": metadata.get("mentioned_origin"),
         "mentioned_constraints": metadata.get("mentioned_constraints", []),
         "interpreted_goal": metadata.get("interpreted_goal"),
         "interpreted_constraints": metadata.get("interpreted_constraints", []),
@@ -189,6 +224,11 @@ def _turn(
         "selected_action": metadata.get("selected_action", action),
         "interpreted_action": action,
         "route_plan": metadata.get("route_plan", []),
+        "route_segments": metadata.get("route_segments", []),
+        "route_advice": metadata.get("route_advice"),
+        "pipeline_events": metadata.get("pipeline_events", []),
+        "audio_path": metadata.get("audio_path"),
+        "audio_duration_seconds": metadata.get("audio_duration_seconds", 0.0),
         "state_before": before,
         "state_after": after,
         "valid_action": valid,
@@ -204,8 +244,10 @@ def _turn(
 def _agent_a_private_knowledge(task: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     constraints = params.get("constraints") or _constraints_for_type(params.get("constraint_type", "avoid_blocked"))
     return {
+        "origin": task["start"],
+        "origin_label": station_label(task, task["start"]),
         "goal": task["goal"],
-        "goal_label": _goal_label(task),
+        "goal_label": station_label(task, task["goal"]),
         "constraints": constraints,
         "preferences": params.get("preferences", ["prefer_shortest"]),
         "success_criteria": ["reach_goal", "respect_constraints"],
@@ -229,13 +271,6 @@ def _constraints_for_type(constraint_type: str) -> list[str]:
     return ["avoid_blocked", "prefer_shortest"]
 
 
-def _goal_label(task: dict[str, Any]) -> str:
-    for label, position in task.get("landmarks", {}).items():
-        if list(position) == list(task["goal"]):
-            return label
-    return f"[{task['goal'][0]}, {task['goal'][1]}]"
-
-
 def _public_state(state: dict[str, Any]) -> dict[str, Any]:
     return {"position": state["position"], "success": state["success"]}
 
@@ -244,4 +279,13 @@ def _default_knowledge_split() -> dict[str, Any]:
     return {
         "agent_a": {"knows_goal": True, "knows_constraints": True, "knows_network": False},
         "agent_b": {"knows_goal_initially": False, "knows_constraints_initially": False, "knows_network": True},
+    }
+
+
+def _audio_record(turn_id: int, speaker: str, pipeline_result: Any) -> dict[str, Any]:
+    return {
+        "turn_id": turn_id,
+        "speaker": speaker,
+        "audio_path": pipeline_result.audio_path,
+        "duration_seconds": pipeline_result.audio_duration_seconds,
     }

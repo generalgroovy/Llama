@@ -1,16 +1,16 @@
 # Automatic Evaluation of Speech Dialogue Systems
 
-This repository implements a reproducible bachelor thesis software project for evaluating cooperative navigation-task solving between two speech dialogue agents.
+This repository implements a reproducible bachelor thesis software project for the faculty area "Quality and Usability". It evaluates cooperative task solving between two configurable speech dialogue system agents.
 
 Agent A is `UserLM`, a synthetic instruction generator. Agent B is swappable by configuration, currently using `RuleAgent` for deterministic experiments and `ChatGPTAgent` as a placeholder adapter for future live LLM integration.
 
-The current experiment model enforces asymmetric knowledge: Agent A receives the goal and constraints but not the network topology, while Agent B receives the map/network data but must infer the goal and constraints from Agent A's dialogue.
+The current experiment model enforces asymmetric knowledge: Agent A receives the get-on station, get-off station, and constraints but not the network topology, while Agent B receives the line/network data but must infer the requested route from Agent A's dialogue.
 
 ## Architecture
 
 The project is split into two deployable parts:
 
-- `src/sds_eval`: Python experiment framework for agents, navigation maps, dialogue runs, metrics, reliability analysis, and static export.
+- `src/sds_eval`: Python experiment framework for agents, ASR/NLU/dialogue-management/NLG/TTS phase logging, navigation maps, dialogue runs, metrics, reliability analysis, audio artifacts, and static export.
 - `web`: Vite + React + TypeScript dashboard that reads static JSON files from `web/public/data`.
 
 GitHub Pages can only host static assets. For that reason, Python experiments run locally or in CI and export JSON artifacts. The deployed dashboard does not require, start, or call a Python backend.
@@ -58,6 +58,26 @@ Each run produces structured transcript JSON with run metadata, agent metadata, 
 
 ## Metrics and Reliability
 
+Routes are conversed about as passenger-level line advice, for example: `Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.` The simulator may still step through the internal graph for success and optimality metrics, but the transcript and dashboard emphasize line segments rather than every intermediate station.
+
+## Speech Pipeline
+
+Every turn logs the complete speech dialogue pipeline:
+
+- ASR
+- NLU
+- dialogue management
+- NLG
+- TTS
+
+Speech components are configurable and are off by default for reproducible low-resource experiments. They can be enabled at runtime:
+
+```bash
+python scripts/run_experiment.py --config configs/experiments/exp_01_baseline.yaml --out data/runs/baseline_tts.json --enable-asr --enable-tts --audio-dir data/audio
+```
+
+When TTS is enabled, deterministic `.wav` recordings are written under `data/audio/<run_id>/` and referenced from the transcript. The default synthetic TTS backend is intentionally simple and dependency-free so batch experiments remain runnable on low-end systems.
+
 Implemented metrics include:
 
 - task success
@@ -78,6 +98,11 @@ Implemented metrics include:
 - constraint violation count
 - dialogue-act distribution
 - naturalness proxy score
+- ASR confidence
+- NLU confidence
+- TTS audio coverage
+- pipeline phase count
+- pipeline latency
 
 Reliability analysis exports metric correlation with task success, variance across seeds, sensitivity to map complexity, sensitivity to noise and ambiguity, and ranking stability across Agent B variants.
 

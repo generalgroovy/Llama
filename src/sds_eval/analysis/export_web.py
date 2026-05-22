@@ -48,6 +48,8 @@ def export_web_data(run_paths: list[str | Path], out_dir: str | Path) -> dict:
             "success": run["success"],
             "metrics": run["metrics"],
             "system_profile": run.get("system_profile", {}),
+            "speech_pipeline": run.get("speech_pipeline", {}),
+            "audio_recordings": run.get("audio_recordings", []),
             "failure_category": explanation.get("failure_category"),
             "failure_explanation": explanation.get("failure_explanation"),
             "route_summary": run.get("route_summary", {}),

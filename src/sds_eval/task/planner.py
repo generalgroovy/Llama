@@ -74,6 +74,42 @@ def route_optimality_ratio(actual_steps: int, shortest_steps: int, success: bool
     return min(1.0, shortest_steps / actual_steps)
 
 
+def summarize_route_segments(network: dict[str, Any], path: list[list[int]]) -> list[dict[str, Any]]:
+    """Compress a node path into line-based advice segments."""
+
+    if len(path) < 2:
+        return []
+    segments: list[dict[str, Any]] = []
+    current_line: str | None = None
+    segment_start = path[0]
+    previous_position = path[0]
+    for idx in range(1, len(path)):
+        current_position = path[idx]
+        line = _line_for_edge(network, previous_position, current_position, current_line)
+        if current_line is None:
+            current_line = line
+        elif line != current_line:
+            segments.append(_segment(network, current_line, segment_start, previous_position))
+            segment_start = previous_position
+            current_line = line
+        previous_position = current_position
+    if current_line is not None:
+        segments.append(_segment(network, current_line, segment_start, path[-1]))
+    return segments
+
+
+def route_advice_text(segments: list[dict[str, Any]]) -> str:
+    if not segments:
+        return "No valid line route is available."
+    parts = [
+        f"take line {segment['line']} from {segment['from_station']} to {segment['to_station']}"
+        for segment in segments
+    ]
+    if len(parts) == 1:
+        return _sentence_case(parts[0]) + "."
+    return f"{_sentence_case(parts[0])}, then " + ", then ".join(parts[1:]) + "."
+
+
 def _neighbors(pos: Position, width: int, height: int) -> list[Position]:
     values: list[Position] = []
     for action in ("north", "east", "south", "west"):
@@ -90,3 +126,41 @@ def _position(value: list[int] | tuple[int, int]) -> Position:
 
 def _as_list(value: Position) -> list[int]:
     return [value[0], value[1]]
+
+
+def _line_for_edge(network: dict[str, Any], a: list[int], b: list[int], previous_line: str | None) -> str:
+    candidates = []
+    edge = {_position(a), _position(b)}
+    for line_name, stops in network.get("transit_lines", {}).items():
+        parsed = [_position(stop) for stop in stops]
+        for idx in range(1, len(parsed)):
+            if {parsed[idx - 1], parsed[idx]} == edge:
+                candidates.append(str(line_name))
+                break
+    if previous_line in candidates:
+        return previous_line
+    return sorted(candidates)[0] if candidates else "walk"
+
+
+def _segment(network: dict[str, Any], line: str, start: list[int], end: list[int]) -> dict[str, Any]:
+    return {
+        "line": line,
+        "from_station": station_label(network, start),
+        "to_station": station_label(network, end),
+        "from_position": start,
+        "to_position": end,
+        "steps": abs(end[0] - start[0]) + abs(end[1] - start[1]),
+    }
+
+
+def station_label(network: dict[str, Any], position: list[int] | tuple[int, int]) -> str:
+    pos = list(position)
+    stations = network.get("stations") or network.get("landmarks", {})
+    for label, station_position in stations.items():
+        if list(station_position) == pos:
+            return str(label)
+    return f"[{pos[0]}, {pos[1]}]"
+
+
+def _sentence_case(value: str) -> str:
+    return value[:1].upper() + value[1:]

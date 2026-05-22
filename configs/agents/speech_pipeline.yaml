@@ -1,0 +1,17 @@
+speech_pipeline:
+  asr:
+    enabled: false
+    word_error_rate: 0.0
+  nlu:
+    enabled: true
+    confidence: 1.0
+  dialog_management:
+    enabled: true
+  nlg:
+    enabled: true
+  tts:
+    enabled: false
+    sample_rate: 16000
+    voice: synthetic-tone
+  record_audio: true
+  audio_dir: data/audio

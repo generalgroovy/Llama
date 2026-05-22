@@ -16,6 +16,28 @@
     },
     "system_profile": "low",
     "system_profile_overrides": {},
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
     "knowledge_split": {
       "agent_a": {
         "knows_goal": true,
@@ -40,6 +62,29 @@
     "store_full_belief_trace": true,
     "bootstrap_reliability": false,
     "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
+  },
+  "speech_pipeline": {
+    "asr": {
+      "enabled": false,
+      "word_error_rate": 0.0
+    },
+    "nlu": {
+      "enabled": true,
+      "confidence": 1.0
+    },
+    "dialog_management": {
+      "enabled": true
+    },
+    "nlg": {
+      "enabled": true
+    },
+    "tts": {
+      "enabled": false,
+      "sample_rate": 16000,
+      "voice": "synthetic-tone"
+    },
+    "record_audio": true,
+    "audio_dir": "data/audio"
   },
   "knowledge_split": {
     "agent_a": {
@@ -68,11 +113,16 @@
     }
   },
   "agent_a_private_knowledge": {
+    "origin": [
+      0,
+      0
+    ],
+    "origin_label": "Alpha",
     "goal": [
       3,
       3
     ],
-    "goal_label": "library",
+    "goal_label": "Harbor",
     "constraints": [
       "avoid_blocked",
       "prefer_shortest"
@@ -90,7 +140,8 @@
     "knows_network": true,
     "map_id": "simple_01",
     "node_count": 16,
-    "blocked_node_count": 0
+    "blocked_node_count": 0,
+    "line_count": 2
   },
   "shared_dialogue_state": {
     "b_belief": {
@@ -121,7 +172,38 @@
         3
       ]
     ],
-    "unresolved_ambiguities": 0
+    "unresolved_ambiguities": 0,
+    "route_segments": [
+      {
+        "line": "R",
+        "from_station": "Alpha",
+        "to_station": "Bravo",
+        "from_position": [
+          0,
+          0
+        ],
+        "to_position": [
+          3,
+          0
+        ],
+        "steps": 3
+      },
+      {
+        "line": "EW2",
+        "from_station": "Bravo",
+        "to_station": "Harbor",
+        "from_position": [
+          3,
+          0
+        ],
+        "to_position": [
+          3,
+          3
+        ],
+        "steps": 3
+      }
+    ],
+    "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
   },
   "task": {
     "map_id": "simple_01",
@@ -136,13 +218,69 @@
       3
     ],
     "landmarks": {
-      "fountain": [
-        1,
-        1
+      "Alpha": [
+        0,
+        0
       ],
-      "library": [
+      "Bravo": [
+        3,
+        0
+      ],
+      "Harbor": [
         3,
         3
+      ]
+    },
+    "stations": {
+      "Alpha": [
+        0,
+        0
+      ],
+      "Bravo": [
+        3,
+        0
+      ],
+      "Harbor": [
+        3,
+        3
+      ]
+    },
+    "transit_lines": {
+      "R": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "EW2": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
       ]
     },
     "obstacles": [],
@@ -152,10 +290,12 @@
     {
       "turn_id": 0,
       "speaker": "UserLM",
-      "text": "Goal: library. Constraints: avoid_blocked, prefer_shortest. Please plan the next step.",
+      "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+      "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
       "dialogue_act": "goal_request",
       "intent": "communicate_goal_and_constraints",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -166,6 +306,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "goal_request",
+            "intent": "communicate_goal_and_constraints",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "goal_request",
+              "intent": "communicate_goal_and_constraints"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.002,
+          "payload": {
+            "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+            "token_count": 19
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "communicate_goal_and_constraints",
+            "recognized_dialogue_act": "goal_request",
+            "confidence": 1.0,
+            "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -195,10 +394,12 @@
     {
       "turn_id": 1,
       "speaker": "RuleAgent",
-      "text": "Route step: east toward library. Planned remaining steps: 6.",
+      "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -241,6 +442,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "east",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.002,
+          "payload": {
+            "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+            "token_count": 15
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -279,10 +607,12 @@
     {
       "turn_id": 2,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue toward library while respecting avoid_blocked, prefer_shortest.",
+      "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+      "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -293,6 +623,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "confirmation",
+            "intent": "continue_shared_plan",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "confirmation",
+              "intent": "continue_shared_plan"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.002,
+          "payload": {
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "token_count": 11
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "continue_shared_plan",
+            "recognized_dialogue_act": "confirmation",
+            "confidence": 1.0,
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -322,10 +711,12 @@
     {
       "turn_id": 3,
       "speaker": "RuleAgent",
-      "text": "Route step: east toward library. Planned remaining steps: 5.",
+      "text": "Continue on the agreed line route.",
+      "recognized_text": "Continue on the agreed line route.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -364,6 +755,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "east",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Continue on the agreed line route.",
+            "token_count": 6
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Continue on the agreed line route.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Continue on the agreed line route."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -411,10 +929,12 @@
     {
       "turn_id": 4,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue toward library while respecting avoid_blocked, prefer_shortest.",
+      "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+      "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -425,6 +945,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "confirmation",
+            "intent": "continue_shared_plan",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "confirmation",
+              "intent": "continue_shared_plan"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.002,
+          "payload": {
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "token_count": 11
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "continue_shared_plan",
+            "recognized_dialogue_act": "confirmation",
+            "confidence": 1.0,
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -454,10 +1033,12 @@
     {
       "turn_id": 5,
       "speaker": "RuleAgent",
-      "text": "Route step: east toward library. Planned remaining steps: 4.",
+      "text": "Continue on the agreed line route.",
+      "recognized_text": "Continue on the agreed line route.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -492,6 +1073,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "east",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Continue on the agreed line route.",
+            "token_count": 6
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.002,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Continue on the agreed line route.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Continue on the agreed line route."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -539,10 +1247,12 @@
     {
       "turn_id": 6,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue toward library while respecting avoid_blocked, prefer_shortest.",
+      "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+      "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -553,6 +1263,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "confirmation",
+            "intent": "continue_shared_plan",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "confirmation",
+              "intent": "continue_shared_plan"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.002,
+          "payload": {
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "token_count": 11
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "continue_shared_plan",
+            "recognized_dialogue_act": "confirmation",
+            "confidence": 1.0,
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -582,10 +1351,12 @@
     {
       "turn_id": 7,
       "speaker": "RuleAgent",
-      "text": "Route step: south toward library. Planned remaining steps: 3.",
+      "text": "Continue on the agreed line route.",
+      "recognized_text": "Continue on the agreed line route.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -616,6 +1387,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "south",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.003,
+          "payload": {
+            "text": "Continue on the agreed line route.",
+            "token_count": 6
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Continue on the agreed line route.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Continue on the agreed line route."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -663,10 +1561,12 @@
     {
       "turn_id": 8,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue toward library while respecting avoid_blocked, prefer_shortest.",
+      "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+      "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -677,6 +1577,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "confirmation",
+            "intent": "continue_shared_plan",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "confirmation",
+              "intent": "continue_shared_plan"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "token_count": 11
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "continue_shared_plan",
+            "recognized_dialogue_act": "confirmation",
+            "confidence": 1.0,
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -706,10 +1665,12 @@
     {
       "turn_id": 9,
       "speaker": "RuleAgent",
-      "text": "Route step: south toward library. Planned remaining steps: 2.",
+      "text": "Continue on the agreed line route.",
+      "recognized_text": "Continue on the agreed line route.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -736,6 +1697,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "south",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Continue on the agreed line route.",
+            "token_count": 6
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.002,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Continue on the agreed line route.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Continue on the agreed line route."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -783,10 +1871,12 @@
     {
       "turn_id": 10,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue toward library while respecting avoid_blocked, prefer_shortest.",
+      "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+      "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "library",
+      "mentioned_goal": "Harbor",
+      "mentioned_origin": "Alpha",
       "mentioned_constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -797,6 +1887,65 @@
       "selected_action": null,
       "interpreted_action": null,
       "route_plan": [],
+      "route_segments": [],
+      "route_advice": null,
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "confirmation",
+            "intent": "continue_shared_plan",
+            "selected_action": null,
+            "semantic_payload": {
+              "dialogue_act": "confirmation",
+              "intent": "continue_shared_plan"
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "token_count": 11
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "continue_shared_plan",
+            "recognized_dialogue_act": "confirmation",
+            "confidence": 1.0,
+            "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -826,10 +1975,12 @@
     {
       "turn_id": 11,
       "speaker": "RuleAgent",
-      "text": "Route step: south toward library. Planned remaining steps: 1.",
+      "text": "Continue on the agreed line route.",
+      "recognized_text": "Continue on the agreed line route.",
       "dialogue_act": "route_proposal",
-      "intent": "calculate_and_execute_next_route_step",
+      "intent": "calculate_line_route",
       "mentioned_goal": null,
+      "mentioned_origin": null,
       "mentioned_constraints": [],
       "interpreted_goal": [
         3,
@@ -852,6 +2003,133 @@
           3
         ]
       ],
+      "route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+      "pipeline_events": [
+        {
+          "phase": "dialog_management",
+          "enabled": true,
+          "latency_ms": 0.0,
+          "payload": {
+            "dialogue_act": "route_proposal",
+            "intent": "calculate_line_route",
+            "selected_action": "south",
+            "semantic_payload": {
+              "dialogue_act": "route_proposal",
+              "intent": "calculate_line_route",
+              "interpreted_goal": [
+                3,
+                3
+              ],
+              "interpreted_constraints": [
+                "avoid_blocked",
+                "prefer_shortest"
+              ],
+              "route_segments": [
+                {
+                  "line": "R",
+                  "from_station": "Alpha",
+                  "to_station": "Bravo",
+                  "from_position": [
+                    0,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    0
+                  ],
+                  "steps": 3
+                },
+                {
+                  "line": "EW2",
+                  "from_station": "Bravo",
+                  "to_station": "Harbor",
+                  "from_position": [
+                    3,
+                    0
+                  ],
+                  "to_position": [
+                    3,
+                    3
+                  ],
+                  "steps": 3
+                }
+              ],
+              "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+            }
+          }
+        },
+        {
+          "phase": "nlg",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "text": "Continue on the agreed line route.",
+            "token_count": 6
+          }
+        },
+        {
+          "phase": "tts",
+          "enabled": false,
+          "latency_ms": 0.002,
+          "payload": {
+            "audio_path": null,
+            "duration_seconds": 0.0
+          }
+        },
+        {
+          "phase": "asr",
+          "enabled": false,
+          "latency_ms": 0.002,
+          "payload": {
+            "recognized_text": "Continue on the agreed line route.",
+            "confidence": 1.0,
+            "audio_path": null
+          }
+        },
+        {
+          "phase": "nlu",
+          "enabled": true,
+          "latency_ms": 0.001,
+          "payload": {
+            "recognized_intent": "calculate_line_route",
+            "recognized_dialogue_act": "route_proposal",
+            "confidence": 1.0,
+            "text": "Continue on the agreed line route."
+          }
+        }
+      ],
+      "audio_path": null,
+      "audio_duration_seconds": 0.0,
       "state_before": {
         "map_id": "simple_01",
         "position": [
@@ -1102,6 +2380,7 @@
       "error": null
     }
   ],
+  "audio_recordings": [],
   "route_summary": {
     "shortest_path": [
       [
@@ -1134,6 +2413,37 @@
       ]
     ],
     "shortest_path_length": 6,
+    "shortest_route_segments": [
+      {
+        "line": "R",
+        "from_station": "Alpha",
+        "to_station": "Bravo",
+        "from_position": [
+          0,
+          0
+        ],
+        "to_position": [
+          3,
+          0
+        ],
+        "steps": 3
+      },
+      {
+        "line": "EW2",
+        "from_station": "Bravo",
+        "to_station": "Harbor",
+        "from_position": [
+          3,
+          0
+        ],
+        "to_position": [
+          3,
+          3
+        ],
+        "steps": 3
+      }
+    ],
+    "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
     "actual_path": [
       [
         0,
@@ -1165,6 +2475,37 @@
       ]
     ],
     "actual_path_length": 6,
+    "actual_route_segments": [
+      {
+        "line": "R",
+        "from_station": "Alpha",
+        "to_station": "Bravo",
+        "from_position": [
+          0,
+          0
+        ],
+        "to_position": [
+          3,
+          0
+        ],
+        "steps": 3
+      },
+      {
+        "line": "EW2",
+        "from_station": "Bravo",
+        "to_station": "Harbor",
+        "from_position": [
+          3,
+          0
+        ],
+        "to_position": [
+          3,
+          3
+        ],
+        "steps": 3
+      }
+    ],
+    "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
     "planner_diagnostics": {
       "planner": "bfs",
       "expanded_nodes": 16,
@@ -1190,7 +2531,7 @@
     "task_success": 1.0,
     "path_distance_error": 0,
     "turn_count": 12,
-    "token_count": 104,
+    "token_count": 119,
     "repair_count": 0,
     "clarification_count": 0,
     "contradiction_count": 0,
@@ -1227,17 +2568,25 @@
     "final_distance_to_goal": 0,
     "action_turn_count": 6,
     "non_action_turn_count": 6,
-    "repeated_message_count": 4,
+    "repeated_message_count": 8,
     "dialogue_act_distribution": {
       "goal_request": 1,
       "route_proposal": 6,
       "confirmation": 5
     },
-    "average_message_length": 8.666666666666666,
+    "average_message_length": 9.916666666666666,
     "lexical_noise_level": 0.0,
     "explicit_reference_count": 12,
     "unresolved_reference_count": 0,
     "naturalness_proxy_score": 1.0,
+    "audio_recording_count": 0,
+    "tts_audio_coverage": 1.0,
+    "mean_asr_confidence": 1.0,
+    "mean_nlu_confidence": 1.0,
+    "mean_pipeline_latency_ms": 0.0009833333333333335,
+    "pipeline_phase_count": 60,
+    "asr_enabled": 0.0,
+    "tts_enabled": 0.0,
     "robustness_by_condition": {
       "condition": {
         "ambiguity_level": 0.0,
@@ -1258,7 +2607,7 @@
         "turn_id": 0,
         "speaker": "UserLM",
         "dialogue_act": "goal_request",
-        "text": "Goal: library. Constraints: avoid_blocked, prefer_shortest. Please plan the next step."
+        "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
       }
     ],
     "route_summary": {
@@ -1293,6 +2642,37 @@
         ]
       ],
       "shortest_path_length": 6,
+      "shortest_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "actual_path": [
         [
           0,
@@ -1324,6 +2704,37 @@
         ]
       ],
       "actual_path_length": 6,
+      "actual_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 16,
@@ -1386,7 +2797,7 @@
       },
       {
         "metric_name": "token_count",
-        "value": 104,
+        "value": 119,
         "definition": "Computed from transcript field evidence for token_count.",
         "numerator": null,
         "denominator": null,
@@ -1830,7 +3241,7 @@
       },
       {
         "metric_name": "repeated_message_count",
-        "value": 4,
+        "value": 8,
         "definition": "Computed from transcript field evidence for repeated_message_count.",
         "numerator": null,
         "denominator": null,
@@ -1842,7 +3253,7 @@
       },
       {
         "metric_name": "average_message_length",
-        "value": 8.666666666666666,
+        "value": 9.916666666666666,
         "definition": "Computed from transcript field evidence for average_message_length.",
         "numerator": null,
         "denominator": null,
@@ -1895,6 +3306,102 @@
         "numerator": null,
         "denominator": null,
         "interpretation": "higher is better",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "audio_recording_count",
+        "value": 0,
+        "definition": "Computed from transcript field evidence for audio_recording_count.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "lower is better",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "tts_audio_coverage",
+        "value": 1.0,
+        "definition": "Share of turns with a generated audio recording when TTS is enabled.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "mean_asr_confidence",
+        "value": 1.0,
+        "definition": "Average ASR confidence reported by turn-level ASR phase events.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "mean_nlu_confidence",
+        "value": 1.0,
+        "definition": "Average NLU confidence reported by turn-level NLU phase events.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "mean_pipeline_latency_ms",
+        "value": 0.0009833333333333335,
+        "definition": "Average measured latency across logged pipeline phase events.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "pipeline_phase_count",
+        "value": 60,
+        "definition": "Computed from transcript field evidence for pipeline_phase_count.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "lower is better",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "asr_enabled",
+        "value": 0.0,
+        "definition": "Computed from transcript field evidence for asr_enabled.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
+        "related_run_ids": [
+          "exp_01_baseline_001_simple_01_s2"
+        ],
+        "warning": "sample size is one run"
+      },
+      {
+        "metric_name": "tts_enabled",
+        "value": 0.0,
+        "definition": "Computed from transcript field evidence for tts_enabled.",
+        "numerator": null,
+        "denominator": null,
+        "interpretation": "descriptive",
         "related_run_ids": [
           "exp_01_baseline_001_simple_01_s2"
         ],

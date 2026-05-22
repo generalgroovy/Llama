@@ -4,13 +4,12 @@ import type { RunSummary, Transcript } from '../lib/loadData';
 const KEY_METRICS = [
   'task_success',
   'route_optimality_ratio',
-  'shared_goal_alignment',
-  'constraint_coverage',
-  'belief_update_accuracy',
+  'mean_asr_confidence',
+  'mean_nlu_confidence',
+  'tts_audio_coverage',
+  'mean_pipeline_latency_ms',
   'turn_count',
-  'clarification_count',
-  'invalid_action_count',
-  'naturalness_proxy_score'
+  'invalid_action_count'
 ];
 
 type Props = {
@@ -33,7 +32,7 @@ export default function ConversationMetricsCard({ run, transcript }: Props) {
       </header>
 
       <div className="pipeline" aria-label="Dialogue evaluation pipeline">
-        {pipelineStages(run, transcript).map((stage) => (
+        {speechPipelineStages(run, transcript).map((stage) => (
           <div className={`pipeline-stage ${stage.ok ? 'pass' : 'warn'}`} key={stage.label}>
             <span>{stage.label}</span>
             <strong>{stage.value}</strong>
@@ -54,16 +53,17 @@ export default function ConversationMetricsCard({ run, transcript }: Props) {
         <div className="conversation-list">
           <h3>Dialogue Timeline</h3>
           {transcript ? (
-            transcript.turns.map((turn) => (
-              <article className="dialogue-row" key={turn.turn_id}>
+            compactTurns(transcript.turns).map((item) => (
+              <article className="dialogue-row" key={`${item.turn.turn_id}-${item.count}`}>
                 <header>
-                  <strong>{turn.speaker}</strong>
-                  <span>#{turn.turn_id}</span>
-                  {turn.dialogue_act && <span>{turn.dialogue_act}</span>}
-                  {turn.selected_action && <span>{turn.selected_action}</span>}
-                  {!turn.valid_action && <span className="bad">invalid</span>}
+                  <strong>{item.turn.speaker}</strong>
+                  <span>#{item.turn.turn_id}</span>
+                  {item.count > 1 && <span>x{item.count}</span>}
+                  {item.turn.dialogue_act && <span>{item.turn.dialogue_act}</span>}
+                  {item.turn.route_segments?.length ? <span>{item.turn.route_segments.length} line segment{item.turn.route_segments.length === 1 ? '' : 's'}</span> : null}
+                  {!item.turn.valid_action && <span className="bad">invalid</span>}
                 </header>
-                <p>{turn.text}</p>
+                <p>{item.turn.text}</p>
               </article>
             ))
           ) : (
@@ -75,35 +75,35 @@ export default function ConversationMetricsCard({ run, transcript }: Props) {
   );
 }
 
-function pipelineStages(run: RunSummary | undefined, transcript: Transcript | null) {
+function speechPipelineStages(run: RunSummary | undefined, transcript: Transcript | null) {
   const metrics = run?.metrics ?? {};
-  const goal = transcript?.agent_a_private_knowledge?.goal_label ?? transcript?.agent_a_private_knowledge?.goal?.join(', ') ?? 'n/a';
-  const constraints = transcript?.agent_a_private_knowledge?.constraints?.length ?? 0;
+  const events = transcript?.turns.flatMap((turn) => turn.pipeline_events ?? []) ?? [];
+  const hasPhase = (phase: string) => events.some((event) => event.phase === phase);
   return [
     {
-      label: 'Communicate',
-      value: `${goal}, ${constraints} constraints`,
-      ok: Number(metrics.goal_mention_turn ?? -1) >= 0 && Number(metrics.constraint_coverage ?? 0) >= 1
+      label: 'ASR',
+      value: Number(metrics.asr_enabled ?? 0) ? formatMetric(metrics.mean_asr_confidence) : 'off',
+      ok: hasPhase('asr')
     },
     {
-      label: 'Interpret',
+      label: 'NLU',
+      value: formatMetric(metrics.mean_nlu_confidence),
+      ok: hasPhase('nlu') && Number(metrics.mean_nlu_confidence ?? 0) >= 0.9
+    },
+    {
+      label: 'DM',
       value: formatMetric(metrics.belief_update_accuracy),
-      ok: Number(metrics.belief_update_accuracy ?? 0) >= 1
+      ok: hasPhase('dialog_management') && Number(metrics.belief_update_accuracy ?? 0) >= 1
     },
     {
-      label: 'Plan',
-      value: formatMetric(metrics.route_optimality_ratio),
-      ok: Number(metrics.route_optimality_ratio ?? 0) >= 0.95
+      label: 'NLG',
+      value: `${formatMetric(metrics.turn_count)} turns`,
+      ok: hasPhase('nlg')
     },
     {
-      label: 'Act',
-      value: `${formatMetric(metrics.invalid_action_count)} invalid`,
-      ok: Number(metrics.invalid_action_count ?? 0) === 0
-    },
-    {
-      label: 'Evaluate',
-      value: run?.success ? 'success' : 'failed',
-      ok: Boolean(run?.success)
+      label: 'TTS',
+      value: Number(metrics.tts_enabled ?? 0) ? formatMetric(metrics.tts_audio_coverage) : 'off',
+      ok: hasPhase('tts')
     }
   ];
 }
@@ -112,4 +112,17 @@ function formatMetric(value: unknown) {
   if (typeof value === 'number') return Number.isInteger(value) ? String(value) : value.toFixed(2);
   if (typeof value === 'string') return value;
   return 'n/a';
+}
+
+function compactTurns(turns: Transcript['turns']) {
+  const items: Array<{ turn: Transcript['turns'][number]; count: number }> = [];
+  for (const turn of turns) {
+    const previous = items[items.length - 1];
+    if (previous && previous.turn.speaker === turn.speaker && previous.turn.text === turn.text && previous.turn.dialogue_act === turn.dialogue_act) {
+      previous.count += 1;
+    } else {
+      items.push({ turn, count: 1 });
+    }
+  }
+  return items;
 }

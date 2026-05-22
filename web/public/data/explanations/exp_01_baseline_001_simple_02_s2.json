@@ -6,7 +6,7 @@
       "turn_id": 0,
       "speaker": "UserLM",
       "dialogue_act": "goal_request",
-      "text": "Goal: tower. Constraints: avoid_blocked, prefer_shortest. Please plan the next step."
+      "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
     }
   ],
   "route_summary": {
@@ -33,6 +33,23 @@
       ]
     ],
     "shortest_path_length": 4,
+    "shortest_route_segments": [
+      {
+        "line": "C",
+        "from_station": "Gate",
+        "to_station": "Tower",
+        "from_position": [
+          0,
+          1
+        ],
+        "to_position": [
+          4,
+          1
+        ],
+        "steps": 4
+      }
+    ],
+    "shortest_route_advice": "Take line C from Gate to Tower.",
     "actual_path": [
       [
         0,
@@ -56,6 +73,23 @@
       ]
     ],
     "actual_path_length": 4,
+    "actual_route_segments": [
+      {
+        "line": "C",
+        "from_station": "Gate",
+        "to_station": "Tower",
+        "from_position": [
+          0,
+          1
+        ],
+        "to_position": [
+          4,
+          1
+        ],
+        "steps": 4
+      }
+    ],
+    "actual_route_advice": "Take line C from Gate to Tower.",
     "planner_diagnostics": {
       "planner": "bfs",
       "expanded_nodes": 10,
@@ -118,7 +152,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 70,
+      "value": 77,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -562,7 +596,7 @@
     },
     {
       "metric_name": "repeated_message_count",
-      "value": 2,
+      "value": 4,
       "definition": "Computed from transcript field evidence for repeated_message_count.",
       "numerator": null,
       "denominator": null,
@@ -574,7 +608,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 8.75,
+      "value": 9.625,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,
@@ -627,6 +661,102 @@
       "numerator": null,
       "denominator": null,
       "interpretation": "higher is better",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "audio_recording_count",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for audio_recording_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "tts_audio_coverage",
+      "value": 1.0,
+      "definition": "Share of turns with a generated audio recording when TTS is enabled.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "mean_asr_confidence",
+      "value": 1.0,
+      "definition": "Average ASR confidence reported by turn-level ASR phase events.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "mean_nlu_confidence",
+      "value": 1.0,
+      "definition": "Average NLU confidence reported by turn-level NLU phase events.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "mean_pipeline_latency_ms",
+      "value": 0.0008500000000000001,
+      "definition": "Average measured latency across logged pipeline phase events.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "pipeline_phase_count",
+      "value": 40,
+      "definition": "Computed from transcript field evidence for pipeline_phase_count.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "lower is better",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "asr_enabled",
+      "value": 0.0,
+      "definition": "Computed from transcript field evidence for asr_enabled.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "tts_enabled",
+      "value": 0.0,
+      "definition": "Computed from transcript field evidence for tts_enabled.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
       "related_run_ids": [
         "exp_01_baseline_001_simple_02_s2"
       ],

@@ -21,6 +21,8 @@ class NavigationMap:
     start: tuple[int, int]
     goal: tuple[int, int]
     landmarks: dict[str, tuple[int, int]] = field(default_factory=dict)
+    stations: dict[str, tuple[int, int]] = field(default_factory=dict)
+    transit_lines: dict[str, list[tuple[int, int]]] = field(default_factory=dict)
     obstacles: set[tuple[int, int]] = field(default_factory=set)
     complexity: str = "simple"
 
@@ -29,6 +31,11 @@ class NavigationMap:
         data["start"] = list(self.start)
         data["goal"] = list(self.goal)
         data["landmarks"] = {key: list(value) for key, value in self.landmarks.items()}
+        data["stations"] = {key: list(value) for key, value in self.stations.items()}
+        data["transit_lines"] = {
+            line: [list(value) for value in stops]
+            for line, stops in self.transit_lines.items()
+        }
         data["obstacles"] = [list(value) for value in sorted(self.obstacles)]
         return data
 

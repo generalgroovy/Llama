@@ -20,6 +20,7 @@ class UserLMAgent(AgentAdapter):
         private = context.private_context
         shared = context.shared_state
         goal_label = private.get("goal_label", "goal")
+        origin_label = private.get("origin_label", "start")
         goal = private.get("goal")
         constraints = list(private.get("constraints", ["avoid_blocked"]))
         ambiguity = float(context.parameters.get("ambiguity_level", 0.0))
@@ -33,13 +34,13 @@ class UserLMAgent(AgentAdapter):
         elif not known_goal:
             dialogue_act = "goal_request"
             intent = "communicate_goal_and_constraints"
-            text = f"Goal: {goal_label}. Constraints: {', '.join(constraints)}. Please plan the next step."
+            text = f"Route request: get on at {origin_label} and get off at {goal_label}. Constraints: {', '.join(constraints)}. Which line should I take?"
             if ambiguity and self._rng.random() < ambiguity:
-                text = "I need to get there while respecting the constraints. Please plan the next step."
+                text = "I need a line route between my stations while respecting the constraints."
         else:
             dialogue_act = "confirmation"
             intent = "continue_shared_plan"
-            text = f"Confirmed. Continue toward {goal_label} while respecting {', '.join(constraints)}."
+            text = f"Confirmed. Continue the line route to {goal_label} while respecting {', '.join(constraints)}."
             if ambiguity and self._rng.random() < ambiguity:
                 text = "Confirmed. Continue with the agreed plan."
         if noise and self._rng.random() < noise:
@@ -52,7 +53,9 @@ class UserLMAgent(AgentAdapter):
                 "dialogue_act": dialogue_act,
                 "intent": intent,
                 "mentioned_goal": mentioned_goal,
+                "mentioned_origin": origin_label if mentioned_goal else None,
                 "mentioned_constraints": constraints if "constraint" in text.lower() or "avoid" in text.lower() else [],
+                "route_request": {"from_station": origin_label, "to_station": goal_label},
                 "private_goal": goal,
                 "private_constraints": constraints,
                 "uses_network_topology": False,

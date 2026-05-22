@@ -223,6 +223,53 @@ def naturalness_proxy_score(transcript: dict[str, Any]) -> float:
     return max(0.0, length_score - contradiction_penalty - noise_penalty)
 
 
+def audio_recording_count(transcript: dict[str, Any]) -> int:
+    return len(transcript.get("audio_recordings", []))
+
+
+def tts_audio_coverage(transcript: dict[str, Any]) -> float:
+    tts_enabled = transcript.get("speech_pipeline", {}).get("tts", {}).get("enabled", False)
+    if not tts_enabled:
+        return 1.0
+    turns = max(1, turn_count(transcript))
+    return audio_recording_count(transcript) / turns
+
+
+def mean_asr_confidence(transcript: dict[str, Any]) -> float:
+    return _mean_phase_payload(transcript, "asr", "confidence", default=1.0)
+
+
+def mean_nlu_confidence(transcript: dict[str, Any]) -> float:
+    return _mean_phase_payload(transcript, "nlu", "confidence", default=1.0)
+
+
+def mean_pipeline_latency_ms(transcript: dict[str, Any]) -> float:
+    latencies = [event.get("latency_ms", 0.0) for turn in transcript.get("turns", []) for event in turn.get("pipeline_events", [])]
+    return sum(latencies) / len(latencies) if latencies else 0.0
+
+
+def pipeline_phase_count(transcript: dict[str, Any]) -> int:
+    return sum(len(turn.get("pipeline_events", [])) for turn in transcript.get("turns", []))
+
+
+def asr_enabled(transcript: dict[str, Any]) -> float:
+    return 1.0 if transcript.get("speech_pipeline", {}).get("asr", {}).get("enabled", False) else 0.0
+
+
+def tts_enabled(transcript: dict[str, Any]) -> float:
+    return 1.0 if transcript.get("speech_pipeline", {}).get("tts", {}).get("enabled", False) else 0.0
+
+
+def _mean_phase_payload(transcript: dict[str, Any], phase: str, key: str, default: float) -> float:
+    values = [
+        float(event.get("payload", {}).get(key, default))
+        for turn in transcript.get("turns", [])
+        for event in turn.get("pipeline_events", [])
+        if event.get("phase") == phase
+    ]
+    return sum(values) / len(values) if values else default
+
+
 def robustness_by_condition(transcript: dict[str, Any]) -> dict[str, Any]:
     params = transcript.get("config", {}).get("parameters", {})
     return {
@@ -286,6 +333,14 @@ METRICS: dict[str, MetricFn] = {
     "explicit_reference_count": explicit_reference_count,
     "unresolved_reference_count": unresolved_reference_count,
     "naturalness_proxy_score": naturalness_proxy_score,
+    "audio_recording_count": audio_recording_count,
+    "tts_audio_coverage": tts_audio_coverage,
+    "mean_asr_confidence": mean_asr_confidence,
+    "mean_nlu_confidence": mean_nlu_confidence,
+    "mean_pipeline_latency_ms": mean_pipeline_latency_ms,
+    "pipeline_phase_count": pipeline_phase_count,
+    "asr_enabled": asr_enabled,
+    "tts_enabled": tts_enabled,
     "robustness_by_condition": robustness_by_condition,
 }
 
@@ -295,6 +350,10 @@ METRIC_DEFINITIONS: dict[str, str] = {
     "goal_interpretation_accuracy": "1 when Agent B's final believed goal matches Agent A's private goal.",
     "constraint_interpretation_accuracy": "Share of Agent A constraints present in Agent B's final belief.",
     "cooperation_efficiency": "Task success and plan agreement normalized by dialogue length.",
+    "tts_audio_coverage": "Share of turns with a generated audio recording when TTS is enabled.",
+    "mean_asr_confidence": "Average ASR confidence reported by turn-level ASR phase events.",
+    "mean_nlu_confidence": "Average NLU confidence reported by turn-level NLU phase events.",
+    "mean_pipeline_latency_ms": "Average measured latency across logged pipeline phase events.",
 }
 
 

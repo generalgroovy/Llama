@@ -17,11 +17,15 @@ export type RunSummary = {
     goal?: number[];
     obstacles?: number[][];
     landmarks?: Record<string, number[]>;
+    stations?: Record<string, number[]>;
+    transit_lines?: Record<string, number[][]>;
     complexity?: string;
   };
   success: boolean;
   metrics: Record<string, number | string | object>;
   system_profile?: { name?: string; metric_detail?: string; planner?: string };
+  speech_pipeline?: Record<string, Record<string, unknown> | boolean | string>;
+  audio_recordings?: Array<{ turn_id: number; speaker: string; audio_path: string; duration_seconds: number }>;
   failure_category?: string;
   failure_explanation?: string;
   route_summary?: {
@@ -29,6 +33,10 @@ export type RunSummary = {
     actual_path_length?: number;
     shortest_path?: number[][];
     actual_path?: number[][];
+    shortest_route_segments?: RouteSegment[];
+    actual_route_segments?: RouteSegment[];
+    shortest_route_advice?: string;
+    actual_route_advice?: string;
   };
   transcript_url: string;
   explanation_url?: string;
@@ -40,6 +48,7 @@ export type Transcript = RunSummary & {
     goal?: number[];
     goal_label?: string;
     constraints?: string[];
+    origin_label?: string;
     knows_network?: boolean;
   };
   agent_b_private_knowledge_summary?: {
@@ -47,6 +56,7 @@ export type Transcript = RunSummary & {
     map_id?: string;
     node_count?: number;
     blocked_node_count?: number;
+    line_count?: number;
   };
   shared_dialogue_state?: {
     known_goal?: number[];
@@ -61,6 +71,11 @@ export type Transcript = RunSummary & {
     interpreted_action: string | null;
     selected_action?: string | null;
     route_plan?: number[][];
+    route_segments?: RouteSegment[];
+    route_advice?: string;
+    pipeline_events?: PipelineEvent[];
+    audio_path?: string | null;
+    audio_duration_seconds?: number;
     ambiguity_detected?: boolean;
     constraint_satisfied?: boolean;
     state_before: { position?: number[] };
@@ -72,6 +87,22 @@ export type Transcript = RunSummary & {
   action_trace: unknown[];
   final_state: { position?: number[]; distance_to_goal?: number };
   errors: string[];
+};
+
+export type RouteSegment = {
+  line: string;
+  from_station: string;
+  to_station: string;
+  from_position: number[];
+  to_position: number[];
+  steps: number;
+};
+
+export type PipelineEvent = {
+  phase: 'dialog_management' | 'nlg' | 'tts' | 'asr' | 'nlu' | string;
+  enabled: boolean;
+  latency_ms: number;
+  payload: Record<string, unknown>;
 };
 
 export type MetricsFile = {

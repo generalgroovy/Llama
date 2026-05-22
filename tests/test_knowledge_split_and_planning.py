@@ -2,7 +2,7 @@ from sds_eval.agents.base import AgentContext
 from sds_eval.agents.rule_agent import RuleAgent
 from sds_eval.agents.userlm import UserLMAgent
 from sds_eval.metrics.metric_registry import compute_all_metrics
-from sds_eval.task.planner import next_action_for_path, shortest_path
+from sds_eval.task.planner import next_action_for_path, route_advice_text, shortest_path, summarize_route_segments
 
 
 def test_agent_a_does_not_require_network_topology():
@@ -52,6 +52,26 @@ def test_shortest_path_and_action_selection():
     assert diagnostics["path_found"]
     assert path == [[0, 0], [0, 1], [1, 1], [2, 1], [2, 0]]
     assert next_action_for_path(path) == "south"
+
+
+def test_path_is_compressed_into_line_segments():
+    network = {
+        "width": 4,
+        "height": 4,
+        "stations": {"Alpha": [0, 0], "Bravo": [3, 0], "Harbor": [3, 3]},
+        "transit_lines": {
+            "R": [[0, 0], [1, 0], [2, 0], [3, 0]],
+            "EW2": [[3, 0], [3, 1], [3, 2], [3, 3]],
+        },
+        "obstacles": [],
+    }
+    path, _ = shortest_path(network, [0, 0], [3, 3], ["prefer_shortest"])
+    segments = summarize_route_segments(network, path)
+    assert segments == [
+        {"line": "R", "from_station": "Alpha", "to_station": "Bravo", "from_position": [0, 0], "to_position": [3, 0], "steps": 3},
+        {"line": "EW2", "from_station": "Bravo", "to_station": "Harbor", "from_position": [3, 0], "to_position": [3, 3], "steps": 3},
+    ]
+    assert route_advice_text(segments) == "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
 
 
 def test_route_optimality_metric():

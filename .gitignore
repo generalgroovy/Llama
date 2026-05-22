@@ -1,9 +1,13 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.pytest_cache_tmp/
+.pytest_tmp/
 *.egg-info/
 node_modules/
 web/dist/
 .vite/
 .env
 .env.*
+data/audio/*/
+data/runs/*_check.json

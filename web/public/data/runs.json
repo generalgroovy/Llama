@@ -23,13 +23,69 @@
         3
       ],
       "landmarks": {
-        "fountain": [
-          1,
-          1
+        "Alpha": [
+          0,
+          0
         ],
-        "library": [
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
           3,
           3
+        ]
+      },
+      "stations": {
+        "Alpha": [
+          0,
+          0
+        ],
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
+          3,
+          3
+        ]
+      },
+      "transit_lines": {
+        "R": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "EW2": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
         ]
       },
       "obstacles": [],
@@ -40,7 +96,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 104,
+      "token_count": 119,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -77,17 +133,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 6,
       "non_action_turn_count": 6,
-      "repeated_message_count": 4,
+      "repeated_message_count": 8,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 6,
         "confirmation": 5
       },
-      "average_message_length": 8.666666666666666,
+      "average_message_length": 9.916666666666666,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 12,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.0010166666666666666,
+      "pipeline_phase_count": 60,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -110,6 +174,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -144,6 +232,37 @@
         ]
       ],
       "shortest_path_length": 6,
+      "shortest_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "actual_path": [
         [
           0,
@@ -175,6 +294,37 @@
         ]
       ],
       "actual_path_length": 6,
+      "actual_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 16,
@@ -212,13 +362,55 @@
         1
       ],
       "landmarks": {
-        "gate": [
+        "Gate": [
           0,
           1
         ],
-        "tower": [
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
           4,
           1
+        ]
+      },
+      "stations": {
+        "Gate": [
+          0,
+          1
+        ],
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
+          4,
+          1
+        ]
+      },
+      "transit_lines": {
+        "C": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
         ]
       },
       "obstacles": [
@@ -238,7 +430,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 70,
+      "token_count": 77,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -275,17 +467,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 4,
       "non_action_turn_count": 4,
-      "repeated_message_count": 2,
+      "repeated_message_count": 4,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 4,
         "confirmation": 3
       },
-      "average_message_length": 8.75,
+      "average_message_length": 9.625,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 8,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.0008750000000000001,
+      "pipeline_phase_count": 40,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -308,6 +508,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -334,6 +558,23 @@
         ]
       ],
       "shortest_path_length": 4,
+      "shortest_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "shortest_route_advice": "Take line C from Gate to Tower.",
       "actual_path": [
         [
           0,
@@ -357,6 +598,23 @@
         ]
       ],
       "actual_path_length": 4,
+      "actual_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "actual_route_advice": "Take line C from Gate to Tower.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 10,
@@ -394,13 +652,69 @@
         3
       ],
       "landmarks": {
-        "fountain": [
-          1,
-          1
+        "Alpha": [
+          0,
+          0
         ],
-        "library": [
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
           3,
           3
+        ]
+      },
+      "stations": {
+        "Alpha": [
+          0,
+          0
+        ],
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
+          3,
+          3
+        ]
+      },
+      "transit_lines": {
+        "R": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "EW2": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
         ]
       },
       "obstacles": [],
@@ -411,7 +725,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 104,
+      "token_count": 119,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -448,17 +762,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 6,
       "non_action_turn_count": 6,
-      "repeated_message_count": 4,
+      "repeated_message_count": 8,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 6,
         "confirmation": 5
       },
-      "average_message_length": 8.666666666666666,
+      "average_message_length": 9.916666666666666,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 12,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.0009833333333333335,
+      "pipeline_phase_count": 60,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -481,6 +803,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -515,6 +861,37 @@
         ]
       ],
       "shortest_path_length": 6,
+      "shortest_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "actual_path": [
         [
           0,
@@ -546,6 +923,37 @@
         ]
       ],
       "actual_path_length": 6,
+      "actual_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 16,
@@ -583,13 +991,55 @@
         1
       ],
       "landmarks": {
-        "gate": [
+        "Gate": [
           0,
           1
         ],
-        "tower": [
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
           4,
           1
+        ]
+      },
+      "stations": {
+        "Gate": [
+          0,
+          1
+        ],
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
+          4,
+          1
+        ]
+      },
+      "transit_lines": {
+        "C": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
         ]
       },
       "obstacles": [
@@ -609,7 +1059,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 70,
+      "token_count": 77,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -646,17 +1096,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 4,
       "non_action_turn_count": 4,
-      "repeated_message_count": 2,
+      "repeated_message_count": 4,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 4,
         "confirmation": 3
       },
-      "average_message_length": 8.75,
+      "average_message_length": 9.625,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 8,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.0008500000000000001,
+      "pipeline_phase_count": 40,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -679,6 +1137,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -705,6 +1187,23 @@
         ]
       ],
       "shortest_path_length": 4,
+      "shortest_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "shortest_route_advice": "Take line C from Gate to Tower.",
       "actual_path": [
         [
           0,
@@ -728,6 +1227,23 @@
         ]
       ],
       "actual_path_length": 4,
+      "actual_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "actual_route_advice": "Take line C from Gate to Tower.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 10,
@@ -765,13 +1281,69 @@
         3
       ],
       "landmarks": {
-        "fountain": [
-          1,
-          1
+        "Alpha": [
+          0,
+          0
         ],
-        "library": [
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
           3,
           3
+        ]
+      },
+      "stations": {
+        "Alpha": [
+          0,
+          0
+        ],
+        "Bravo": [
+          3,
+          0
+        ],
+        "Harbor": [
+          3,
+          3
+        ]
+      },
+      "transit_lines": {
+        "R": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "EW2": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
         ]
       },
       "obstacles": [],
@@ -782,7 +1354,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 12,
-      "token_count": 104,
+      "token_count": 119,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -819,17 +1391,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 6,
       "non_action_turn_count": 6,
-      "repeated_message_count": 4,
+      "repeated_message_count": 8,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 6,
         "confirmation": 5
       },
-      "average_message_length": 8.666666666666666,
+      "average_message_length": 9.916666666666666,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 12,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.0009166666666666666,
+      "pipeline_phase_count": 60,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -852,6 +1432,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -886,6 +1490,37 @@
         ]
       ],
       "shortest_path_length": 6,
+      "shortest_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "actual_path": [
         [
           0,
@@ -917,6 +1552,37 @@
         ]
       ],
       "actual_path_length": 6,
+      "actual_route_segments": [
+        {
+          "line": "R",
+          "from_station": "Alpha",
+          "to_station": "Bravo",
+          "from_position": [
+            0,
+            0
+          ],
+          "to_position": [
+            3,
+            0
+          ],
+          "steps": 3
+        },
+        {
+          "line": "EW2",
+          "from_station": "Bravo",
+          "to_station": "Harbor",
+          "from_position": [
+            3,
+            0
+          ],
+          "to_position": [
+            3,
+            3
+          ],
+          "steps": 3
+        }
+      ],
+      "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 16,
@@ -954,13 +1620,55 @@
         1
       ],
       "landmarks": {
-        "gate": [
+        "Gate": [
           0,
           1
         ],
-        "tower": [
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
           4,
           1
+        ]
+      },
+      "stations": {
+        "Gate": [
+          0,
+          1
+        ],
+        "Midtown": [
+          2,
+          1
+        ],
+        "Tower": [
+          4,
+          1
+        ]
+      },
+      "transit_lines": {
+        "C": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
         ]
       },
       "obstacles": [
@@ -980,7 +1688,7 @@
       "task_success": 1.0,
       "path_distance_error": 0,
       "turn_count": 8,
-      "token_count": 70,
+      "token_count": 77,
       "repair_count": 0,
       "clarification_count": 0,
       "contradiction_count": 0,
@@ -1017,17 +1725,25 @@
       "final_distance_to_goal": 0,
       "action_turn_count": 4,
       "non_action_turn_count": 4,
-      "repeated_message_count": 2,
+      "repeated_message_count": 4,
       "dialogue_act_distribution": {
         "goal_request": 1,
         "route_proposal": 4,
         "confirmation": 3
       },
-      "average_message_length": 8.75,
+      "average_message_length": 9.625,
       "lexical_noise_level": 0.0,
       "explicit_reference_count": 8,
       "unresolved_reference_count": 0,
       "naturalness_proxy_score": 1.0,
+      "audio_recording_count": 0,
+      "tts_audio_coverage": 1.0,
+      "mean_asr_confidence": 1.0,
+      "mean_nlu_confidence": 1.0,
+      "mean_pipeline_latency_ms": 0.001,
+      "pipeline_phase_count": 40,
+      "asr_enabled": 0.0,
+      "tts_enabled": 0.0,
       "robustness_by_condition": {
         "condition": {
           "ambiguity_level": 0.0,
@@ -1050,6 +1766,30 @@
       "bootstrap_reliability": false,
       "notes": "Default profile for low-end systems; deterministic, small memory footprint, no expensive resampling."
     },
+    "speech_pipeline": {
+      "asr": {
+        "enabled": false,
+        "word_error_rate": 0.0
+      },
+      "nlu": {
+        "enabled": true,
+        "confidence": 1.0
+      },
+      "dialog_management": {
+        "enabled": true
+      },
+      "nlg": {
+        "enabled": true
+      },
+      "tts": {
+        "enabled": false,
+        "sample_rate": 16000,
+        "voice": "synthetic-tone"
+      },
+      "record_audio": true,
+      "audio_dir": "data/audio"
+    },
+    "audio_recordings": [],
     "failure_category": "success",
     "failure_explanation": "The agents reached the goal without recorded constraint violations.",
     "route_summary": {
@@ -1076,6 +1816,23 @@
         ]
       ],
       "shortest_path_length": 4,
+      "shortest_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "shortest_route_advice": "Take line C from Gate to Tower.",
       "actual_path": [
         [
           0,
@@ -1099,6 +1856,23 @@
         ]
       ],
       "actual_path_length": 4,
+      "actual_route_segments": [
+        {
+          "line": "C",
+          "from_station": "Gate",
+          "to_station": "Tower",
+          "from_position": [
+            0,
+            1
+          ],
+          "to_position": [
+            4,
+            1
+          ],
+          "steps": 4
+        }
+      ],
+      "actual_route_advice": "Take line C from Gate to Tower.",
       "planner_diagnostics": {
         "planner": "bfs",
         "expanded_nodes": 10,

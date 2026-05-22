@@ -14,9 +14,10 @@ from sds_eval.task.map_loader import load_maps
 from sds_eval.task.navigation_env import NavigationEnvironment
 
 
-def run_experiment(config_path: str | Path) -> dict:
+def run_experiment(config_path: str | Path, runtime_overrides: dict | None = None) -> dict:
     config_path = Path(config_path)
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    runtime_overrides = runtime_overrides or {}
     root = config_path.parents[2] if len(config_path.parents) >= 3 else Path(".")
     maps_path = root / config.get("maps_path", "configs/tasks/navigation_maps.yaml")
     maps = load_maps(maps_path)
@@ -36,6 +37,7 @@ def run_experiment(config_path: str | Path) -> dict:
                 "parameters": params,
                 "system_profile": system_profile["name"],
                 "system_profile_overrides": config.get("system_profile_overrides", {}),
+                "speech_pipeline": _merge_speech_pipeline(config.get("speech_pipeline", {}), runtime_overrides.get("speech_pipeline", {})),
                 "knowledge_split": config.get("knowledge_split", _default_knowledge_split()),
                 "max_turns": config.get("max_turns", system_profile["max_turns"]),
                 "max_invalid_moves": config.get("max_invalid_moves", system_profile["max_invalid_moves"]),
@@ -84,3 +86,13 @@ def _default_knowledge_split() -> dict:
         "agent_a": {"knows_goal": True, "knows_constraints": True, "knows_network": False},
         "agent_b": {"knows_goal_initially": False, "knows_constraints_initially": False, "knows_network": True},
     }
+
+
+def _merge_speech_pipeline(base: dict, overrides: dict) -> dict:
+    merged = dict(base or {})
+    for key, value in (overrides or {}).items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = {**merged[key], **value}
+        else:
+            merged[key] = value
+    return merged
