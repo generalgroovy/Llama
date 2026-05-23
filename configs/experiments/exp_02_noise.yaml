@@ -52,7 +52,7 @@ parameter_grid:
   language_noise: [0.0, 0.3]
   memory_context_limit: [full]
   prompt_strategy: [direct]
-  constraint_type: [avoid_blocked]
+  secondary_constraint_type: [comfort]
   network_change: [none]
   start_time: ["08:00"]
   seed: [1, 2]

@@ -63,7 +63,7 @@ export default function ConversationMetricsCard({ run, transcript }: Props) {
                   <span>#{item.turn.turn_id}</span>
                   {item.count > 1 && <span>x{item.count}</span>}
                   {item.turn.dialogue_act && <span>{item.turn.dialogue_act}</span>}
-                  {item.turn.route_segments?.length ? <span>{item.turn.route_segments.length} line segment{item.turn.route_segments.length === 1 ? '' : 's'}</span> : null}
+                  {item.turn.route_segments?.length ? <span>{item.turn.route_segments.length} boarding point{item.turn.route_segments.length === 1 ? '' : 's'}</span> : null}
                   {!item.turn.valid_action && <span className="bad">invalid</span>}
                 </header>
                 <p>{item.turn.text}</p>

@@ -4,7 +4,7 @@ This repository implements a reproducible bachelor thesis software project for t
 
 Agent A is `UserLM`, a synthetic instruction generator. Agent B is swappable by configuration, currently using `RuleAgent` for deterministic experiments and `ChatGPTAgent` as a placeholder adapter for future live LLM integration.
 
-The current experiment model enforces asymmetric knowledge: Agent A receives the get-on station, get-off station, and constraints but not the network topology, while Agent B receives the line/network data but must infer the requested route from Agent A's dialogue.
+The current experiment model enforces asymmetric knowledge: Agent A receives the start time, start station, destination station, and secondary preferences but not the network topology, while Agent B receives the line/network data and must infer the requested route from Agent A's dialogue.
 
 ## Architecture
 
@@ -58,7 +58,7 @@ Each run produces structured transcript JSON with run metadata, agent metadata, 
 
 ## Metrics and Reliability
 
-Routes are conversed about as passenger-level line advice, for example: `Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.` The simulator may still step through the internal graph for success and optimality metrics, but the transcript and dashboard emphasize line segments rather than every intermediate station.
+Routes are conversed about as passenger-level boarding advice, for example: `Board R at Alpha; change to EW2 at Bravo.` Agent A first asks only for a route from start to destination at a start time. After Agent B has proposed a valid route, Agent A may ask whether the route satisfies secondary constraints such as low fullness or few transfers. The simulator may still step through the internal graph for success and optimality metrics, but the transcript and dashboard emphasize boarding stations rather than every intermediate station.
 
 ## Speech Pipeline
 

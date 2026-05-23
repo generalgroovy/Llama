@@ -59,12 +59,12 @@ export default function NetworkDataCard({ transcript }: { transcript: Transcript
             <div><dt>Line segments</dt><dd>{routeSegments.length || 'n/a'}</dd></div>
           </dl>
 
-          <h3>Line Plan</h3>
+          <h3>Boarding Plan</h3>
           <ol className="segment-list">
             {routeSegments.map((segment, index) => (
               <li key={`${segment.line}-${index}`}>
                 <strong>Line {segment.line}</strong>
-                <span>{segment.from_station} to {segment.to_station}</span>
+                <span>{index === 0 ? 'Board' : 'Change'} at {segment.from_station}</span>
               </li>
             ))}
           </ol>

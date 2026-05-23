@@ -6,7 +6,7 @@ from sds_eval.agents.base import AgentAdapter, AgentContext, AgentResponse
 
 
 class UserLMAgent(AgentAdapter):
-    """Synthetic user agent that communicates goals and constraints only."""
+    """Synthetic user agent that stages route request before secondary constraints."""
 
     def __init__(self, name: str = "UserLM", metadata: dict | None = None):
         super().__init__(name, metadata or {"role": "instruction_generator"})
@@ -31,6 +31,7 @@ class UserLMAgent(AgentAdapter):
 
         known_goal = shared.get("b_belief", {}).get("goal")
         known_route = shared.get("route_advice")
+        known_constraints = shared.get("known_constraints", [])
         if context.state.get("success"):
             text = "Goal reached. Stop."
             dialogue_act = "stop"
@@ -40,14 +41,20 @@ class UserLMAgent(AgentAdapter):
             mentioned_constraints: list[str] = []
         elif not known_goal:
             dialogue_act = "goal_request"
-            intent = "communicate_goal_and_constraints"
-            constraint_text = _constraint_phrase(constraints)
-            text = f"At {start_time}, from {origin_label} to {goal_label}. Need {constraint_text}. Which line?"
+            intent = "communicate_route_request"
+            text = f"At {start_time}, start {origin_label}, destination {goal_label}. Which route?"
             if ambiguity and self._rng.random() < ambiguity:
-                text = "I need a line route between my stations while respecting the constraints."
+                text = "I need a route between my start and destination."
             mentioned_goal = None if text.lower().startswith("i need") else goal_label
             mentioned_origin = origin_label if mentioned_goal else None
-            mentioned_constraints = constraints if "constraint" in text.lower() or "avoid" in text.lower() else []
+            mentioned_constraints = []
+        elif known_route and constraints and not known_constraints and not shared.get("secondary_constraints_requested"):
+            dialogue_act = "constraint_request"
+            intent = "request_secondary_constraint_check"
+            text = f"Now check {_constraint_phrase(constraints)}."
+            mentioned_goal = None
+            mentioned_origin = None
+            mentioned_constraints = constraints
         else:
             dialogue_act = "confirmation"
             intent = "continue_shared_plan"
@@ -87,6 +94,8 @@ def _constraint_phrase(constraints: list[str]) -> str:
     labels = {
         "avoid_blocked": "avoid blocked",
         "prefer_shortest": "shortest",
+        "low_fullness": "low fullness",
+        "few_transfers": "few transfers",
     }
     readable = [labels.get(item, item.replace("_", " ")) for item in constraints]
     if not readable:

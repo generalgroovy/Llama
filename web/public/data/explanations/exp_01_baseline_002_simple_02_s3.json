@@ -6,7 +6,7 @@
       "turn_id": 0,
       "speaker": "UserLM",
       "dialogue_act": "goal_request",
-      "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+      "text": "At 08:00, start Gate, destination Tower. Which route?"
     }
   ],
   "route_summary": {
@@ -49,7 +49,7 @@
         "steps": 4
       }
     ],
-    "shortest_route_advice": "Take C: Gate -> Tower.",
+    "shortest_route_advice": "Board C at Gate.",
     "actual_path": [
       [
         0,
@@ -89,7 +89,7 @@
         "steps": 4
       }
     ],
-    "actual_route_advice": "Take C: Gate -> Tower.",
+    "actual_route_advice": "Board C at Gate.",
     "planner_diagnostics": {
       "planner": "dijkstra",
       "optimization_strategy": "shortest_path_first",
@@ -102,7 +102,8 @@
       "walk_edges": 0,
       "transfers": 0,
       "constraints": [
-        "avoid_blocked",
+        "low_fullness",
+        "few_transfers",
         "prefer_shortest"
       ]
     }
@@ -113,8 +114,8 @@
       1
     ],
     "final_shared_constraints": [
-      "avoid_blocked",
-      "prefer_shortest"
+      "low_fullness",
+      "few_transfers"
     ],
     "unresolved_ambiguities": 0,
     "agent_a_knows_network": false,
@@ -159,7 +160,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 24,
+      "value": 30,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -303,7 +304,7 @@
     },
     {
       "metric_name": "confirmation_count",
-      "value": 3,
+      "value": 2,
       "definition": "Computed from transcript field evidence for confirmation_count.",
       "numerator": null,
       "denominator": null,
@@ -447,7 +448,7 @@
     },
     {
       "metric_name": "unnecessary_turn_count",
-      "value": 3,
+      "value": 2,
       "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
       "numerator": null,
       "denominator": null,
@@ -603,7 +604,7 @@
     },
     {
       "metric_name": "repeated_message_count",
-      "value": 4,
+      "value": 2,
       "definition": "Computed from transcript field evidence for repeated_message_count.",
       "numerator": null,
       "denominator": null,
@@ -615,7 +616,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 3.0,
+      "value": 3.75,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,

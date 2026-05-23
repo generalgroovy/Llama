@@ -80,8 +80,8 @@
         "prompt_strategy": [
           "direct"
         ],
-        "constraint_type": [
-          "avoid_blocked"
+        "secondary_constraint_type": [
+          "comfort"
         ],
         "start_time": [
           "08:00"
@@ -108,7 +108,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 1
         },
@@ -245,8 +245,8 @@
         ],
         "goal_label": "Harbor",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -271,8 +271,8 @@
             3
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -280,9 +280,10 @@
           3
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -324,7 +325,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+        "route_advice": "Board R at Alpha; change to EW2 at Bravo."
       },
       "task": {
         "map_id": "simple_01",
@@ -411,18 +412,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -438,11 +436,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -451,10 +449,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -471,7 +469,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -485,10 +483,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?"
               }
             }
           ],
@@ -524,9 +522,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "text": "Board R at Alpha; change to EW2 at Bravo.",
+          "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
+          "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -537,10 +535,7 @@
             3,
             3
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -604,7 +599,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -621,10 +616,7 @@
                     3,
                     3
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "R",
@@ -655,7 +647,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -664,10 +656,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "text": "Board R at Alpha; change to EW2 at Bravo.",
+                "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "token_count": 9,
-                "spoken_token_count": 14
+                "spoken_token_count": 12
               }
             },
             {
@@ -684,7 +676,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -701,7 +693,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
+                "text": "Board line R at Alpha. Then change to line EW2 at Bravo."
               }
             }
           ],
@@ -736,25 +728,25 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -769,12 +761,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -783,10 +775,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -803,7 +795,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -817,10 +809,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -856,11 +848,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -870,8 +862,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -932,26 +924,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -983,7 +975,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -992,10 +984,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -1012,7 +1004,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -1026,10 +1018,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -1063,10 +1055,7 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -1074,8 +1063,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -1196,8 +1185,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -1207,8 +1196,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -1265,26 +1254,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -1316,7 +1305,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -1359,8 +1348,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -1397,8 +1386,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -1407,8 +1396,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -1529,8 +1518,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -1540,8 +1529,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -1594,26 +1583,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -1645,7 +1634,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -1688,8 +1677,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -1726,8 +1715,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -1736,8 +1725,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -1858,8 +1847,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -1869,8 +1858,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -1919,26 +1908,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -1970,7 +1959,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -2013,8 +2002,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -2051,8 +2040,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -2061,8 +2050,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -2183,8 +2172,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -2194,8 +2183,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -2240,26 +2229,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -2291,7 +2280,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -2334,8 +2323,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -2372,8 +2361,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -2382,8 +2371,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -2657,7 +2646,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "actual_path": [
           [
             0,
@@ -2719,7 +2708,7 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -2732,7 +2721,8 @@
           "walk_edges": 0,
           "transfers": 1,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -2752,7 +2742,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 32,
+        "token_count": 39,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -2764,7 +2754,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
-        "confirmation_count": 5,
+        "confirmation_count": 4,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -2776,7 +2766,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 5,
+        "unnecessary_turn_count": 4,
         "cooperation_efficiency": 0.08333333333333333,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 6,
@@ -2789,17 +2779,20 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 6,
         "non_action_turn_count": 6,
-        "repeated_message_count": 8,
+        "repeated_message_count": 6,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 6,
-          "confirmation": 5
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 4,
+          "route_followup": 4
         },
-        "average_message_length": 2.6666666666666665,
+        "average_message_length": 3.25,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 0.5,
+        "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "total_audio_duration_seconds": 0,
@@ -2833,7 +2826,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Alpha, destination Harbor. Which route?"
           }
         ],
         "route_summary": {
@@ -2898,7 +2891,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "actual_path": [
             [
               0,
@@ -2960,7 +2953,7 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -2973,7 +2966,8 @@
             "walk_edges": 0,
             "transfers": 1,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -2984,8 +2978,8 @@
             3
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -3030,7 +3024,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 32,
+            "value": 39,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -3174,7 +3168,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -3318,7 +3312,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -3474,7 +3468,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 8,
+            "value": 6,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -3486,7 +3480,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 2.6666666666666665,
+            "value": 3.25,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -3534,7 +3528,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 0.5,
+            "value": 1.0,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -3716,7 +3710,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 1
         },
@@ -3853,8 +3847,8 @@
         ],
         "goal_label": "Tower",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -3879,8 +3873,8 @@
             1
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -3888,9 +3882,10 @@
           1
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -3918,7 +3913,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take C: Gate -> Tower."
+        "route_advice": "Board C at Gate."
       },
       "task": {
         "map_id": "simple_02",
@@ -4000,18 +3995,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Gate, destination Tower. Which route?",
+          "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+          "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -4027,11 +4019,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -4040,10 +4032,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Gate, destination Tower. Which route?",
+                "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -4060,7 +4052,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -4074,10 +4066,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Gate, destination Tower. Which route?"
               }
             }
           ],
@@ -4113,9 +4105,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take C: Gate -> Tower.",
-          "spoken_text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Board C at Gate.",
+          "spoken_text": "Board line C at Gate.",
+          "recognized_text": "Board line C at Gate.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -4126,10 +4118,7 @@
             4,
             1
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -4171,7 +4160,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -4188,10 +4177,7 @@
                     4,
                     1
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "C",
@@ -4208,7 +4194,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -4217,10 +4203,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take C: Gate -> Tower.",
-                "spoken_text": "Take line C from Gate to Tower.",
-                "token_count": 5,
-                "spoken_token_count": 7
+                "text": "Board C at Gate.",
+                "spoken_text": "Board line C at Gate.",
+                "token_count": 4,
+                "spoken_token_count": 5
               }
             },
             {
@@ -4237,7 +4223,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Board line C at Gate.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -4254,7 +4240,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Board line C at Gate."
               }
             }
           ],
@@ -4289,25 +4275,25 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -4322,12 +4308,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -4336,10 +4322,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -4356,7 +4342,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -4370,10 +4356,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -4409,11 +4395,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -4423,8 +4409,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -4463,26 +4449,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -4500,7 +4486,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -4509,10 +4495,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -4529,7 +4515,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -4543,10 +4529,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -4580,10 +4566,7 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -4591,8 +4574,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -4713,8 +4696,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -4724,8 +4707,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -4760,26 +4743,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -4797,7 +4780,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -4840,8 +4823,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -4878,8 +4861,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -4888,8 +4871,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -5010,8 +4993,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -5021,8 +5004,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -5053,26 +5036,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -5090,7 +5073,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -5133,8 +5116,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -5171,8 +5154,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -5181,8 +5164,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -5370,7 +5353,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take C: Gate -> Tower.",
+        "shortest_route_advice": "Board C at Gate.",
         "actual_path": [
           [
             0,
@@ -5410,7 +5393,7 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take C: Gate -> Tower.",
+        "actual_route_advice": "Board C at Gate.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -5423,7 +5406,8 @@
           "walk_edges": 0,
           "transfers": 0,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -5443,7 +5427,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 24,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -5455,7 +5439,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.25,
         "correction_count": 0,
-        "confirmation_count": 3,
+        "confirmation_count": 2,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -5467,7 +5451,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 3,
+        "unnecessary_turn_count": 2,
         "cooperation_efficiency": 0.125,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 4,
@@ -5480,13 +5464,16 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 4,
         "non_action_turn_count": 4,
-        "repeated_message_count": 4,
+        "repeated_message_count": 2,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 4,
-          "confirmation": 3
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 2,
+          "route_followup": 2
         },
-        "average_message_length": 3.0,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
@@ -5524,7 +5511,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Gate, destination Tower. Which route?"
           }
         ],
         "route_summary": {
@@ -5567,7 +5554,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take C: Gate -> Tower.",
+          "shortest_route_advice": "Board C at Gate.",
           "actual_path": [
             [
               0,
@@ -5607,7 +5594,7 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take C: Gate -> Tower.",
+          "actual_route_advice": "Board C at Gate.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -5620,7 +5607,8 @@
             "walk_edges": 0,
             "transfers": 0,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -5631,8 +5619,8 @@
             1
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -5677,7 +5665,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 24,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -5821,7 +5809,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -5965,7 +5953,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -6121,7 +6109,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 4,
+            "value": 2,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -6133,7 +6121,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.0,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -6363,7 +6351,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 2
         },
@@ -6500,8 +6488,8 @@
         ],
         "goal_label": "Harbor",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -6526,8 +6514,8 @@
             3
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -6535,9 +6523,10 @@
           3
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -6579,7 +6568,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+        "route_advice": "Board R at Alpha; change to EW2 at Bravo."
       },
       "task": {
         "map_id": "simple_01",
@@ -6666,18 +6655,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -6693,11 +6679,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -6706,10 +6692,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -6726,7 +6712,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -6740,10 +6726,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?"
               }
             }
           ],
@@ -6779,9 +6765,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "text": "Board R at Alpha; change to EW2 at Bravo.",
+          "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
+          "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -6792,10 +6778,7 @@
             3,
             3
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -6859,7 +6842,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -6876,10 +6859,7 @@
                     3,
                     3
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "R",
@@ -6910,7 +6890,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -6919,10 +6899,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "text": "Board R at Alpha; change to EW2 at Bravo.",
+                "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "token_count": 9,
-                "spoken_token_count": 14
+                "spoken_token_count": 12
               }
             },
             {
@@ -6939,7 +6919,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -6956,7 +6936,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
+                "text": "Board line R at Alpha. Then change to line EW2 at Bravo."
               }
             }
           ],
@@ -6991,25 +6971,25 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -7024,12 +7004,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -7038,10 +7018,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -7058,7 +7038,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -7072,10 +7052,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -7111,11 +7091,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -7125,8 +7105,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -7187,26 +7167,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -7238,7 +7218,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -7247,10 +7227,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -7267,7 +7247,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -7281,10 +7261,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -7318,10 +7298,7 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -7329,8 +7306,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -7451,8 +7428,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -7462,8 +7439,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -7520,26 +7497,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -7571,7 +7548,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -7614,8 +7591,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -7652,8 +7629,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -7662,8 +7639,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -7784,8 +7761,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -7795,8 +7772,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -7849,26 +7826,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -7900,7 +7877,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -7943,8 +7920,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -7981,8 +7958,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -7991,8 +7968,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -8113,8 +8090,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -8124,8 +8101,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -8174,26 +8151,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -8225,7 +8202,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -8268,8 +8245,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -8306,8 +8283,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -8316,8 +8293,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -8438,8 +8415,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -8449,8 +8426,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -8495,26 +8472,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -8546,7 +8523,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -8589,8 +8566,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -8627,8 +8604,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -8637,8 +8614,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -8912,7 +8889,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "actual_path": [
           [
             0,
@@ -8974,7 +8951,7 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -8987,7 +8964,8 @@
           "walk_edges": 0,
           "transfers": 1,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -9007,7 +8985,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 32,
+        "token_count": 39,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -9019,7 +8997,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
-        "confirmation_count": 5,
+        "confirmation_count": 4,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -9031,7 +9009,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 5,
+        "unnecessary_turn_count": 4,
         "cooperation_efficiency": 0.08333333333333333,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 6,
@@ -9044,17 +9022,20 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 6,
         "non_action_turn_count": 6,
-        "repeated_message_count": 8,
+        "repeated_message_count": 6,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 6,
-          "confirmation": 5
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 4,
+          "route_followup": 4
         },
-        "average_message_length": 2.6666666666666665,
+        "average_message_length": 3.25,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 0.5,
+        "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "total_audio_duration_seconds": 0,
@@ -9088,7 +9069,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Alpha, destination Harbor. Which route?"
           }
         ],
         "route_summary": {
@@ -9153,7 +9134,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "actual_path": [
             [
               0,
@@ -9215,7 +9196,7 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -9228,7 +9209,8 @@
             "walk_edges": 0,
             "transfers": 1,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -9239,8 +9221,8 @@
             3
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -9285,7 +9267,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 32,
+            "value": 39,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -9429,7 +9411,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -9573,7 +9555,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -9729,7 +9711,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 8,
+            "value": 6,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -9741,7 +9723,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 2.6666666666666665,
+            "value": 3.25,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -9789,7 +9771,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 0.5,
+            "value": 1.0,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -9971,7 +9953,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 2
         },
@@ -10108,8 +10090,8 @@
         ],
         "goal_label": "Tower",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -10134,8 +10116,8 @@
             1
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -10143,9 +10125,10 @@
           1
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -10173,7 +10156,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take C: Gate -> Tower."
+        "route_advice": "Board C at Gate."
       },
       "task": {
         "map_id": "simple_02",
@@ -10255,18 +10238,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Gate, destination Tower. Which route?",
+          "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+          "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -10282,11 +10262,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -10295,10 +10275,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Gate, destination Tower. Which route?",
+                "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -10315,7 +10295,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -10329,10 +10309,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Gate, destination Tower. Which route?"
               }
             }
           ],
@@ -10368,9 +10348,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take C: Gate -> Tower.",
-          "spoken_text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Board C at Gate.",
+          "spoken_text": "Board line C at Gate.",
+          "recognized_text": "Board line C at Gate.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -10381,10 +10361,7 @@
             4,
             1
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -10426,7 +10403,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -10443,10 +10420,7 @@
                     4,
                     1
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "C",
@@ -10463,7 +10437,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -10472,10 +10446,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take C: Gate -> Tower.",
-                "spoken_text": "Take line C from Gate to Tower.",
-                "token_count": 5,
-                "spoken_token_count": 7
+                "text": "Board C at Gate.",
+                "spoken_text": "Board line C at Gate.",
+                "token_count": 4,
+                "spoken_token_count": 5
               }
             },
             {
@@ -10492,7 +10466,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Board line C at Gate.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -10509,7 +10483,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Board line C at Gate."
               }
             }
           ],
@@ -10544,25 +10518,25 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -10577,12 +10551,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -10591,10 +10565,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -10611,7 +10585,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -10625,10 +10599,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -10664,11 +10638,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -10678,8 +10652,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -10718,26 +10692,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -10755,7 +10729,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -10764,10 +10738,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -10784,7 +10758,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -10798,10 +10772,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -10835,10 +10809,7 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -10846,8 +10817,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -10968,8 +10939,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -10979,8 +10950,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -11015,26 +10986,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -11052,7 +11023,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -11095,8 +11066,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -11133,8 +11104,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -11143,8 +11114,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -11265,8 +11236,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -11276,8 +11247,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -11308,26 +11279,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -11345,7 +11316,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -11388,8 +11359,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -11426,8 +11397,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -11436,8 +11407,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -11625,7 +11596,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take C: Gate -> Tower.",
+        "shortest_route_advice": "Board C at Gate.",
         "actual_path": [
           [
             0,
@@ -11665,7 +11636,7 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take C: Gate -> Tower.",
+        "actual_route_advice": "Board C at Gate.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -11678,7 +11649,8 @@
           "walk_edges": 0,
           "transfers": 0,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -11698,7 +11670,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 24,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -11710,7 +11682,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.25,
         "correction_count": 0,
-        "confirmation_count": 3,
+        "confirmation_count": 2,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -11722,7 +11694,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 3,
+        "unnecessary_turn_count": 2,
         "cooperation_efficiency": 0.125,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 4,
@@ -11735,13 +11707,16 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 4,
         "non_action_turn_count": 4,
-        "repeated_message_count": 4,
+        "repeated_message_count": 2,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 4,
-          "confirmation": 3
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 2,
+          "route_followup": 2
         },
-        "average_message_length": 3.0,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
@@ -11779,7 +11754,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Gate, destination Tower. Which route?"
           }
         ],
         "route_summary": {
@@ -11822,7 +11797,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take C: Gate -> Tower.",
+          "shortest_route_advice": "Board C at Gate.",
           "actual_path": [
             [
               0,
@@ -11862,7 +11837,7 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take C: Gate -> Tower.",
+          "actual_route_advice": "Board C at Gate.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -11875,7 +11850,8 @@
             "walk_edges": 0,
             "transfers": 0,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -11886,8 +11862,8 @@
             1
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -11932,7 +11908,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 24,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -12076,7 +12052,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -12220,7 +12196,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -12376,7 +12352,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 4,
+            "value": 2,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -12388,7 +12364,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.0,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -12618,7 +12594,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 3
         },
@@ -12755,8 +12731,8 @@
         ],
         "goal_label": "Harbor",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -12781,8 +12757,8 @@
             3
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -12790,9 +12766,10 @@
           3
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -12834,7 +12811,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+        "route_advice": "Board R at Alpha; change to EW2 at Bravo."
       },
       "task": {
         "map_id": "simple_01",
@@ -12921,18 +12898,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+          "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -12948,11 +12922,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -12961,10 +12935,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "spoken_text": "At 08:00, start Alpha, destination Harbor. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -12981,7 +12955,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Alpha, destination Harbor. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -12995,10 +12969,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Alpha, destination Harbor. Which route?"
               }
             }
           ],
@@ -13034,9 +13008,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "text": "Board R at Alpha; change to EW2 at Bravo.",
+          "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
+          "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -13047,10 +13021,7 @@
             3,
             3
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -13114,7 +13085,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -13131,10 +13102,7 @@
                     3,
                     3
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "R",
@@ -13165,7 +13133,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -13174,10 +13142,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "text": "Board R at Alpha; change to EW2 at Bravo.",
+                "spoken_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "token_count": 9,
-                "spoken_token_count": 14
+                "spoken_token_count": 12
               }
             },
             {
@@ -13194,7 +13162,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "recognized_text": "Board line R at Alpha. Then change to line EW2 at Bravo.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -13211,7 +13179,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
+                "text": "Board line R at Alpha. Then change to line EW2 at Bravo."
               }
             }
           ],
@@ -13246,25 +13214,25 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -13279,12 +13247,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -13293,10 +13261,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -13313,7 +13281,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -13327,10 +13295,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -13366,11 +13334,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -13380,8 +13348,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -13442,26 +13410,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -13493,7 +13461,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -13502,10 +13470,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -13522,7 +13490,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -13536,10 +13504,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -13573,10 +13541,7 @@
               3,
               3
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -13584,8 +13549,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -13706,8 +13671,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -13717,8 +13682,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -13775,26 +13740,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -13826,7 +13791,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -13869,8 +13834,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -13907,8 +13872,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -13917,8 +13882,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -14039,8 +14004,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -14050,8 +14015,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -14104,26 +14069,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -14155,7 +14120,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -14198,8 +14163,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -14236,8 +14201,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -14246,8 +14211,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -14368,8 +14333,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -14379,8 +14344,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -14429,26 +14394,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -14480,7 +14445,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -14523,8 +14488,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -14561,8 +14526,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -14571,8 +14536,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -14693,8 +14658,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -14704,8 +14669,8 @@
             3
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "south",
           "selected_action": "south",
@@ -14750,26 +14715,26 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "south",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     3,
                     3
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -14801,7 +14766,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                  "route_advice": "Board R at Alpha; change to EW2 at Bravo."
                 }
               }
             },
@@ -14844,8 +14809,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -14882,8 +14847,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -14892,8 +14857,8 @@
               3
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -15167,7 +15132,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "actual_path": [
           [
             0,
@@ -15229,7 +15194,7 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+        "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -15242,7 +15207,8 @@
           "walk_edges": 0,
           "transfers": 1,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -15262,7 +15228,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 32,
+        "token_count": 39,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -15274,7 +15240,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
-        "confirmation_count": 5,
+        "confirmation_count": 4,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -15286,7 +15252,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 5,
+        "unnecessary_turn_count": 4,
         "cooperation_efficiency": 0.08333333333333333,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 6,
@@ -15299,17 +15265,20 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 6,
         "non_action_turn_count": 6,
-        "repeated_message_count": 8,
+        "repeated_message_count": 6,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 6,
-          "confirmation": 5
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 4,
+          "route_followup": 4
         },
-        "average_message_length": 2.6666666666666665,
+        "average_message_length": 3.25,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 0.5,
+        "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "total_audio_duration_seconds": 0,
@@ -15343,7 +15312,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Alpha, destination Harbor. Which route?"
           }
         ],
         "route_summary": {
@@ -15408,7 +15377,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "actual_path": [
             [
               0,
@@ -15470,7 +15439,7 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -15483,7 +15452,8 @@
             "walk_edges": 0,
             "transfers": 1,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -15494,8 +15464,8 @@
             3
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -15540,7 +15510,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 32,
+            "value": 39,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -15684,7 +15654,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -15828,7 +15798,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 5,
+            "value": 4,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -15984,7 +15954,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 8,
+            "value": 6,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -15996,7 +15966,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 2.6666666666666665,
+            "value": 3.25,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -16044,7 +16014,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 0.5,
+            "value": 1.0,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -16226,7 +16196,7 @@
           "language_noise": 0.0,
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
-          "constraint_type": "avoid_blocked",
+          "secondary_constraint_type": "comfort",
           "start_time": "08:00",
           "seed": 3
         },
@@ -16363,8 +16333,8 @@
         ],
         "goal_label": "Tower",
         "constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
         "preferences": [
           "prefer_shortest"
@@ -16389,8 +16359,8 @@
             1
           ],
           "constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ]
         },
         "known_goal": [
@@ -16398,9 +16368,10 @@
           1
         ],
         "known_constraints": [
-          "avoid_blocked",
-          "prefer_shortest"
+          "low_fullness",
+          "few_transfers"
         ],
+        "secondary_constraints_requested": true,
         "agreed_plan": [
           [
             3,
@@ -16428,7 +16399,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take C: Gate -> Tower."
+        "route_advice": "Board C at Gate."
       },
       "task": {
         "map_id": "simple_02",
@@ -16510,18 +16481,15 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "text": "At 08:00, start Gate, destination Tower. Which route?",
+          "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+          "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
           "dialogue_act": "goal_request",
-          "intent": "communicate_goal_and_constraints",
+          "intent": "communicate_route_request",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
           "mentioned_start_time": "08:00",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -16537,11 +16505,11 @@
               "latency_ms": 0.0,
               "payload": {
                 "dialogue_act": "goal_request",
-                "intent": "communicate_goal_and_constraints",
+                "intent": "communicate_route_request",
                 "selected_action": null,
                 "semantic_payload": {
                   "dialogue_act": "goal_request",
-                  "intent": "communicate_goal_and_constraints"
+                  "intent": "communicate_route_request"
                 }
               }
             },
@@ -16550,10 +16518,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
-                "token_count": 13,
-                "spoken_token_count": 13
+                "text": "At 08:00, start Gate, destination Tower. Which route?",
+                "spoken_text": "At 08:00, start Gate, destination Tower. Which route?",
+                "token_count": 8,
+                "spoken_token_count": 8
               }
             },
             {
@@ -16570,7 +16538,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "recognized_text": "At 08:00, start Gate, destination Tower. Which route?",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -16584,10 +16552,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "communicate_goal_and_constraints",
+                "recognized_intent": "communicate_route_request",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+                "text": "At 08:00, start Gate, destination Tower. Which route?"
               }
             }
           ],
@@ -16623,9 +16591,9 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take C: Gate -> Tower.",
-          "spoken_text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Board C at Gate.",
+          "spoken_text": "Board line C at Gate.",
+          "recognized_text": "Board line C at Gate.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -16636,10 +16604,7 @@
             4,
             1
           ],
-          "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "interpreted_constraints": [],
           "proposed_action": "east",
           "selected_action": "east",
           "interpreted_action": "east",
@@ -16681,7 +16646,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -16698,10 +16663,7 @@
                     4,
                     1
                   ],
-                  "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
-                  ],
+                  "interpreted_constraints": [],
                   "route_segments": [
                     {
                       "line": "C",
@@ -16718,7 +16680,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -16727,10 +16689,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Take C: Gate -> Tower.",
-                "spoken_text": "Take line C from Gate to Tower.",
-                "token_count": 5,
-                "spoken_token_count": 7
+                "text": "Board C at Gate.",
+                "spoken_text": "Board line C at Gate.",
+                "token_count": 4,
+                "spoken_token_count": 5
               }
             },
             {
@@ -16747,7 +16709,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Board line C at Gate.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -16764,7 +16726,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Board line C at Gate."
               }
             }
           ],
@@ -16799,25 +16761,25 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "errors": []
         },
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Proceed.",
-          "spoken_text": "Proceed.",
-          "recognized_text": "Proceed.",
-          "dialogue_act": "confirmation",
-          "intent": "continue_shared_plan",
+          "text": "Now check low fullness and few transfers.",
+          "spoken_text": "Now check low fullness and few transfers.",
+          "recognized_text": "Now check low fullness and few transfers.",
+          "dialogue_act": "constraint_request",
+          "intent": "request_secondary_constraint_check",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
-          "mentioned_constraints": [],
+          "mentioned_constraints": [
+            "low_fullness",
+            "few_transfers"
+          ],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -16832,12 +16794,12 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "confirmation",
-                "intent": "continue_shared_plan",
+                "dialogue_act": "constraint_request",
+                "intent": "request_secondary_constraint_check",
                 "selected_action": null,
                 "semantic_payload": {
-                  "dialogue_act": "confirmation",
-                  "intent": "continue_shared_plan"
+                  "dialogue_act": "constraint_request",
+                  "intent": "request_secondary_constraint_check"
                 }
               }
             },
@@ -16846,10 +16808,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Proceed.",
-                "spoken_text": "Proceed.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Now check low fullness and few transfers.",
+                "spoken_text": "Now check low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 7
               }
             },
             {
@@ -16866,7 +16828,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Proceed.",
+                "recognized_text": "Now check low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -16880,10 +16842,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "continue_shared_plan",
-                "recognized_dialogue_act": "confirmation",
+                "recognized_intent": "request_secondary_constraint_check",
+                "recognized_dialogue_act": "constraint_request",
                 "confidence": 1.0,
-                "text": "Proceed."
+                "text": "Now check low fullness and few transfers."
               }
             }
           ],
@@ -16919,11 +16881,11 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue.",
-          "spoken_text": "Continue.",
-          "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "text": "Route fits: low fullness and few transfers.",
+          "spoken_text": "Route line fits from low fullness and few transfers.",
+          "recognized_text": "Route line fits from low fullness and few transfers.",
+          "dialogue_act": "constraint_response",
+          "intent": "evaluate_secondary_constraints",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -16933,8 +16895,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -16973,26 +16935,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "constraint_response",
+                "intent": "evaluate_secondary_constraints",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "constraint_response",
+                  "intent": "evaluate_secondary_constraints",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -17010,7 +16972,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -17019,10 +16981,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Continue.",
-                "spoken_text": "Continue.",
-                "token_count": 1,
-                "spoken_token_count": 1
+                "text": "Route fits: low fullness and few transfers.",
+                "spoken_text": "Route line fits from low fullness and few transfers.",
+                "token_count": 7,
+                "spoken_token_count": 9
               }
             },
             {
@@ -17039,7 +17001,7 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue.",
+                "recognized_text": "Route line fits from low fullness and few transfers.",
                 "confidence": 1.0,
                 "audio_path": null,
                 "sidecar_path": null,
@@ -17053,10 +17015,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "evaluate_secondary_constraints",
+                "recognized_dialogue_act": "constraint_response",
                 "confidence": 1.0,
-                "text": "Continue."
+                "text": "Route line fits from low fullness and few transfers."
               }
             }
           ],
@@ -17090,10 +17052,7 @@
               4,
               1
             ],
-            "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
-            ]
+            "constraints": []
           },
           "belief_state_after": {
             "goal": [
@@ -17101,8 +17060,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -17223,8 +17182,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -17234,8 +17193,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -17270,26 +17229,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -17307,7 +17266,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -17350,8 +17309,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -17388,8 +17347,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -17398,8 +17357,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -17520,8 +17479,8 @@
           "text": "Continue.",
           "spoken_text": "Continue.",
           "recognized_text": "Continue.",
-          "dialogue_act": "route_proposal",
-          "intent": "calculate_line_route",
+          "dialogue_act": "route_followup",
+          "intent": "execute_agreed_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
           "mentioned_start_time": null,
@@ -17531,8 +17490,8 @@
             1
           ],
           "interpreted_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "proposed_action": "east",
           "selected_action": "east",
@@ -17563,26 +17522,26 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take C: Gate -> Tower.",
+          "route_advice": "Board C at Gate.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": "route_followup",
+                "intent": "execute_agreed_route",
                 "selected_action": "east",
                 "semantic_payload": {
-                  "dialogue_act": "route_proposal",
-                  "intent": "calculate_line_route",
+                  "dialogue_act": "route_followup",
+                  "intent": "execute_agreed_route",
                   "interpreted_goal": [
                     4,
                     1
                   ],
                   "interpreted_constraints": [
-                    "avoid_blocked",
-                    "prefer_shortest"
+                    "low_fullness",
+                    "few_transfers"
                   ],
                   "route_segments": [
                     {
@@ -17600,7 +17559,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take C: Gate -> Tower."
+                  "route_advice": "Board C at Gate."
                 }
               }
             },
@@ -17643,8 +17602,8 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_intent": "calculate_line_route",
-                "recognized_dialogue_act": "route_proposal",
+                "recognized_intent": "execute_agreed_route",
+                "recognized_dialogue_act": "route_followup",
                 "confidence": 1.0,
                 "text": "Continue."
               }
@@ -17681,8 +17640,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "belief_state_after": {
@@ -17691,8 +17650,8 @@
               1
             ],
             "constraints": [
-              "avoid_blocked",
-              "prefer_shortest"
+              "low_fullness",
+              "few_transfers"
             ]
           },
           "errors": []
@@ -17880,7 +17839,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take C: Gate -> Tower.",
+        "shortest_route_advice": "Board C at Gate.",
         "actual_path": [
           [
             0,
@@ -17920,7 +17879,7 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take C: Gate -> Tower.",
+        "actual_route_advice": "Board C at Gate.",
         "planner_diagnostics": {
           "planner": "dijkstra",
           "optimization_strategy": "shortest_path_first",
@@ -17933,7 +17892,8 @@
           "walk_edges": 0,
           "transfers": 0,
           "constraints": [
-            "avoid_blocked",
+            "low_fullness",
+            "few_transfers",
             "prefer_shortest"
           ]
         }
@@ -17953,7 +17913,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 24,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -17965,7 +17925,7 @@
         "ambiguity_rate": 0.0,
         "instruction_specificity": 0.25,
         "correction_count": 0,
-        "confirmation_count": 3,
+        "confirmation_count": 2,
         "goal_interpretation_accuracy": 1.0,
         "constraint_interpretation_accuracy": 1.0,
         "intent_classification_accuracy": 1.0,
@@ -17977,7 +17937,7 @@
         "plan_agreement_rate": 1.0,
         "clarification_resolution_rate": 1.0,
         "repair_success_rate": 1.0,
-        "unnecessary_turn_count": 3,
+        "unnecessary_turn_count": 2,
         "cooperation_efficiency": 0.125,
         "belief_state_delta_score": 2.0,
         "shortest_path_length": 4,
@@ -17990,13 +17950,16 @@
         "final_distance_to_goal": 0,
         "action_turn_count": 4,
         "non_action_turn_count": 4,
-        "repeated_message_count": 4,
+        "repeated_message_count": 2,
         "dialogue_act_distribution": {
           "goal_request": 1,
-          "route_proposal": 4,
-          "confirmation": 3
+          "route_proposal": 1,
+          "constraint_request": 1,
+          "constraint_response": 1,
+          "confirmation": 2,
+          "route_followup": 2
         },
-        "average_message_length": 3.0,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
@@ -18034,7 +17997,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
+            "text": "At 08:00, start Gate, destination Tower. Which route?"
           }
         ],
         "route_summary": {
@@ -18077,7 +18040,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take C: Gate -> Tower.",
+          "shortest_route_advice": "Board C at Gate.",
           "actual_path": [
             [
               0,
@@ -18117,7 +18080,7 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take C: Gate -> Tower.",
+          "actual_route_advice": "Board C at Gate.",
           "planner_diagnostics": {
             "planner": "dijkstra",
             "optimization_strategy": "shortest_path_first",
@@ -18130,7 +18093,8 @@
             "walk_edges": 0,
             "transfers": 0,
             "constraints": [
-              "avoid_blocked",
+              "low_fullness",
+              "few_transfers",
               "prefer_shortest"
             ]
           }
@@ -18141,8 +18105,8 @@
             1
           ],
           "final_shared_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
+            "low_fullness",
+            "few_transfers"
           ],
           "unresolved_ambiguities": 0,
           "agent_a_knows_network": false,
@@ -18187,7 +18151,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 24,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -18331,7 +18295,7 @@
           },
           {
             "metric_name": "confirmation_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for confirmation_count.",
             "numerator": null,
             "denominator": null,
@@ -18475,7 +18439,7 @@
           },
           {
             "metric_name": "unnecessary_turn_count",
-            "value": 3,
+            "value": 2,
             "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
             "numerator": null,
             "denominator": null,
@@ -18631,7 +18595,7 @@
           },
           {
             "metric_name": "repeated_message_count",
-            "value": 4,
+            "value": 2,
             "definition": "Computed from transcript field evidence for repeated_message_count.",
             "numerator": null,
             "denominator": null,
@@ -18643,7 +18607,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.0,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,

@@ -40,6 +40,8 @@ class RuleAgent(AgentAdapter):
         goal = _resolve_goal(instruction, network) or belief_before.get("goal")
         constraints = _resolve_constraints(instruction) or list(belief_before.get("constraints", []))
         belief_after = {"goal": goal, "constraints": constraints}
+        prompt_policy = context.parameters.get("prompt_policy", {})
+        planning_constraints = _planning_constraints(constraints, prompt_policy)
 
         if not goal:
             return AgentResponse(
@@ -55,8 +57,8 @@ class RuleAgent(AgentAdapter):
                 },
             )
 
-        path, diagnostics = shortest_path(network, context.state["position"], goal, constraints)
-        full_path, full_diagnostics = shortest_path(network, network.get("start", context.state["position"]), goal, constraints)
+        path, diagnostics = shortest_path(network, context.state["position"], goal, planning_constraints)
+        full_path, full_diagnostics = shortest_path(network, network.get("start", context.state["position"]), goal, planning_constraints)
         if not path:
             return AgentResponse(
                 text="No valid route satisfies the communicated constraints.",
@@ -76,15 +78,26 @@ class RuleAgent(AgentAdapter):
 
         action = next_action_for_path(path)
         route_segments = summarize_route_segments(network, full_path or path)
-        prompt_policy = context.parameters.get("prompt_policy", {})
         route_advice = route_advice_text(route_segments, style=prompt_policy.get("agent_b_response_style", "compact"))
-        text = "Continue." if context.shared_state.get("route_advice") and prompt_policy.get("avoid_repetition", True) else route_advice
+        constraints_changed = constraints and constraints != belief_before.get("constraints", [])
+        if context.shared_state.get("route_advice") and constraints_changed:
+            text = f"Route fits: {_constraint_phrase(constraints)}."
+            dialogue_act = "constraint_response"
+            intent = "evaluate_secondary_constraints"
+        elif context.shared_state.get("route_advice") and prompt_policy.get("avoid_repetition", True):
+            text = "Continue."
+            dialogue_act = "route_followup"
+            intent = "execute_agreed_route"
+        else:
+            text = route_advice
+            dialogue_act = "route_proposal"
+            intent = "calculate_line_route"
         return AgentResponse(
             text=text,
             interpreted_action=action,
             metadata={
-                "dialogue_act": "route_proposal",
-                "intent": "calculate_line_route",
+                "dialogue_act": dialogue_act,
+                "intent": intent,
                 "interpreted_goal": goal,
                 "interpreted_constraints": constraints,
                 "proposed_action": action,
@@ -92,7 +105,7 @@ class RuleAgent(AgentAdapter):
                 "route_plan": path,
                 "route_segments": route_segments,
                 "route_advice": route_advice,
-                "route_diagnostics": {**diagnostics, "full_route": full_diagnostics},
+                "route_diagnostics": {**diagnostics, "full_route": full_diagnostics, "planning_constraints": planning_constraints},
                 "constraint_satisfied": True,
                 "belief_state_before": belief_before,
                 "belief_state_after": belief_after,
@@ -107,7 +120,7 @@ def _resolve_goal(text: str, network: dict[str, Any]) -> list[int] | None:
     stations = network.get("stations") or network.get("landmarks", {})
     for label, position in stations.items():
         label_text = label.lower()
-        if f"get off at {label_text}" in lowered or f"to {label_text}" in lowered:
+        if f"get off at {label_text}" in lowered or f"to {label_text}" in lowered or f"destination {label_text}" in lowered:
             return list(position)
     mentions = [
         (lowered.rfind(label.lower()), position)
@@ -116,7 +129,7 @@ def _resolve_goal(text: str, network: dict[str, Any]) -> list[int] | None:
     ]
     if mentions:
         return list(max(mentions, key=lambda item: item[0])[1])
-    destination_match = re.search(r"(?:get off at|to)\s*\[(\d+),\s*(\d+)\]", lowered)
+    destination_match = re.search(r"(?:get off at|to|destination)\s*\[(\d+),\s*(\d+)\]", lowered)
     if destination_match:
         return [int(destination_match.group(1)), int(destination_match.group(2))]
     match = re.search(r"\[(\d+),\s*(\d+)\]", lowered)
@@ -132,7 +145,33 @@ def _resolve_constraints(text: str) -> list[str]:
         constraints.append("avoid_blocked")
     if "short" in lowered:
         constraints.append("prefer_shortest")
+    if "full" in lowered or "crowd" in lowered:
+        constraints.append("low_fullness")
+    if "transfer" in lowered or "transition" in lowered or "change" in lowered:
+        constraints.append("few_transfers")
     return constraints
+
+
+def _planning_constraints(constraints: list[str], prompt_policy: dict[str, Any]) -> list[str]:
+    values = list(constraints)
+    if prompt_policy.get("route_strategy", "shortest_path_first") == "shortest_path_first" and "prefer_shortest" not in values:
+        values.append("prefer_shortest")
+    return values
+
+
+def _constraint_phrase(constraints: list[str]) -> str:
+    labels = {
+        "avoid_blocked": "avoid blocked nodes",
+        "prefer_shortest": "short route",
+        "low_fullness": "low fullness",
+        "few_transfers": "few transfers",
+    }
+    readable = [labels.get(item, item.replace("_", " ")) for item in constraints]
+    if not readable:
+        return "the stated constraints"
+    if len(readable) == 1:
+        return readable[0]
+    return ", ".join(readable[:-1]) + f" and {readable[-1]}"
 
 
 def _goal_label(goal: list[int], network: dict[str, Any]) -> str:

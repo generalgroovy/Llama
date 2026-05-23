@@ -6,7 +6,7 @@
       "turn_id": 0,
       "speaker": "UserLM",
       "dialogue_act": "goal_request",
-      "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
+      "text": "At 08:00, start Alpha, destination Harbor. Which route?"
     }
   ],
   "route_summary": {
@@ -71,7 +71,7 @@
         "steps": 3
       }
     ],
-    "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+    "shortest_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
     "actual_path": [
       [
         0,
@@ -133,7 +133,7 @@
         "steps": 3
       }
     ],
-    "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+    "actual_route_advice": "Board R at Alpha; change to EW2 at Bravo.",
     "planner_diagnostics": {
       "planner": "dijkstra",
       "optimization_strategy": "shortest_path_first",
@@ -146,7 +146,8 @@
       "walk_edges": 0,
       "transfers": 1,
       "constraints": [
-        "avoid_blocked",
+        "low_fullness",
+        "few_transfers",
         "prefer_shortest"
       ]
     }
@@ -157,8 +158,8 @@
       3
     ],
     "final_shared_constraints": [
-      "avoid_blocked",
-      "prefer_shortest"
+      "low_fullness",
+      "few_transfers"
     ],
     "unresolved_ambiguities": 0,
     "agent_a_knows_network": false,
@@ -203,7 +204,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 32,
+      "value": 39,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -347,7 +348,7 @@
     },
     {
       "metric_name": "confirmation_count",
-      "value": 5,
+      "value": 4,
       "definition": "Computed from transcript field evidence for confirmation_count.",
       "numerator": null,
       "denominator": null,
@@ -491,7 +492,7 @@
     },
     {
       "metric_name": "unnecessary_turn_count",
-      "value": 5,
+      "value": 4,
       "definition": "Computed from transcript field evidence for unnecessary_turn_count.",
       "numerator": null,
       "denominator": null,
@@ -647,7 +648,7 @@
     },
     {
       "metric_name": "repeated_message_count",
-      "value": 8,
+      "value": 6,
       "definition": "Computed from transcript field evidence for repeated_message_count.",
       "numerator": null,
       "denominator": null,
@@ -659,7 +660,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 2.6666666666666665,
+      "value": 3.25,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,
@@ -707,7 +708,7 @@
     },
     {
       "metric_name": "naturalness_proxy_score",
-      "value": 0.5,
+      "value": 1.0,
       "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
       "numerator": null,
       "denominator": null,

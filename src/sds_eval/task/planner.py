@@ -108,15 +108,15 @@ def route_advice_text(segments: list[dict[str, Any]], style: str = "compact") ->
     if not segments:
         return "No valid line route is available."
     if style == "compact":
-        parts = [
-            f"{segment['line']}: {segment['from_station']} -> {segment['to_station']}"
-            for segment in segments
-        ]
-        return "Take " + "; ".join(parts) + "."
-    parts = [
-        f"take line {segment['line']} from {segment['from_station']} to {segment['to_station']}"
-        for segment in segments
-    ]
+        parts = []
+        for index, segment in enumerate(segments):
+            verb = "Board" if index == 0 else "change to"
+            parts.append(f"{verb} {segment['line']} at {segment['from_station']}")
+        return "; ".join(parts) + "."
+    parts = []
+    for index, segment in enumerate(segments):
+        verb = "board line" if index == 0 else "change to line"
+        parts.append(f"{verb} {segment['line']} at {segment['from_station']}")
     if len(parts) == 1:
         return _sentence_case(parts[0]) + "."
     return f"{_sentence_case(parts[0])}, then " + ", then ".join(parts[1:]) + "."

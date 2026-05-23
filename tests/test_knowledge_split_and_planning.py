@@ -71,7 +71,7 @@ def test_path_is_compressed_into_line_segments():
         {"line": "R", "from_station": "Alpha", "to_station": "Bravo", "from_position": [0, 0], "to_position": [3, 0], "steps": 3},
         {"line": "EW2", "from_station": "Bravo", "to_station": "Harbor", "from_position": [3, 0], "to_position": [3, 3], "steps": 3},
     ]
-    assert route_advice_text(segments) == "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+    assert route_advice_text(segments) == "Board R at Alpha; change to EW2 at Bravo."
 
 
 def test_route_optimality_metric():
@@ -123,5 +123,76 @@ def test_agents_avoid_repeating_route_details_after_first_advice():
         shared_state={"b_belief": first.metadata["belief_state_after"], "route_advice": first.metadata["route_advice"]},
         parameters={"prompt_policy": {"avoid_repetition": True, "agent_b_response_style": "compact"}},
     ))
-    assert first.text == "Take R: Alpha -> Bravo."
+    assert first.text == "Board R at Alpha."
     assert second.text == "Continue."
+
+
+def test_agent_b_reacts_to_secondary_constraints_after_route():
+    network = {
+        "map_id": "m",
+        "width": 2,
+        "height": 1,
+        "start": [0, 0],
+        "goal": [1, 0],
+        "stations": {"Alpha": [0, 0], "Bravo": [1, 0]},
+        "transit_lines": {"R": [[0, 0], [1, 0]]},
+        "obstacles": [],
+    }
+    response = RuleAgent().respond(AgentContext(
+        experiment_id="exp",
+        run_id="run",
+        turn_id=3,
+        state={"position": [0, 0], "success": False},
+        last_instruction="Now check low fullness and few transfers.",
+        private_context={"network": network},
+        shared_state={"b_belief": {"goal": [1, 0], "constraints": []}, "route_advice": "Board R at Alpha."},
+        parameters={"prompt_policy": {"avoid_repetition": True, "agent_b_response_style": "compact"}},
+    ))
+    assert response.text == "Route fits: low fullness and few transfers."
+    assert response.metadata["dialogue_act"] == "constraint_response"
+    assert response.metadata["belief_state_after"]["constraints"] == ["low_fullness", "few_transfers"]
+
+
+def test_agent_a_stages_secondary_constraints_after_route():
+    agent = UserLMAgent()
+    first = agent.respond(AgentContext(
+        experiment_id="exp",
+        run_id="run",
+        turn_id=0,
+        state={"position": [0, 0], "success": False},
+        private_context={
+            "goal": [1, 0],
+            "goal_label": "Bravo",
+            "origin_label": "Alpha",
+            "start_time": "08:00",
+            "constraints": ["low_fullness", "few_transfers"],
+            "knows_network": False,
+        },
+        shared_state={"b_belief": {}},
+        parameters={},
+    ))
+    second = agent.respond(AgentContext(
+        experiment_id="exp",
+        run_id="run",
+        turn_id=2,
+        state={"position": [0, 0], "success": False},
+        private_context={
+            "goal": [1, 0],
+            "goal_label": "Bravo",
+            "origin_label": "Alpha",
+            "start_time": "08:00",
+            "constraints": ["low_fullness", "few_transfers"],
+            "knows_network": False,
+        },
+        shared_state={
+            "b_belief": {"goal": [1, 0], "constraints": []},
+            "route_advice": "Board R at Alpha.",
+            "known_constraints": [],
+            "secondary_constraints_requested": False,
+        },
+        parameters={},
+    ))
+    assert first.text == "At 08:00, start Alpha, destination Bravo. Which route?"
+    assert first.metadata["mentioned_constraints"] == []
+    assert second.text == "Now check low fullness and few transfers."
+    assert second.metadata["mentioned_constraints"] == ["low_fullness", "few_transfers"]

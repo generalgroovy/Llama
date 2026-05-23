@@ -80,8 +80,8 @@
         "prompt_strategy": [
           "direct"
         ],
-        "constraint_type": [
-          "avoid_blocked"
+        "secondary_constraint_type": [
+          "comfort"
         ],
         "start_time": [
           "08:00"

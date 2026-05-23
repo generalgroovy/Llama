@@ -65,6 +65,7 @@ class DialogueManager:
             "b_belief": {},
             "known_goal": None,
             "known_constraints": [],
+            "secondary_constraints_requested": False,
             "agreed_plan": [],
             "unresolved_ambiguities": 0,
         }
@@ -99,6 +100,8 @@ class DialogueManager:
                 "audio_duration_seconds": user_pipeline.audio_duration_seconds,
             }
             turns.append(_turn(dialogue_state.turn_id, self.agent_a.name, user_pipeline.text, None, self.environment.state(), self.environment.state(), True, user_metadata))
+            if user_response.metadata.get("mentioned_constraints"):
+                shared_state["secondary_constraints_requested"] = True
             dialogue_state.turn_id += 1
 
             agent_b_private["current_position"] = self.environment.state()["position"]
@@ -154,7 +157,8 @@ class DialogueManager:
             if action == "stop" or dialogue_state.invalid_moves >= self.max_invalid_moves:
                 break
 
-        shortest, diagnostics = shortest_path(task, task["start"], task["goal"], agent_a_private["constraints"])
+        planning_constraints = _planning_constraints(agent_a_private["constraints"], self.config.get("prompt_policy", {}))
+        shortest, diagnostics = shortest_path(task, task["start"], task["goal"], planning_constraints)
         shortest_segments = summarize_route_segments(task, shortest)
         actual_path = [state["position"] for state in state_trace]
         actual_segments = summarize_route_segments(task, actual_path)
@@ -252,7 +256,7 @@ def _turn(
 
 
 def _agent_a_private_knowledge(task: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
-    constraints = params.get("constraints") or _constraints_for_type(params.get("constraint_type", "avoid_blocked"))
+    constraints = params.get("constraints") or _constraints_for_type(params.get("secondary_constraint_type", params.get("constraint_type", "comfort")))
     return {
         "origin": task["start"],
         "origin_label": station_label(task, task["start"]),
@@ -279,7 +283,16 @@ def _agent_b_private_knowledge(task: dict[str, Any]) -> dict[str, Any]:
 def _constraints_for_type(constraint_type: str) -> list[str]:
     if constraint_type == "none":
         return []
+    if constraint_type == "comfort":
+        return ["low_fullness", "few_transfers"]
     return ["avoid_blocked", "prefer_shortest"]
+
+
+def _planning_constraints(constraints: list[str], prompt_policy: dict[str, Any]) -> list[str]:
+    values = list(constraints)
+    if prompt_policy.get("route_strategy", "shortest_path_first") == "shortest_path_first" and "prefer_shortest" not in values:
+        values.append("prefer_shortest")
+    return values
 
 
 def _public_state(state: dict[str, Any]) -> dict[str, Any]:

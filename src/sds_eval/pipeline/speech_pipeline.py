@@ -209,6 +209,8 @@ def _spoken_form(text: str) -> str:
     spoken = spoken.replace("prefer_shortest", "shortest")
     spoken = spoken.replace(";", ". Then ")
     spoken = re.sub(r"\b([A-Za-z][A-Za-z0-9]*)\s*:", r"line \1 from", spoken)
+    spoken = re.sub(r"\b(Board|board)\s+([A-Za-z][A-Za-z0-9]*)\s+at\b", r"\1 line \2 at", spoken)
+    spoken = re.sub(r"\bchange to\s+(?!line\b)([A-Za-z][A-Za-z0-9]*)\s+at\b", r"change to line \1 at", spoken)
     while "  " in spoken:
         spoken = spoken.replace("  ", " ")
     return spoken.strip()
