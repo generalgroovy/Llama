@@ -17,6 +17,7 @@ def default_pipeline_config() -> dict[str, Any]:
         "dialog_management": {"enabled": True},
         "nlg": {"enabled": True},
         "tts": {"enabled": False, "sample_rate": 16000, "voice": "synthetic-tone"},
+        "measure_latency": False,
         "record_audio": True,
         "audio_dir": "data/audio",
     }
@@ -72,13 +73,13 @@ class SpeechPipeline:
         )
 
     def _nlg(self, text: str, metadata: dict[str, Any]) -> tuple[str, dict[str, Any]]:
-        start = perf_counter()
+        start = self._latency_start()
         enabled = bool(self.config.get("nlg", {}).get("enabled", True))
         output = text if enabled else str(metadata.get("dialogue_act", ""))
         return output, _event("nlg", enabled, {"text": output, "token_count": len(output.split())}, start)
 
     def _tts(self, turn_id: int, speaker: str, text: str) -> tuple[str | None, float, dict[str, Any]]:
-        start = perf_counter()
+        start = self._latency_start()
         tts_config = self.config.get("tts", {})
         enabled = bool(tts_config.get("enabled", False)) and bool(self.config.get("record_audio", True))
         if not enabled:
@@ -92,7 +93,7 @@ class SpeechPipeline:
         return str(path), duration, _event("tts", True, {"audio_path": str(path), "duration_seconds": duration, "voice": tts_config.get("voice", "synthetic-tone")}, start)
 
     def _asr(self, text: str, audio_path: str | None) -> tuple[str, dict[str, Any]]:
-        start = perf_counter()
+        start = self._latency_start()
         asr_config = self.config.get("asr", {})
         enabled = bool(asr_config.get("enabled", False))
         recognized = _apply_word_error(text, float(asr_config.get("word_error_rate", 0.0))) if enabled else text
@@ -100,7 +101,7 @@ class SpeechPipeline:
         return recognized, _event("asr", enabled, {"recognized_text": recognized, "confidence": confidence, "audio_path": audio_path}, start)
 
     def _nlu(self, text: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        start = perf_counter()
+        start = self._latency_start()
         enabled = bool(self.config.get("nlu", {}).get("enabled", True))
         confidence = float(self.config.get("nlu", {}).get("confidence", 1.0)) if enabled else 1.0
         return _event("nlu", enabled, {
@@ -109,6 +110,9 @@ class SpeechPipeline:
             "confidence": confidence,
             "text": text,
         }, start)
+
+    def _latency_start(self) -> float | None:
+        return perf_counter() if bool(self.config.get("measure_latency", False)) else None
 
 
 def _event(phase: str, enabled: bool, payload: dict[str, Any], start: float | None = None) -> dict[str, Any]:

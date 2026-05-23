@@ -12,6 +12,7 @@ def test_pipeline_phases_are_logged_with_speech_off():
     first_turn = transcript["turns"][0]
     phases = [event["phase"] for event in first_turn["pipeline_events"]]
     assert phases == ["dialog_management", "nlg", "tts", "asr", "nlu"]
+    assert all(event["latency_ms"] == 0.0 for event in first_turn["pipeline_events"])
     assert first_turn["audio_path"] is None
     assert transcript["audio_recordings"] == []
 

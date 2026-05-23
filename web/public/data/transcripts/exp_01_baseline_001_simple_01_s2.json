@@ -35,6 +35,7 @@
         "enabled": false,
         "sample_rate": 16000
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -88,6 +89,7 @@
       "sample_rate": 16000,
       "voice": "synthetic-tone"
     },
+    "measure_latency": false,
     "record_audio": true,
     "audio_dir": "data/audio"
   },
@@ -331,7 +333,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.003,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
             "token_count": 19
@@ -340,7 +342,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -349,7 +351,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
             "confidence": 1.0,
@@ -359,7 +361,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "communicate_goal_and_constraints",
             "recognized_dialogue_act": "goal_request",
@@ -535,7 +537,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.003,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
             "token_count": 9
@@ -544,7 +546,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -553,7 +555,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
             "confidence": 1.0,
@@ -563,7 +565,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -645,7 +647,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Proceed.",
             "token_count": 1
@@ -654,7 +656,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -663,7 +665,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Proceed.",
             "confidence": 1.0,
@@ -673,7 +675,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
@@ -845,7 +847,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.003,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Continue.",
             "token_count": 1
@@ -854,7 +856,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -863,7 +865,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Continue.",
             "confidence": 1.0,
@@ -873,7 +875,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -964,7 +966,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Proceed.",
             "token_count": 1
@@ -973,7 +975,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -992,7 +994,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
@@ -1160,7 +1162,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Continue.",
             "token_count": 1
@@ -1169,7 +1171,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1178,7 +1180,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.008,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Continue.",
             "confidence": 1.0,
@@ -1188,7 +1190,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -1279,7 +1281,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Proceed.",
             "token_count": 1
@@ -1288,7 +1290,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1297,7 +1299,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Proceed.",
             "confidence": 1.0,
@@ -1307,7 +1309,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
@@ -1471,7 +1473,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Continue.",
             "token_count": 1
@@ -1480,7 +1482,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1489,7 +1491,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.006,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Continue.",
             "confidence": 1.0,
@@ -1499,7 +1501,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -1590,7 +1592,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Proceed.",
             "token_count": 1
@@ -1599,7 +1601,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1618,7 +1620,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
@@ -1778,7 +1780,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Continue.",
             "token_count": 1
@@ -1787,7 +1789,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1796,7 +1798,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Continue.",
             "confidence": 1.0,
@@ -1806,7 +1808,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.005,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -1897,7 +1899,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Proceed.",
             "token_count": 1
@@ -1906,7 +1908,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -1915,7 +1917,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Proceed.",
             "confidence": 1.0,
@@ -1925,7 +1927,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
@@ -2081,7 +2083,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.004,
+          "latency_ms": 0.0,
           "payload": {
             "text": "Continue.",
             "token_count": 1
@@ -2090,7 +2092,7 @@
         {
           "phase": "tts",
           "enabled": false,
-          "latency_ms": 0.002,
+          "latency_ms": 0.0,
           "payload": {
             "audio_path": null,
             "duration_seconds": 0.0
@@ -2099,7 +2101,7 @@
         {
           "phase": "asr",
           "enabled": false,
-          "latency_ms": 0.001,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_text": "Continue.",
             "confidence": 1.0,
@@ -2109,7 +2111,7 @@
         {
           "phase": "nlu",
           "enabled": true,
-          "latency_ms": 0.004,
+          "latency_ms": 0.0,
           "payload": {
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
@@ -2580,7 +2582,7 @@
     "tts_audio_coverage": 1.0,
     "mean_asr_confidence": 1.0,
     "mean_nlu_confidence": 1.0,
-    "mean_pipeline_latency_ms": 0.0013333333333333333,
+    "mean_pipeline_latency_ms": 0.0,
     "pipeline_phase_count": 60,
     "asr_enabled": 0.0,
     "tts_enabled": 0.0,
@@ -3365,7 +3367,7 @@
       },
       {
         "metric_name": "mean_pipeline_latency_ms",
-        "value": 0.0013333333333333333,
+        "value": 0.0,
         "definition": "Average measured latency across logged pipeline phase events.",
         "numerator": null,
         "denominator": null,

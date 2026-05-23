@@ -723,7 +723,7 @@
     },
     {
       "metric_name": "mean_pipeline_latency_ms",
-      "value": 0.0009249999999999999,
+      "value": 0.0,
       "definition": "Average measured latency across logged pipeline phase events.",
       "numerator": null,
       "denominator": null,

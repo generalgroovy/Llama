@@ -19,7 +19,7 @@ GitHub Pages can only host static assets. For that reason, Python experiments ru
 
 Experiments are configurable for low-end and high-end systems. The default is `low`.
 
-- `low`: deterministic BFS planner, standard metric detail, no expensive bootstrap reliability.
+- `low`: deterministic shortest-path planner, standard metric detail, no expensive bootstrap reliability.
 - `high`: larger turn budgets and extended reliability options for stronger local or CI machines.
 
 Set the profile in an experiment config:
@@ -77,6 +77,8 @@ python scripts/run_experiment.py --config configs/experiments/exp_01_baseline.ya
 ```
 
 When TTS is enabled, deterministic `.wav` recordings are written under `data/audio/<run_id>/` and referenced from the transcript. The default synthetic TTS backend is intentionally simple and dependency-free so batch experiments remain runnable on low-end systems.
+
+Pipeline latencies are recorded as `0.0` by default so committed experiment artifacts are reproducible. Set `speech_pipeline.measure_latency: true` in a config when runtime timing itself is part of the experiment.
 
 Implemented metrics include:
 

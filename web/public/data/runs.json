@@ -148,7 +148,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.0013333333333333333,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 60,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -194,6 +194,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -489,7 +490,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.0008750000000000001,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 40,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -535,6 +536,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -791,7 +793,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.0013333333333333333,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 60,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -837,6 +839,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -1132,7 +1135,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.0009249999999999999,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 40,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -1178,6 +1181,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -1434,7 +1438,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.0008666666666666667,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 60,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -1480,6 +1484,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },
@@ -1775,7 +1780,7 @@
       "tts_audio_coverage": 1.0,
       "mean_asr_confidence": 1.0,
       "mean_nlu_confidence": 1.0,
-      "mean_pipeline_latency_ms": 0.001125,
+      "mean_pipeline_latency_ms": 0.0,
       "pipeline_phase_count": 40,
       "asr_enabled": 0.0,
       "tts_enabled": 0.0,
@@ -1821,6 +1826,7 @@
         "sample_rate": 16000,
         "voice": "synthetic-tone"
       },
+      "measure_latency": false,
       "record_audio": true,
       "audio_dir": "data/audio"
     },

@@ -33,6 +33,7 @@
           "enabled": false,
           "sample_rate": 16000
         },
+        "measure_latency": false,
         "record_audio": true,
         "audio_dir": "data/audio"
       },
