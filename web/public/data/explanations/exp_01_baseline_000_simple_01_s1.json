@@ -71,7 +71,7 @@
         "steps": 3
       }
     ],
-    "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+    "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
     "actual_path": [
       [
         0,
@@ -133,11 +133,18 @@
         "steps": 3
       }
     ],
-    "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+    "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
     "planner_diagnostics": {
-      "planner": "bfs",
-      "expanded_nodes": 16,
+      "planner": "dijkstra",
+      "optimization_strategy": "shortest_path_first",
+      "primary_objective": "minimize_number_of_edges",
+      "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+      "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+      "expanded_nodes": 23,
       "path_found": true,
+      "path_length": 6,
+      "walk_edges": 0,
+      "transfers": 1,
       "constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -196,7 +203,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 119,
+      "value": 38,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -280,7 +287,7 @@
     },
     {
       "metric_name": "constraint_mention_count",
-      "value": 12,
+      "value": 2,
       "definition": "Computed from transcript field evidence for constraint_mention_count.",
       "numerator": null,
       "denominator": null,
@@ -316,7 +323,7 @@
     },
     {
       "metric_name": "instruction_specificity",
-      "value": 1.0,
+      "value": 0.16666666666666666,
       "definition": "Computed from transcript field evidence for instruction_specificity.",
       "numerator": null,
       "denominator": null,
@@ -652,7 +659,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 9.916666666666666,
+      "value": 3.1666666666666665,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,
@@ -676,7 +683,7 @@
     },
     {
       "metric_name": "explicit_reference_count",
-      "value": 12,
+      "value": 7,
       "definition": "Computed from transcript field evidence for explicit_reference_count.",
       "numerator": null,
       "denominator": null,
@@ -760,7 +767,7 @@
     },
     {
       "metric_name": "mean_pipeline_latency_ms",
-      "value": 0.0010166666666666666,
+      "value": 0.0013333333333333333,
       "definition": "Average measured latency across logged pipeline phase events.",
       "numerator": null,
       "denominator": null,

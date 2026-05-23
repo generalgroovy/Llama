@@ -38,6 +38,7 @@ def run_experiment(config_path: str | Path, runtime_overrides: dict | None = Non
                 "system_profile": system_profile["name"],
                 "system_profile_overrides": config.get("system_profile_overrides", {}),
                 "speech_pipeline": _merge_speech_pipeline(config.get("speech_pipeline", {}), runtime_overrides.get("speech_pipeline", {})),
+                "prompt_policy": config.get("prompt_policy", _default_prompt_policy()),
                 "knowledge_split": config.get("knowledge_split", _default_knowledge_split()),
                 "max_turns": config.get("max_turns", system_profile["max_turns"]),
                 "max_invalid_moves": config.get("max_invalid_moves", system_profile["max_invalid_moves"]),
@@ -85,6 +86,14 @@ def _default_knowledge_split() -> dict:
     return {
         "agent_a": {"knows_goal": True, "knows_constraints": True, "knows_network": False},
         "agent_b": {"knows_goal_initially": False, "knows_constraints_initially": False, "knows_network": True},
+    }
+
+
+def _default_prompt_policy() -> dict:
+    return {
+        "avoid_repetition": True,
+        "agent_b_response_style": "compact",
+        "route_strategy": "shortest_path_first",
     }
 
 

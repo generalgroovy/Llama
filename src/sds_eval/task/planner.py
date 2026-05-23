@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import deque
+from heapq import heappop, heappush
 from typing import Any
 
 from sds_eval.task.navigation_env import ACTION_DELTAS
@@ -23,6 +24,9 @@ def shortest_path(
     width = int(network["width"])
     height = int(network["height"])
 
+    if "prefer_shortest" in constraints:
+        return _optimized_shortest_path(network, start_pos, goal_pos, width, height, obstacles, constraints)
+
     queue: deque[tuple[Position, list[Position]]] = deque([(start_pos, [start_pos])])
     seen = {start_pos}
     expanded = 0
@@ -32,6 +36,7 @@ def shortest_path(
         if current == goal_pos:
             return [_as_list(pos) for pos in path], {
                 "planner": "bfs",
+                "optimization_strategy": "shortest_path",
                 "expanded_nodes": expanded,
                 "path_found": True,
                 "constraints": constraints,
@@ -43,6 +48,7 @@ def shortest_path(
             queue.append((nxt, [*path, nxt]))
     return [], {
         "planner": "bfs",
+        "optimization_strategy": "shortest_path",
         "expanded_nodes": expanded,
         "path_found": False,
         "constraints": constraints,
@@ -98,9 +104,15 @@ def summarize_route_segments(network: dict[str, Any], path: list[list[int]]) -> 
     return segments
 
 
-def route_advice_text(segments: list[dict[str, Any]]) -> str:
+def route_advice_text(segments: list[dict[str, Any]], style: str = "compact") -> str:
     if not segments:
         return "No valid line route is available."
+    if style == "compact":
+        parts = [
+            f"{segment['line']}: {segment['from_station']} -> {segment['to_station']}"
+            for segment in segments
+        ]
+        return "Take " + "; ".join(parts) + "."
     parts = [
         f"take line {segment['line']} from {segment['from_station']} to {segment['to_station']}"
         for segment in segments
@@ -120,6 +132,63 @@ def _neighbors(pos: Position, width: int, height: int) -> list[Position]:
     return values
 
 
+def _optimized_shortest_path(
+    network: dict[str, Any],
+    start_pos: Position,
+    goal_pos: Position,
+    width: int,
+    height: int,
+    obstacles: set[Position],
+    constraints: list[str],
+) -> tuple[list[list[int]], dict[str, Any]]:
+    heap: list[tuple[int, int, int, int, Position, str | None, list[Position]]] = []
+    push_order = 0
+    heappush(heap, (0, 0, 0, push_order, start_pos, None, [start_pos]))
+    best: dict[tuple[Position, str | None], tuple[int, int, int]] = {(start_pos, None): (0, 0, 0)}
+    expanded = 0
+    while heap:
+        steps, walk_edges, transfers, order, current, current_line, path = heappop(heap)
+        expanded += 1
+        if current == goal_pos:
+            return [_as_list(pos) for pos in path], {
+                "planner": "dijkstra",
+                "optimization_strategy": "shortest_path_first",
+                "primary_objective": "minimize_number_of_edges",
+                "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+                "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+                "expanded_nodes": expanded,
+                "path_found": True,
+                "path_length": steps,
+                "walk_edges": walk_edges,
+                "transfers": transfers,
+                "constraints": constraints,
+            }
+        for nxt in _neighbors(current, width, height):
+            if nxt in obstacles:
+                continue
+            for line in _candidate_lines_for_edge(network, _as_list(current), _as_list(nxt)) or ["walk"]:
+                next_walk_edges = walk_edges + (1 if line == "walk" else 0)
+                next_transfers = transfers + (1 if current_line and line != current_line else 0)
+                next_steps = steps + 1
+                key = (nxt, line)
+                cost = (next_steps, next_walk_edges, next_transfers)
+                if cost >= best.get(key, (10**9, 10**9, 10**9)):
+                    continue
+                best[key] = cost
+                push_order += 1
+                heappush(heap, (next_steps, next_walk_edges, next_transfers, push_order, nxt, line, [*path, nxt]))
+    return [], {
+        "planner": "dijkstra",
+        "optimization_strategy": "shortest_path_first",
+        "primary_objective": "minimize_number_of_edges",
+        "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+        "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+        "expanded_nodes": expanded,
+        "path_found": False,
+        "constraints": constraints,
+    }
+
+
 def _position(value: list[int] | tuple[int, int]) -> Position:
     return int(value[0]), int(value[1])
 
@@ -129,6 +198,13 @@ def _as_list(value: Position) -> list[int]:
 
 
 def _line_for_edge(network: dict[str, Any], a: list[int], b: list[int], previous_line: str | None) -> str:
+    candidates = _candidate_lines_for_edge(network, a, b)
+    if previous_line in candidates:
+        return previous_line
+    return sorted(candidates)[0] if candidates else "walk"
+
+
+def _candidate_lines_for_edge(network: dict[str, Any], a: list[int], b: list[int]) -> list[str]:
     candidates = []
     edge = {_position(a), _position(b)}
     for line_name, stops in network.get("transit_lines", {}).items():
@@ -137,9 +213,7 @@ def _line_for_edge(network: dict[str, Any], a: list[int], b: list[int], previous
             if {parsed[idx - 1], parsed[idx]} == edge:
                 candidates.append(str(line_name))
                 break
-    if previous_line in candidates:
-        return previous_line
-    return sorted(candidates)[0] if candidates else "walk"
+    return sorted(candidates)
 
 
 def _segment(network: dict[str, Any], line: str, start: list[int], end: list[int]) -> dict[str, Any]:

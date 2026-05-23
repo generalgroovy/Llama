@@ -71,7 +71,7 @@ def test_path_is_compressed_into_line_segments():
         {"line": "R", "from_station": "Alpha", "to_station": "Bravo", "from_position": [0, 0], "to_position": [3, 0], "steps": 3},
         {"line": "EW2", "from_station": "Bravo", "to_station": "Harbor", "from_position": [3, 0], "to_position": [3, 3], "steps": 3},
     ]
-    assert route_advice_text(segments) == "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+    assert route_advice_text(segments) == "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
 
 
 def test_route_optimality_metric():
@@ -90,3 +90,38 @@ def test_route_optimality_metric():
     }
     metrics = compute_all_metrics(transcript)
     assert metrics["route_optimality_ratio"] == 0.8
+
+
+def test_agents_avoid_repeating_route_details_after_first_advice():
+    network = {
+        "map_id": "m",
+        "width": 2,
+        "height": 1,
+        "start": [0, 0],
+        "goal": [1, 0],
+        "stations": {"Alpha": [0, 0], "Bravo": [1, 0]},
+        "transit_lines": {"R": [[0, 0], [1, 0]]},
+        "obstacles": [],
+    }
+    first = RuleAgent().respond(AgentContext(
+        experiment_id="exp",
+        run_id="run",
+        turn_id=1,
+        state={"position": [0, 0], "success": False},
+        last_instruction="Route request: get on at Alpha and get off at Bravo. Constraints: prefer_shortest.",
+        private_context={"network": network},
+        shared_state={"b_belief": {}},
+        parameters={"prompt_policy": {"avoid_repetition": True, "agent_b_response_style": "compact"}},
+    ))
+    second = RuleAgent().respond(AgentContext(
+        experiment_id="exp",
+        run_id="run",
+        turn_id=3,
+        state={"position": [0, 0], "success": False},
+        last_instruction="Proceed.",
+        private_context={"network": network},
+        shared_state={"b_belief": first.metadata["belief_state_after"], "route_advice": first.metadata["route_advice"]},
+        parameters={"prompt_policy": {"avoid_repetition": True, "agent_b_response_style": "compact"}},
+    ))
+    assert first.text == "Take R: Alpha -> Bravo."
+    assert second.text == "Continue."

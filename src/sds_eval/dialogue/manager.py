@@ -53,7 +53,10 @@ class DialogueManager:
         state_trace: list[dict[str, Any]] = [self.environment.reset()]
         audio_recordings: list[dict[str, Any]] = []
         task = self.environment.map.to_dict()
-        params = self.config.get("parameters", {})
+        params = {
+            **self.config.get("parameters", {}),
+            "prompt_policy": self.config.get("prompt_policy", {}),
+        }
         speech_pipeline_config = merge_pipeline_config(self.config.get("speech_pipeline", {}))
         speech_pipeline = SpeechPipeline(speech_pipeline_config, self.run_id)
         agent_a_private = _agent_a_private_knowledge(task, params)

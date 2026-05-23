@@ -9,6 +9,11 @@
       "description": "UserLM cooperates with the deterministic RuleAgent on simple maps.",
       "maps_path": "configs/tasks/navigation_maps.yaml",
       "system_profile": "low",
+      "prompt_policy": {
+        "avoid_repetition": true,
+        "agent_b_response_style": "compact",
+        "route_strategy": "shortest_path_first"
+      },
       "speech_pipeline": {
         "asr": {
           "enabled": false,
@@ -117,6 +122,11 @@
           },
           "record_audio": true,
           "audio_dir": "data/audio"
+        },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
         },
         "knowledge_split": {
           "agent_a": {
@@ -283,7 +293,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
       },
       "task": {
         "map_id": "simple_01",
@@ -415,7 +425,7 @@
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -474,8 +484,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -552,7 +562,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -603,23 +613,23 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.003,
+              "latency_ms": 0.007,
               "payload": {
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-                "token_count": 15
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "token_count": 9
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.003,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -628,9 +638,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -638,12 +648,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.003,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
               }
             }
           ],
@@ -687,16 +697,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -723,10 +730,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -743,7 +750,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -756,7 +763,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -791,8 +798,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -865,7 +872,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -916,23 +923,23 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.005,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -941,9 +948,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -951,12 +958,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.003,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -1009,16 +1016,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -1047,8 +1051,8 @@
               "enabled": true,
               "latency_ms": 0.002,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -1065,7 +1069,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1078,7 +1082,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -1113,8 +1117,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -1183,7 +1187,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -1234,17 +1238,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -1261,7 +1265,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1269,12 +1273,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -1327,16 +1331,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -1363,10 +1364,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -1383,7 +1384,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1396,7 +1397,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -1431,8 +1432,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -1497,7 +1498,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -1548,17 +1549,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -1575,7 +1576,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1588,7 +1589,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -1641,16 +1642,13 @@
         {
           "turn_id": 8,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -1677,10 +1675,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -1697,7 +1695,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1710,7 +1708,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -1745,8 +1743,8 @@
         {
           "turn_id": 9,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -1807,7 +1805,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -1858,7 +1856,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -1867,14 +1865,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.0,
+              "latency_ms": 0.001,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -1885,7 +1883,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -1898,7 +1896,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -1951,16 +1949,13 @@
         {
           "turn_id": 10,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -1987,10 +1982,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -2005,9 +2000,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.0,
+              "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -2020,7 +2015,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -2055,8 +2050,8 @@
         {
           "turn_id": 11,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -2113,7 +2108,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -2164,17 +2159,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -2191,7 +2186,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -2204,7 +2199,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -2523,7 +2518,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "actual_path": [
           [
             0,
@@ -2585,11 +2580,18 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 16,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 23,
           "path_found": true,
+          "path_length": 6,
+          "walk_edges": 0,
+          "transfers": 1,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -2611,17 +2613,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 119,
+        "token_count": 38,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 12,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
         "confirmation_count": 5,
         "goal_interpretation_accuracy": 1.0,
@@ -2654,16 +2656,16 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 9.916666666666666,
+        "average_message_length": 3.1666666666666665,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 12,
+        "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
-        "mean_pipeline_latency_ms": 0.0010166666666666666,
+        "mean_pipeline_latency_ms": 0.0013333333333333333,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
@@ -2752,7 +2754,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "actual_path": [
             [
               0,
@@ -2814,11 +2816,18 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 16,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 23,
             "path_found": true,
+            "path_length": 6,
+            "walk_edges": 0,
+            "transfers": 1,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -2877,7 +2886,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 119,
+            "value": 38,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -2961,7 +2970,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 12,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -2997,7 +3006,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.16666666666666666,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -3333,7 +3342,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.916666666666666,
+            "value": 3.1666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -3357,7 +3366,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 12,
+            "value": 7,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -3441,7 +3450,7 @@
           },
           {
             "metric_name": "mean_pipeline_latency_ms",
-            "value": 0.0010166666666666666,
+            "value": 0.0013333333333333333,
             "definition": "Average measured latency across logged pipeline phase events.",
             "numerator": null,
             "denominator": null,
@@ -3529,6 +3538,11 @@
           },
           "record_audio": true,
           "audio_dir": "data/audio"
+        },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
         },
         "knowledge_split": {
           "agent_a": {
@@ -3681,7 +3695,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take line C from Gate to Tower."
+        "route_advice": "Take C: Gate -> Tower."
       },
       "task": {
         "map_id": "simple_02",
@@ -3799,7 +3813,7 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.003,
               "payload": {
                 "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "token_count": 19
@@ -3867,8 +3881,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Take C: Gate -> Tower.",
+          "recognized_text": "Take C: Gate -> Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -3923,7 +3937,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -3960,17 +3974,17 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Take line C from Gate to Tower.",
-                "token_count": 7
+                "text": "Take C: Gate -> Tower.",
+                "token_count": 5
               }
             },
             {
@@ -3987,7 +4001,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Take C: Gate -> Tower.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4000,7 +4014,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Take C: Gate -> Tower."
               }
             }
           ],
@@ -4044,16 +4058,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -4080,10 +4091,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -4100,7 +4111,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4113,7 +4124,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -4148,8 +4159,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -4200,7 +4211,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -4237,7 +4248,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -4246,8 +4257,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -4264,7 +4275,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4277,7 +4288,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -4330,16 +4341,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -4366,10 +4374,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -4386,7 +4394,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4399,7 +4407,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -4434,8 +4442,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -4482,7 +4490,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -4519,7 +4527,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -4528,8 +4536,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -4546,7 +4554,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4559,7 +4567,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -4612,16 +4620,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -4650,8 +4655,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -4668,7 +4673,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4681,7 +4686,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -4716,8 +4721,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -4760,7 +4765,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -4797,7 +4802,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -4806,8 +4811,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -4824,7 +4829,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -4837,7 +4842,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -5070,7 +5075,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take line C from Gate to Tower.",
+        "shortest_route_advice": "Take C: Gate -> Tower.",
         "actual_path": [
           [
             0,
@@ -5110,11 +5115,18 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take line C from Gate to Tower.",
+        "actual_route_advice": "Take C: Gate -> Tower.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 10,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 12,
           "path_found": true,
+          "path_length": 4,
+          "walk_edges": 0,
+          "transfers": 0,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -5136,17 +5148,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 77,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 8,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.25,
         "correction_count": 0,
         "confirmation_count": 3,
         "goal_interpretation_accuracy": 1.0,
@@ -5179,9 +5191,9 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 9.625,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 8,
+        "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
@@ -5255,7 +5267,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take line C from Gate to Tower.",
+          "shortest_route_advice": "Take C: Gate -> Tower.",
           "actual_path": [
             [
               0,
@@ -5295,11 +5307,18 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take line C from Gate to Tower.",
+          "actual_route_advice": "Take C: Gate -> Tower.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 10,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 12,
             "path_found": true,
+            "path_length": 4,
+            "walk_edges": 0,
+            "transfers": 0,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -5358,7 +5377,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 77,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -5442,7 +5461,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 8,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -5478,7 +5497,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.25,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -5814,7 +5833,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.625,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -5838,7 +5857,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 8,
+            "value": 5,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -6011,6 +6030,11 @@
           "record_audio": true,
           "audio_dir": "data/audio"
         },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
+        },
         "knowledge_split": {
           "agent_a": {
             "knows_goal": true,
@@ -6176,7 +6200,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
       },
       "task": {
         "map_id": "simple_01",
@@ -6299,7 +6323,7 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.003,
               "payload": {
                 "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "token_count": 19
@@ -6327,7 +6351,7 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
@@ -6367,8 +6391,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -6445,7 +6469,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -6496,17 +6520,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.003,
               "payload": {
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-                "token_count": 15
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "token_count": 9
               }
             },
             {
@@ -6523,7 +6547,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -6531,12 +6555,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
               }
             }
           ],
@@ -6580,16 +6604,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -6618,8 +6639,8 @@
               "enabled": true,
               "latency_ms": 0.002,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -6636,7 +6657,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -6649,7 +6670,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -6684,8 +6705,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -6758,7 +6779,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -6809,17 +6830,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.003,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -6836,7 +6857,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -6844,12 +6865,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -6902,16 +6923,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -6938,10 +6956,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -6956,9 +6974,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -6971,7 +6989,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -7006,8 +7024,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -7076,7 +7094,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -7127,7 +7145,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -7136,14 +7154,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -7152,9 +7170,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.008,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7167,7 +7185,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -7220,16 +7238,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -7256,10 +7271,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -7276,7 +7291,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7289,7 +7304,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -7324,8 +7339,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -7390,7 +7405,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -7441,17 +7456,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.003,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -7466,9 +7481,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.006,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7481,7 +7496,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -7534,16 +7549,13 @@
         {
           "turn_id": 8,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -7572,8 +7584,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -7588,9 +7600,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7603,7 +7615,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -7638,8 +7650,8 @@
         {
           "turn_id": 9,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -7700,7 +7712,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -7751,7 +7763,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -7760,14 +7772,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -7778,7 +7790,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7786,12 +7798,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.005,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -7844,16 +7856,13 @@
         {
           "turn_id": 10,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -7882,8 +7891,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -7900,7 +7909,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -7913,7 +7922,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -7948,8 +7957,8 @@
         {
           "turn_id": 11,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -8006,7 +8015,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -8057,17 +8066,17 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.004,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -8082,9 +8091,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -8092,12 +8101,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.004,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -8416,7 +8425,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "actual_path": [
           [
             0,
@@ -8478,11 +8487,18 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 16,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 23,
           "path_found": true,
+          "path_length": 6,
+          "walk_edges": 0,
+          "transfers": 1,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -8504,17 +8520,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 119,
+        "token_count": 38,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 12,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
         "confirmation_count": 5,
         "goal_interpretation_accuracy": 1.0,
@@ -8547,16 +8563,16 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 9.916666666666666,
+        "average_message_length": 3.1666666666666665,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 12,
+        "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
-        "mean_pipeline_latency_ms": 0.0009833333333333335,
+        "mean_pipeline_latency_ms": 0.0013333333333333333,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
@@ -8645,7 +8661,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "actual_path": [
             [
               0,
@@ -8707,11 +8723,18 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 16,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 23,
             "path_found": true,
+            "path_length": 6,
+            "walk_edges": 0,
+            "transfers": 1,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -8770,7 +8793,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 119,
+            "value": 38,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -8854,7 +8877,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 12,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -8890,7 +8913,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.16666666666666666,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -9226,7 +9249,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.916666666666666,
+            "value": 3.1666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -9250,7 +9273,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 12,
+            "value": 7,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -9334,7 +9357,7 @@
           },
           {
             "metric_name": "mean_pipeline_latency_ms",
-            "value": 0.0009833333333333335,
+            "value": 0.0013333333333333333,
             "definition": "Average measured latency across logged pipeline phase events.",
             "numerator": null,
             "denominator": null,
@@ -9423,6 +9446,11 @@
           "record_audio": true,
           "audio_dir": "data/audio"
         },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
+        },
         "knowledge_split": {
           "agent_a": {
             "knows_goal": true,
@@ -9574,7 +9602,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take line C from Gate to Tower."
+        "route_advice": "Take C: Gate -> Tower."
       },
       "task": {
         "map_id": "simple_02",
@@ -9692,7 +9720,7 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.005,
               "payload": {
                 "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "token_count": 19
@@ -9760,8 +9788,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Take C: Gate -> Tower.",
+          "recognized_text": "Take C: Gate -> Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -9816,7 +9844,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -9853,17 +9881,17 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
-                "text": "Take line C from Gate to Tower.",
-                "token_count": 7
+                "text": "Take C: Gate -> Tower.",
+                "token_count": 5
               }
             },
             {
@@ -9880,7 +9908,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Take C: Gate -> Tower.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -9893,7 +9921,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Take C: Gate -> Tower."
               }
             }
           ],
@@ -9937,16 +9965,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -9973,10 +9998,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -9993,7 +10018,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10006,7 +10031,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -10041,8 +10066,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -10093,7 +10118,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -10130,7 +10155,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -10139,8 +10164,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -10157,7 +10182,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10170,7 +10195,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -10223,16 +10248,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -10261,8 +10283,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -10279,7 +10301,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10292,7 +10314,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -10327,8 +10349,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -10375,7 +10397,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -10412,7 +10434,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -10421,8 +10443,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -10439,7 +10461,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10452,7 +10474,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -10505,16 +10527,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -10543,8 +10562,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -10561,7 +10580,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10574,7 +10593,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -10609,8 +10628,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -10653,7 +10672,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -10690,7 +10709,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -10699,8 +10718,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -10717,7 +10736,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -10730,7 +10749,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -10963,7 +10982,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take line C from Gate to Tower.",
+        "shortest_route_advice": "Take C: Gate -> Tower.",
         "actual_path": [
           [
             0,
@@ -11003,11 +11022,18 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take line C from Gate to Tower.",
+        "actual_route_advice": "Take C: Gate -> Tower.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 10,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 12,
           "path_found": true,
+          "path_length": 4,
+          "walk_edges": 0,
+          "transfers": 0,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -11029,17 +11055,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 77,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 8,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.25,
         "correction_count": 0,
         "confirmation_count": 3,
         "goal_interpretation_accuracy": 1.0,
@@ -11072,16 +11098,16 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 9.625,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 8,
+        "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
-        "mean_pipeline_latency_ms": 0.0008500000000000001,
+        "mean_pipeline_latency_ms": 0.0009249999999999999,
         "pipeline_phase_count": 40,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
@@ -11148,7 +11174,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take line C from Gate to Tower.",
+          "shortest_route_advice": "Take C: Gate -> Tower.",
           "actual_path": [
             [
               0,
@@ -11188,11 +11214,18 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take line C from Gate to Tower.",
+          "actual_route_advice": "Take C: Gate -> Tower.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 10,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 12,
             "path_found": true,
+            "path_length": 4,
+            "walk_edges": 0,
+            "transfers": 0,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -11251,7 +11284,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 77,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -11335,7 +11368,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 8,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -11371,7 +11404,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.25,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -11707,7 +11740,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.625,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -11731,7 +11764,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 8,
+            "value": 5,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -11815,7 +11848,7 @@
           },
           {
             "metric_name": "mean_pipeline_latency_ms",
-            "value": 0.0008500000000000001,
+            "value": 0.0009249999999999999,
             "definition": "Average measured latency across logged pipeline phase events.",
             "numerator": null,
             "denominator": null,
@@ -11903,6 +11936,11 @@
           },
           "record_audio": true,
           "audio_dir": "data/audio"
+        },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
         },
         "knowledge_split": {
           "agent_a": {
@@ -12069,7 +12107,7 @@
             "steps": 3
           }
         ],
-        "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+        "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
       },
       "task": {
         "map_id": "simple_01",
@@ -12192,7 +12230,7 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.004,
+              "latency_ms": 0.005,
               "payload": {
                 "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "token_count": 19
@@ -12260,8 +12298,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-          "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -12338,7 +12376,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -12389,7 +12427,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -12398,8 +12436,8 @@
               "enabled": true,
               "latency_ms": 0.002,
               "payload": {
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
-                "token_count": 15
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "token_count": 9
               }
             },
             {
@@ -12416,7 +12454,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -12429,7 +12467,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
               }
             }
           ],
@@ -12473,16 +12511,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -12509,10 +12544,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -12529,7 +12564,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -12542,7 +12577,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -12577,8 +12612,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -12651,7 +12686,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -12702,7 +12737,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -12711,8 +12746,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -12729,7 +12764,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -12742,7 +12777,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -12795,16 +12830,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -12833,8 +12865,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -12851,7 +12883,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -12864,7 +12896,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -12899,8 +12931,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -12969,7 +13001,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -13020,7 +13052,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -13029,8 +13061,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -13045,9 +13077,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13060,7 +13092,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -13113,16 +13145,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -13149,10 +13178,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -13169,7 +13198,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13182,7 +13211,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -13217,8 +13246,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -13283,7 +13312,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -13334,7 +13363,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -13343,14 +13372,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -13361,7 +13390,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13374,7 +13403,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -13427,16 +13456,13 @@
         {
           "turn_id": 8,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -13465,14 +13491,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -13481,9 +13507,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.0,
+              "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13496,7 +13522,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -13531,8 +13557,8 @@
         {
           "turn_id": 9,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -13593,7 +13619,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -13644,7 +13670,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -13653,8 +13679,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -13669,9 +13695,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13684,7 +13710,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -13737,16 +13763,13 @@
         {
           "turn_id": 10,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Harbor",
-          "mentioned_origin": "Alpha",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -13775,8 +13798,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -13791,9 +13814,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13806,7 +13829,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Harbor while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -13841,8 +13864,8 @@
         {
           "turn_id": 11,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -13899,7 +13922,7 @@
               "steps": 3
             }
           ],
-          "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -13950,7 +13973,7 @@
                       "steps": 3
                     }
                   ],
-                  "route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor."
+                  "route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
                 }
               }
             },
@@ -13959,8 +13982,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -13977,7 +14000,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -13990,7 +14013,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -14309,7 +14332,7 @@
             "steps": 3
           }
         ],
-        "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "actual_path": [
           [
             0,
@@ -14371,11 +14394,18 @@
             "steps": 3
           }
         ],
-        "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+        "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 16,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 23,
           "path_found": true,
+          "path_length": 6,
+          "walk_edges": 0,
+          "transfers": 1,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -14397,17 +14427,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 119,
+        "token_count": 38,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 12,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.16666666666666666,
         "correction_count": 0,
         "confirmation_count": 5,
         "goal_interpretation_accuracy": 1.0,
@@ -14440,16 +14470,16 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 9.916666666666666,
+        "average_message_length": 3.1666666666666665,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 12,
+        "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
-        "mean_pipeline_latency_ms": 0.0009166666666666666,
+        "mean_pipeline_latency_ms": 0.0008666666666666667,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
@@ -14538,7 +14568,7 @@
               "steps": 3
             }
           ],
-          "shortest_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "shortest_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "actual_path": [
             [
               0,
@@ -14600,11 +14630,18 @@
               "steps": 3
             }
           ],
-          "actual_route_advice": "Take line R from Alpha to Bravo, then take line EW2 from Bravo to Harbor.",
+          "actual_route_advice": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 16,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 23,
             "path_found": true,
+            "path_length": 6,
+            "walk_edges": 0,
+            "transfers": 1,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -14663,7 +14700,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 119,
+            "value": 38,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -14747,7 +14784,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 12,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -14783,7 +14820,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.16666666666666666,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -15119,7 +15156,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.916666666666666,
+            "value": 3.1666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -15143,7 +15180,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 12,
+            "value": 7,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -15227,7 +15264,7 @@
           },
           {
             "metric_name": "mean_pipeline_latency_ms",
-            "value": 0.0009166666666666666,
+            "value": 0.0008666666666666667,
             "definition": "Average measured latency across logged pipeline phase events.",
             "numerator": null,
             "denominator": null,
@@ -15315,6 +15352,11 @@
           },
           "record_audio": true,
           "audio_dir": "data/audio"
+        },
+        "prompt_policy": {
+          "avoid_repetition": true,
+          "agent_b_response_style": "compact",
+          "route_strategy": "shortest_path_first"
         },
         "knowledge_split": {
           "agent_a": {
@@ -15467,7 +15509,7 @@
             "steps": 4
           }
         ],
-        "route_advice": "Take line C from Gate to Tower."
+        "route_advice": "Take C: Gate -> Tower."
       },
       "task": {
         "map_id": "simple_02",
@@ -15585,7 +15627,7 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.006,
               "payload": {
                 "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "token_count": 19
@@ -15603,7 +15645,7 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.004,
               "payload": {
                 "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
                 "confidence": 1.0,
@@ -15613,7 +15655,7 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.003,
               "payload": {
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
@@ -15653,8 +15695,8 @@
         {
           "turn_id": 1,
           "speaker": "RuleAgent",
-          "text": "Take line C from Gate to Tower.",
-          "recognized_text": "Take line C from Gate to Tower.",
+          "text": "Take C: Gate -> Tower.",
+          "recognized_text": "Take C: Gate -> Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -15709,7 +15751,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -15746,23 +15788,23 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.001,
+              "latency_ms": 0.003,
               "payload": {
-                "text": "Take line C from Gate to Tower.",
-                "token_count": 7
+                "text": "Take C: Gate -> Tower.",
+                "token_count": 5
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.001,
+              "latency_ms": 0.002,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -15773,7 +15815,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Take line C from Gate to Tower.",
+                "recognized_text": "Take C: Gate -> Tower.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -15786,7 +15828,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take line C from Gate to Tower."
+                "text": "Take C: Gate -> Tower."
               }
             }
           ],
@@ -15830,16 +15872,13 @@
         {
           "turn_id": 2,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -15866,10 +15905,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -15886,7 +15925,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -15899,7 +15938,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -15934,8 +15973,8 @@
         {
           "turn_id": 3,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -15986,7 +16025,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -16023,7 +16062,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -16032,14 +16071,14 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
               "phase": "tts",
               "enabled": false,
-              "latency_ms": 0.003,
+              "latency_ms": 0.001,
               "payload": {
                 "audio_path": null,
                 "duration_seconds": 0.0
@@ -16050,7 +16089,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -16063,7 +16102,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -16116,16 +16155,13 @@
         {
           "turn_id": 4,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -16152,10 +16188,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -16172,7 +16208,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -16185,7 +16221,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -16220,8 +16256,8 @@
         {
           "turn_id": 5,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -16268,7 +16304,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -16305,7 +16341,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -16314,8 +16350,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -16330,9 +16366,9 @@
             {
               "phase": "asr",
               "enabled": false,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -16345,7 +16381,7 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -16398,16 +16434,13 @@
         {
           "turn_id": 6,
           "speaker": "UserLM",
-          "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-          "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+          "text": "Proceed.",
+          "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
-          "mentioned_goal": "Tower",
-          "mentioned_origin": "Gate",
-          "mentioned_constraints": [
-            "avoid_blocked",
-            "prefer_shortest"
-          ],
+          "mentioned_goal": null,
+          "mentioned_origin": null,
+          "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
           "proposed_action": null,
@@ -16434,10 +16467,10 @@
             {
               "phase": "nlg",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-                "token_count": 11
+                "text": "Proceed.",
+                "token_count": 1
               }
             },
             {
@@ -16454,7 +16487,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+                "recognized_text": "Proceed.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -16467,7 +16500,7 @@
                 "recognized_intent": "continue_shared_plan",
                 "recognized_dialogue_act": "confirmation",
                 "confidence": 1.0,
-                "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+                "text": "Proceed."
               }
             }
           ],
@@ -16502,8 +16535,8 @@
         {
           "turn_id": 7,
           "speaker": "RuleAgent",
-          "text": "Continue on the agreed line route.",
-          "recognized_text": "Continue on the agreed line route.",
+          "text": "Continue.",
+          "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
@@ -16546,7 +16579,7 @@
               "steps": 4
             }
           ],
-          "route_advice": "Take line C from Gate to Tower.",
+          "route_advice": "Take C: Gate -> Tower.",
           "pipeline_events": [
             {
               "phase": "dialog_management",
@@ -16583,7 +16616,7 @@
                       "steps": 4
                     }
                   ],
-                  "route_advice": "Take line C from Gate to Tower."
+                  "route_advice": "Take C: Gate -> Tower."
                 }
               }
             },
@@ -16592,8 +16625,8 @@
               "enabled": true,
               "latency_ms": 0.001,
               "payload": {
-                "text": "Continue on the agreed line route.",
-                "token_count": 6
+                "text": "Continue.",
+                "token_count": 1
               }
             },
             {
@@ -16610,7 +16643,7 @@
               "enabled": false,
               "latency_ms": 0.001,
               "payload": {
-                "recognized_text": "Continue on the agreed line route.",
+                "recognized_text": "Continue.",
                 "confidence": 1.0,
                 "audio_path": null
               }
@@ -16618,12 +16651,12 @@
             {
               "phase": "nlu",
               "enabled": true,
-              "latency_ms": 0.002,
+              "latency_ms": 0.001,
               "payload": {
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Continue on the agreed line route."
+                "text": "Continue."
               }
             }
           ],
@@ -16856,7 +16889,7 @@
             "steps": 4
           }
         ],
-        "shortest_route_advice": "Take line C from Gate to Tower.",
+        "shortest_route_advice": "Take C: Gate -> Tower.",
         "actual_path": [
           [
             0,
@@ -16896,11 +16929,18 @@
             "steps": 4
           }
         ],
-        "actual_route_advice": "Take line C from Gate to Tower.",
+        "actual_route_advice": "Take C: Gate -> Tower.",
         "planner_diagnostics": {
-          "planner": "bfs",
-          "expanded_nodes": 10,
+          "planner": "dijkstra",
+          "optimization_strategy": "shortest_path_first",
+          "primary_objective": "minimize_number_of_edges",
+          "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+          "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+          "expanded_nodes": 12,
           "path_found": true,
+          "path_length": 4,
+          "walk_edges": 0,
+          "transfers": 0,
           "constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -16922,17 +16962,17 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 77,
+        "token_count": 30,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
         "semantic_action_consistency": 1.0,
         "invalid_action_count": 0,
         "goal_mention_turn": 0,
-        "constraint_mention_count": 8,
+        "constraint_mention_count": 2,
         "constraint_coverage": 1.0,
         "ambiguity_rate": 0.0,
-        "instruction_specificity": 1.0,
+        "instruction_specificity": 0.25,
         "correction_count": 0,
         "confirmation_count": 3,
         "goal_interpretation_accuracy": 1.0,
@@ -16965,16 +17005,16 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 9.625,
+        "average_message_length": 3.75,
         "lexical_noise_level": 0.0,
-        "explicit_reference_count": 8,
+        "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
-        "mean_pipeline_latency_ms": 0.001,
+        "mean_pipeline_latency_ms": 0.001125,
         "pipeline_phase_count": 40,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
@@ -17041,7 +17081,7 @@
               "steps": 4
             }
           ],
-          "shortest_route_advice": "Take line C from Gate to Tower.",
+          "shortest_route_advice": "Take C: Gate -> Tower.",
           "actual_path": [
             [
               0,
@@ -17081,11 +17121,18 @@
               "steps": 4
             }
           ],
-          "actual_route_advice": "Take line C from Gate to Tower.",
+          "actual_route_advice": "Take C: Gate -> Tower.",
           "planner_diagnostics": {
-            "planner": "bfs",
-            "expanded_nodes": 10,
+            "planner": "dijkstra",
+            "optimization_strategy": "shortest_path_first",
+            "primary_objective": "minimize_number_of_edges",
+            "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+            "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+            "expanded_nodes": 12,
             "path_found": true,
+            "path_length": 4,
+            "walk_edges": 0,
+            "transfers": 0,
             "constraints": [
               "avoid_blocked",
               "prefer_shortest"
@@ -17144,7 +17191,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 77,
+            "value": 30,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -17228,7 +17275,7 @@
           },
           {
             "metric_name": "constraint_mention_count",
-            "value": 8,
+            "value": 2,
             "definition": "Computed from transcript field evidence for constraint_mention_count.",
             "numerator": null,
             "denominator": null,
@@ -17264,7 +17311,7 @@
           },
           {
             "metric_name": "instruction_specificity",
-            "value": 1.0,
+            "value": 0.25,
             "definition": "Computed from transcript field evidence for instruction_specificity.",
             "numerator": null,
             "denominator": null,
@@ -17600,7 +17647,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 9.625,
+            "value": 3.75,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -17624,7 +17671,7 @@
           },
           {
             "metric_name": "explicit_reference_count",
-            "value": 8,
+            "value": 5,
             "definition": "Computed from transcript field evidence for explicit_reference_count.",
             "numerator": null,
             "denominator": null,
@@ -17708,7 +17755,7 @@
           },
           {
             "metric_name": "mean_pipeline_latency_ms",
-            "value": 0.001,
+            "value": 0.001125,
             "definition": "Average measured latency across logged pipeline phase events.",
             "numerator": null,
             "denominator": null,

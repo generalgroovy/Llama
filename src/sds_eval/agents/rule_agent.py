@@ -76,8 +76,9 @@ class RuleAgent(AgentAdapter):
 
         action = next_action_for_path(path)
         route_segments = summarize_route_segments(network, full_path or path)
-        route_advice = route_advice_text(route_segments)
-        text = "Continue on the agreed line route." if context.shared_state.get("route_advice") else route_advice
+        prompt_policy = context.parameters.get("prompt_policy", {})
+        route_advice = route_advice_text(route_segments, style=prompt_policy.get("agent_b_response_style", "compact"))
+        text = "Continue." if context.shared_state.get("route_advice") and prompt_policy.get("avoid_repetition", True) else route_advice
         return AgentResponse(
             text=text,
             interpreted_action=action,
@@ -115,6 +116,9 @@ def _resolve_goal(text: str, network: dict[str, Any]) -> list[int] | None:
     ]
     if mentions:
         return list(max(mentions, key=lambda item: item[0])[1])
+    destination_match = re.search(r"(?:get off at|to)\s*\[(\d+),\s*(\d+)\]", lowered)
+    if destination_match:
+        return [int(destination_match.group(1)), int(destination_match.group(2))]
     match = re.search(r"\[(\d+),\s*(\d+)\]", lowered)
     if match:
         return [int(match.group(1)), int(match.group(2))]

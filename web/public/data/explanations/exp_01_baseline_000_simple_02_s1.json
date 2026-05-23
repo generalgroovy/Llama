@@ -49,7 +49,7 @@
         "steps": 4
       }
     ],
-    "shortest_route_advice": "Take line C from Gate to Tower.",
+    "shortest_route_advice": "Take C: Gate -> Tower.",
     "actual_path": [
       [
         0,
@@ -89,11 +89,18 @@
         "steps": 4
       }
     ],
-    "actual_route_advice": "Take line C from Gate to Tower.",
+    "actual_route_advice": "Take C: Gate -> Tower.",
     "planner_diagnostics": {
-      "planner": "bfs",
-      "expanded_nodes": 10,
+      "planner": "dijkstra",
+      "optimization_strategy": "shortest_path_first",
+      "primary_objective": "minimize_number_of_edges",
+      "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+      "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+      "expanded_nodes": 12,
       "path_found": true,
+      "path_length": 4,
+      "walk_edges": 0,
+      "transfers": 0,
       "constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -152,7 +159,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 77,
+      "value": 30,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -236,7 +243,7 @@
     },
     {
       "metric_name": "constraint_mention_count",
-      "value": 8,
+      "value": 2,
       "definition": "Computed from transcript field evidence for constraint_mention_count.",
       "numerator": null,
       "denominator": null,
@@ -272,7 +279,7 @@
     },
     {
       "metric_name": "instruction_specificity",
-      "value": 1.0,
+      "value": 0.25,
       "definition": "Computed from transcript field evidence for instruction_specificity.",
       "numerator": null,
       "denominator": null,
@@ -608,7 +615,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 9.625,
+      "value": 3.75,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,
@@ -632,7 +639,7 @@
     },
     {
       "metric_name": "explicit_reference_count",
-      "value": 8,
+      "value": 5,
       "definition": "Computed from transcript field evidence for explicit_reference_count.",
       "numerator": null,
       "denominator": null,

@@ -9,6 +9,11 @@
       "description": "UserLM cooperates with the deterministic RuleAgent on simple maps.",
       "maps_path": "configs/tasks/navigation_maps.yaml",
       "system_profile": "low",
+      "prompt_policy": {
+        "avoid_repetition": true,
+        "agent_b_response_style": "compact",
+        "route_strategy": "shortest_path_first"
+      },
       "speech_pipeline": {
         "asr": {
           "enabled": false,

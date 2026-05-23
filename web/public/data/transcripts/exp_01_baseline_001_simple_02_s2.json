@@ -38,6 +38,11 @@
       "record_audio": true,
       "audio_dir": "data/audio"
     },
+    "prompt_policy": {
+      "avoid_repetition": true,
+      "agent_b_response_style": "compact",
+      "route_strategy": "shortest_path_first"
+    },
     "knowledge_split": {
       "agent_a": {
         "knows_goal": true,
@@ -189,7 +194,7 @@
         "steps": 4
       }
     ],
-    "route_advice": "Take line C from Gate to Tower."
+    "route_advice": "Take C: Gate -> Tower."
   },
   "task": {
     "map_id": "simple_02",
@@ -307,7 +312,7 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.005,
           "payload": {
             "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
             "token_count": 19
@@ -375,8 +380,8 @@
     {
       "turn_id": 1,
       "speaker": "RuleAgent",
-      "text": "Take line C from Gate to Tower.",
-      "recognized_text": "Take line C from Gate to Tower.",
+      "text": "Take C: Gate -> Tower.",
+      "recognized_text": "Take C: Gate -> Tower.",
       "dialogue_act": "route_proposal",
       "intent": "calculate_line_route",
       "mentioned_goal": null,
@@ -431,7 +436,7 @@
           "steps": 4
         }
       ],
-      "route_advice": "Take line C from Gate to Tower.",
+      "route_advice": "Take C: Gate -> Tower.",
       "pipeline_events": [
         {
           "phase": "dialog_management",
@@ -468,17 +473,17 @@
                   "steps": 4
                 }
               ],
-              "route_advice": "Take line C from Gate to Tower."
+              "route_advice": "Take C: Gate -> Tower."
             }
           }
         },
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.001,
+          "latency_ms": 0.002,
           "payload": {
-            "text": "Take line C from Gate to Tower.",
-            "token_count": 7
+            "text": "Take C: Gate -> Tower.",
+            "token_count": 5
           }
         },
         {
@@ -495,7 +500,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Take line C from Gate to Tower.",
+            "recognized_text": "Take C: Gate -> Tower.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -508,7 +513,7 @@
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
             "confidence": 1.0,
-            "text": "Take line C from Gate to Tower."
+            "text": "Take C: Gate -> Tower."
           }
         }
       ],
@@ -552,16 +557,13 @@
     {
       "turn_id": 2,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-      "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+      "text": "Proceed.",
+      "recognized_text": "Proceed.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "Tower",
-      "mentioned_origin": "Gate",
-      "mentioned_constraints": [
-        "avoid_blocked",
-        "prefer_shortest"
-      ],
+      "mentioned_goal": null,
+      "mentioned_origin": null,
+      "mentioned_constraints": [],
       "interpreted_goal": null,
       "interpreted_constraints": [],
       "proposed_action": null,
@@ -588,10 +590,10 @@
         {
           "phase": "nlg",
           "enabled": true,
-          "latency_ms": 0.002,
+          "latency_ms": 0.001,
           "payload": {
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-            "token_count": 11
+            "text": "Proceed.",
+            "token_count": 1
           }
         },
         {
@@ -608,7 +610,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+            "recognized_text": "Proceed.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -621,7 +623,7 @@
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
             "confidence": 1.0,
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+            "text": "Proceed."
           }
         }
       ],
@@ -656,8 +658,8 @@
     {
       "turn_id": 3,
       "speaker": "RuleAgent",
-      "text": "Continue on the agreed line route.",
-      "recognized_text": "Continue on the agreed line route.",
+      "text": "Continue.",
+      "recognized_text": "Continue.",
       "dialogue_act": "route_proposal",
       "intent": "calculate_line_route",
       "mentioned_goal": null,
@@ -708,7 +710,7 @@
           "steps": 4
         }
       ],
-      "route_advice": "Take line C from Gate to Tower.",
+      "route_advice": "Take C: Gate -> Tower.",
       "pipeline_events": [
         {
           "phase": "dialog_management",
@@ -745,7 +747,7 @@
                   "steps": 4
                 }
               ],
-              "route_advice": "Take line C from Gate to Tower."
+              "route_advice": "Take C: Gate -> Tower."
             }
           }
         },
@@ -754,8 +756,8 @@
           "enabled": true,
           "latency_ms": 0.001,
           "payload": {
-            "text": "Continue on the agreed line route.",
-            "token_count": 6
+            "text": "Continue.",
+            "token_count": 1
           }
         },
         {
@@ -772,7 +774,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Continue on the agreed line route.",
+            "recognized_text": "Continue.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -785,7 +787,7 @@
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
             "confidence": 1.0,
-            "text": "Continue on the agreed line route."
+            "text": "Continue."
           }
         }
       ],
@@ -838,16 +840,13 @@
     {
       "turn_id": 4,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-      "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+      "text": "Proceed.",
+      "recognized_text": "Proceed.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "Tower",
-      "mentioned_origin": "Gate",
-      "mentioned_constraints": [
-        "avoid_blocked",
-        "prefer_shortest"
-      ],
+      "mentioned_goal": null,
+      "mentioned_origin": null,
+      "mentioned_constraints": [],
       "interpreted_goal": null,
       "interpreted_constraints": [],
       "proposed_action": null,
@@ -876,8 +875,8 @@
           "enabled": true,
           "latency_ms": 0.001,
           "payload": {
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-            "token_count": 11
+            "text": "Proceed.",
+            "token_count": 1
           }
         },
         {
@@ -894,7 +893,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+            "recognized_text": "Proceed.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -907,7 +906,7 @@
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
             "confidence": 1.0,
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+            "text": "Proceed."
           }
         }
       ],
@@ -942,8 +941,8 @@
     {
       "turn_id": 5,
       "speaker": "RuleAgent",
-      "text": "Continue on the agreed line route.",
-      "recognized_text": "Continue on the agreed line route.",
+      "text": "Continue.",
+      "recognized_text": "Continue.",
       "dialogue_act": "route_proposal",
       "intent": "calculate_line_route",
       "mentioned_goal": null,
@@ -990,7 +989,7 @@
           "steps": 4
         }
       ],
-      "route_advice": "Take line C from Gate to Tower.",
+      "route_advice": "Take C: Gate -> Tower.",
       "pipeline_events": [
         {
           "phase": "dialog_management",
@@ -1027,7 +1026,7 @@
                   "steps": 4
                 }
               ],
-              "route_advice": "Take line C from Gate to Tower."
+              "route_advice": "Take C: Gate -> Tower."
             }
           }
         },
@@ -1036,8 +1035,8 @@
           "enabled": true,
           "latency_ms": 0.001,
           "payload": {
-            "text": "Continue on the agreed line route.",
-            "token_count": 6
+            "text": "Continue.",
+            "token_count": 1
           }
         },
         {
@@ -1054,7 +1053,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Continue on the agreed line route.",
+            "recognized_text": "Continue.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -1067,7 +1066,7 @@
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
             "confidence": 1.0,
-            "text": "Continue on the agreed line route."
+            "text": "Continue."
           }
         }
       ],
@@ -1120,16 +1119,13 @@
     {
       "turn_id": 6,
       "speaker": "UserLM",
-      "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-      "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+      "text": "Proceed.",
+      "recognized_text": "Proceed.",
       "dialogue_act": "confirmation",
       "intent": "continue_shared_plan",
-      "mentioned_goal": "Tower",
-      "mentioned_origin": "Gate",
-      "mentioned_constraints": [
-        "avoid_blocked",
-        "prefer_shortest"
-      ],
+      "mentioned_goal": null,
+      "mentioned_origin": null,
+      "mentioned_constraints": [],
       "interpreted_goal": null,
       "interpreted_constraints": [],
       "proposed_action": null,
@@ -1158,8 +1154,8 @@
           "enabled": true,
           "latency_ms": 0.001,
           "payload": {
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
-            "token_count": 11
+            "text": "Proceed.",
+            "token_count": 1
           }
         },
         {
@@ -1176,7 +1172,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest.",
+            "recognized_text": "Proceed.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -1189,7 +1185,7 @@
             "recognized_intent": "continue_shared_plan",
             "recognized_dialogue_act": "confirmation",
             "confidence": 1.0,
-            "text": "Confirmed. Continue the line route to Tower while respecting avoid_blocked, prefer_shortest."
+            "text": "Proceed."
           }
         }
       ],
@@ -1224,8 +1220,8 @@
     {
       "turn_id": 7,
       "speaker": "RuleAgent",
-      "text": "Continue on the agreed line route.",
-      "recognized_text": "Continue on the agreed line route.",
+      "text": "Continue.",
+      "recognized_text": "Continue.",
       "dialogue_act": "route_proposal",
       "intent": "calculate_line_route",
       "mentioned_goal": null,
@@ -1268,7 +1264,7 @@
           "steps": 4
         }
       ],
-      "route_advice": "Take line C from Gate to Tower.",
+      "route_advice": "Take C: Gate -> Tower.",
       "pipeline_events": [
         {
           "phase": "dialog_management",
@@ -1305,7 +1301,7 @@
                   "steps": 4
                 }
               ],
-              "route_advice": "Take line C from Gate to Tower."
+              "route_advice": "Take C: Gate -> Tower."
             }
           }
         },
@@ -1314,8 +1310,8 @@
           "enabled": true,
           "latency_ms": 0.001,
           "payload": {
-            "text": "Continue on the agreed line route.",
-            "token_count": 6
+            "text": "Continue.",
+            "token_count": 1
           }
         },
         {
@@ -1332,7 +1328,7 @@
           "enabled": false,
           "latency_ms": 0.001,
           "payload": {
-            "recognized_text": "Continue on the agreed line route.",
+            "recognized_text": "Continue.",
             "confidence": 1.0,
             "audio_path": null
           }
@@ -1345,7 +1341,7 @@
             "recognized_intent": "calculate_line_route",
             "recognized_dialogue_act": "route_proposal",
             "confidence": 1.0,
-            "text": "Continue on the agreed line route."
+            "text": "Continue."
           }
         }
       ],
@@ -1578,7 +1574,7 @@
         "steps": 4
       }
     ],
-    "shortest_route_advice": "Take line C from Gate to Tower.",
+    "shortest_route_advice": "Take C: Gate -> Tower.",
     "actual_path": [
       [
         0,
@@ -1618,11 +1614,18 @@
         "steps": 4
       }
     ],
-    "actual_route_advice": "Take line C from Gate to Tower.",
+    "actual_route_advice": "Take C: Gate -> Tower.",
     "planner_diagnostics": {
-      "planner": "bfs",
-      "expanded_nodes": 10,
+      "planner": "dijkstra",
+      "optimization_strategy": "shortest_path_first",
+      "primary_objective": "minimize_number_of_edges",
+      "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+      "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+      "expanded_nodes": 12,
       "path_found": true,
+      "path_length": 4,
+      "walk_edges": 0,
+      "transfers": 0,
       "constraints": [
         "avoid_blocked",
         "prefer_shortest"
@@ -1644,17 +1647,17 @@
     "task_success": 1.0,
     "path_distance_error": 0,
     "turn_count": 8,
-    "token_count": 77,
+    "token_count": 30,
     "repair_count": 0,
     "clarification_count": 0,
     "contradiction_count": 0,
     "semantic_action_consistency": 1.0,
     "invalid_action_count": 0,
     "goal_mention_turn": 0,
-    "constraint_mention_count": 8,
+    "constraint_mention_count": 2,
     "constraint_coverage": 1.0,
     "ambiguity_rate": 0.0,
-    "instruction_specificity": 1.0,
+    "instruction_specificity": 0.25,
     "correction_count": 0,
     "confirmation_count": 3,
     "goal_interpretation_accuracy": 1.0,
@@ -1687,16 +1690,16 @@
       "route_proposal": 4,
       "confirmation": 3
     },
-    "average_message_length": 9.625,
+    "average_message_length": 3.75,
     "lexical_noise_level": 0.0,
-    "explicit_reference_count": 8,
+    "explicit_reference_count": 5,
     "unresolved_reference_count": 0,
     "naturalness_proxy_score": 1.0,
     "audio_recording_count": 0,
     "tts_audio_coverage": 1.0,
     "mean_asr_confidence": 1.0,
     "mean_nlu_confidence": 1.0,
-    "mean_pipeline_latency_ms": 0.0008500000000000001,
+    "mean_pipeline_latency_ms": 0.0009249999999999999,
     "pipeline_phase_count": 40,
     "asr_enabled": 0.0,
     "tts_enabled": 0.0,
@@ -1763,7 +1766,7 @@
           "steps": 4
         }
       ],
-      "shortest_route_advice": "Take line C from Gate to Tower.",
+      "shortest_route_advice": "Take C: Gate -> Tower.",
       "actual_path": [
         [
           0,
@@ -1803,11 +1806,18 @@
           "steps": 4
         }
       ],
-      "actual_route_advice": "Take line C from Gate to Tower.",
+      "actual_route_advice": "Take C: Gate -> Tower.",
       "planner_diagnostics": {
-        "planner": "bfs",
-        "expanded_nodes": 10,
+        "planner": "dijkstra",
+        "optimization_strategy": "shortest_path_first",
+        "primary_objective": "minimize_number_of_edges",
+        "secondary_objective": "prefer_transit_line_edges_over_walk_edges",
+        "tertiary_objective": "minimize_transfers_for_equal_length_paths",
+        "expanded_nodes": 12,
         "path_found": true,
+        "path_length": 4,
+        "walk_edges": 0,
+        "transfers": 0,
         "constraints": [
           "avoid_blocked",
           "prefer_shortest"
@@ -1866,7 +1876,7 @@
       },
       {
         "metric_name": "token_count",
-        "value": 77,
+        "value": 30,
         "definition": "Computed from transcript field evidence for token_count.",
         "numerator": null,
         "denominator": null,
@@ -1950,7 +1960,7 @@
       },
       {
         "metric_name": "constraint_mention_count",
-        "value": 8,
+        "value": 2,
         "definition": "Computed from transcript field evidence for constraint_mention_count.",
         "numerator": null,
         "denominator": null,
@@ -1986,7 +1996,7 @@
       },
       {
         "metric_name": "instruction_specificity",
-        "value": 1.0,
+        "value": 0.25,
         "definition": "Computed from transcript field evidence for instruction_specificity.",
         "numerator": null,
         "denominator": null,
@@ -2322,7 +2332,7 @@
       },
       {
         "metric_name": "average_message_length",
-        "value": 9.625,
+        "value": 3.75,
         "definition": "Computed from transcript field evidence for average_message_length.",
         "numerator": null,
         "denominator": null,
@@ -2346,7 +2356,7 @@
       },
       {
         "metric_name": "explicit_reference_count",
-        "value": 8,
+        "value": 5,
         "definition": "Computed from transcript field evidence for explicit_reference_count.",
         "numerator": null,
         "denominator": null,
@@ -2430,7 +2440,7 @@
       },
       {
         "metric_name": "mean_pipeline_latency_ms",
-        "value": 0.0008500000000000001,
+        "value": 0.0009249999999999999,
         "definition": "Average measured latency across logged pipeline phase events.",
         "numerator": null,
         "denominator": null,
