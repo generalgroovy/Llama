@@ -17,7 +17,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -31,7 +33,13 @@
         },
         "tts": {
           "enabled": false,
-          "sample_rate": 16000
+          "backend": "synthetic_wave",
+          "sample_rate": 16000,
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -74,6 +82,9 @@
         ],
         "constraint_type": [
           "avoid_blocked"
+        ],
+        "start_time": [
+          "08:00"
         ],
         "seed": [
           1,

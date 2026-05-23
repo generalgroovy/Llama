@@ -199,6 +199,15 @@ dt {
   margin: 0.35rem 0 0;
 }
 
+.dialogue-row small {
+  color: #5d6970;
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin-top: 0.25rem;
+  overflow-wrap: anywhere;
+}
+
 .network-grid {
   grid-template-columns: minmax(220px, 0.75fr) minmax(260px, 1fr);
 }

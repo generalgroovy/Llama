@@ -25,7 +25,7 @@ export type RunSummary = {
   metrics: Record<string, number | string | object>;
   system_profile?: { name?: string; metric_detail?: string; planner?: string };
   speech_pipeline?: Record<string, Record<string, unknown> | boolean | string>;
-  audio_recordings?: Array<{ turn_id: number; speaker: string; audio_path: string; duration_seconds: number }>;
+  audio_recordings?: Array<{ turn_id: number; speaker: string; audio_path: string; audio_sidecar_path?: string; duration_seconds: number }>;
   failure_category?: string;
   failure_explanation?: string;
   route_summary?: {
@@ -67,6 +67,8 @@ export type Transcript = RunSummary & {
     turn_id: number;
     speaker: string;
     text: string;
+    spoken_text?: string;
+    recognized_text?: string;
     dialogue_act?: string;
     interpreted_action: string | null;
     selected_action?: string | null;
@@ -75,6 +77,7 @@ export type Transcript = RunSummary & {
     route_advice?: string;
     pipeline_events?: PipelineEvent[];
     audio_path?: string | null;
+    audio_sidecar_path?: string | null;
     audio_duration_seconds?: number;
     ambiguity_detected?: boolean;
     constraint_satisfied?: boolean;

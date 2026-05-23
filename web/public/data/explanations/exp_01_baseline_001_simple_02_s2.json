@@ -6,7 +6,7 @@
       "turn_id": 0,
       "speaker": "UserLM",
       "dialogue_act": "goal_request",
-      "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+      "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
     }
   ],
   "route_summary": {
@@ -159,7 +159,7 @@
     },
     {
       "metric_name": "token_count",
-      "value": 30,
+      "value": 24,
       "definition": "Computed from transcript field evidence for token_count.",
       "numerator": null,
       "denominator": null,
@@ -615,7 +615,7 @@
     },
     {
       "metric_name": "average_message_length",
-      "value": 3.75,
+      "value": 3.0,
       "definition": "Computed from transcript field evidence for average_message_length.",
       "numerator": null,
       "denominator": null,
@@ -698,6 +698,54 @@
       "warning": "sample size is one run"
     },
     {
+      "metric_name": "total_audio_duration_seconds",
+      "value": 0,
+      "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "mean_audio_duration_seconds",
+      "value": 0.0,
+      "definition": "Average duration of generated speech recordings.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "max_audio_duration_seconds",
+      "value": 0.0,
+      "definition": "Longest generated speech recording in one dialogue run.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "speech_duration_within_limit",
+      "value": 1.0,
+      "definition": "1 when every generated speech turn respects the configured maximum duration.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
       "metric_name": "mean_asr_confidence",
       "value": 1.0,
       "definition": "Average ASR confidence reported by turn-level ASR phase events.",
@@ -764,6 +812,18 @@
       "numerator": null,
       "denominator": null,
       "interpretation": "descriptive",
+      "related_run_ids": [
+        "exp_01_baseline_001_simple_02_s2"
+      ],
+      "warning": "sample size is one run"
+    },
+    {
+      "metric_name": "asr_audio_backed_rate",
+      "value": 1.0,
+      "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+      "numerator": null,
+      "denominator": null,
+      "interpretation": "higher is better",
       "related_run_ids": [
         "exp_01_baseline_001_simple_02_s2"
       ],

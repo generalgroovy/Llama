@@ -21,6 +21,7 @@ class UserLMAgent(AgentAdapter):
         shared = context.shared_state
         goal_label = private.get("goal_label", "goal")
         origin_label = private.get("origin_label", "start")
+        start_time = private.get("start_time", "08:00")
         goal = private.get("goal")
         constraints = list(private.get("constraints", ["avoid_blocked"]))
         prompt_policy = context.parameters.get("prompt_policy", {})
@@ -40,7 +41,8 @@ class UserLMAgent(AgentAdapter):
         elif not known_goal:
             dialogue_act = "goal_request"
             intent = "communicate_goal_and_constraints"
-            text = f"Route request: get on at {origin_label} and get off at {goal_label}. Constraints: {', '.join(constraints)}. Which line should I take?"
+            constraint_text = _constraint_phrase(constraints)
+            text = f"At {start_time}, from {origin_label} to {goal_label}. Need {constraint_text}. Which line?"
             if ambiguity and self._rng.random() < ambiguity:
                 text = "I need a line route between my stations while respecting the constraints."
             mentioned_goal = None if text.lower().startswith("i need") else goal_label
@@ -71,10 +73,24 @@ class UserLMAgent(AgentAdapter):
                 "intent": intent,
                 "mentioned_goal": mentioned_goal,
                 "mentioned_origin": mentioned_origin,
+                "mentioned_start_time": start_time if mentioned_goal else None,
                 "mentioned_constraints": mentioned_constraints,
-                "route_request": {"from_station": origin_label, "to_station": goal_label},
+                "route_request": {"start_time": start_time, "from_station": origin_label, "to_station": goal_label},
                 "private_goal": goal,
                 "private_constraints": constraints,
                 "uses_network_topology": False,
             },
         )
+
+
+def _constraint_phrase(constraints: list[str]) -> str:
+    labels = {
+        "avoid_blocked": "avoid blocked",
+        "prefer_shortest": "shortest",
+    }
+    readable = [labels.get(item, item.replace("_", " ")) for item in constraints]
+    if not readable:
+        return "any route"
+    if len(readable) == 1:
+        return readable[0]
+    return ", ".join(readable[:-1]) + f" and {readable[-1]}"

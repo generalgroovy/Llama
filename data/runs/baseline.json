@@ -17,7 +17,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -31,7 +33,13 @@
         },
         "tts": {
           "enabled": false,
-          "sample_rate": 16000
+          "backend": "synthetic_wave",
+          "sample_rate": 16000,
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -75,6 +83,9 @@
         "constraint_type": [
           "avoid_blocked"
         ],
+        "start_time": [
+          "08:00"
+        ],
         "seed": [
           1,
           2,
@@ -98,6 +109,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 1
         },
         "system_profile": "low",
@@ -105,7 +117,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -119,7 +133,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -158,7 +178,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -172,8 +194,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -211,6 +238,7 @@
           0
         ],
         "origin_label": "Alpha",
+        "start_time": "08:00",
         "goal": [
           3,
           3
@@ -383,12 +411,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -421,8 +451,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -439,9 +471,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -452,11 +488,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -488,11 +525,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -626,7 +665,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "token_count": 9
+                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "token_count": 9,
+                "spoken_token_count": 14
               }
             },
             {
@@ -643,9 +684,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -656,11 +701,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -701,11 +747,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -736,7 +784,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -755,7 +805,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -771,6 +825,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -802,11 +857,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -936,7 +993,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -955,7 +1014,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -971,6 +1034,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1020,11 +1084,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -1055,7 +1121,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1074,7 +1142,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1090,6 +1162,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1121,11 +1194,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -1251,7 +1326,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1270,7 +1347,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1286,6 +1367,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1335,11 +1417,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -1370,7 +1454,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1389,7 +1475,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1405,6 +1495,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1436,11 +1527,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -1562,7 +1655,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1581,7 +1676,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1597,6 +1696,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1646,11 +1746,13 @@
           "turn_id": 8,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -1681,7 +1783,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1700,7 +1804,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1716,6 +1824,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1747,11 +1856,13 @@
           "turn_id": 9,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -1869,7 +1980,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -1888,7 +2001,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -1904,6 +2021,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -1953,11 +2071,13 @@
           "turn_id": 10,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -1988,7 +2108,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -2007,7 +2129,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -2023,6 +2149,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -2054,11 +2181,13 @@
           "turn_id": 11,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -2172,7 +2301,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -2191,7 +2322,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -2207,6 +2342,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -2616,7 +2752,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 38,
+        "token_count": 32,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -2659,19 +2795,24 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 3.1666666666666665,
+        "average_message_length": 2.6666666666666665,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 1.0,
+        "naturalness_proxy_score": 0.5,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -2692,7 +2833,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -2889,7 +3030,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 38,
+            "value": 32,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -3345,7 +3486,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.1666666666666665,
+            "value": 2.6666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -3393,7 +3534,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 1.0,
+            "value": 0.5,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -3419,6 +3560,54 @@
             "metric_name": "tts_audio_coverage",
             "value": 1.0,
             "definition": "Share of turns with a generated audio recording when TTS is enabled.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_01_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_01_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_01_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_01_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
@@ -3494,6 +3683,18 @@
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_01_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
             "related_run_ids": [
               "exp_01_baseline_000_simple_01_s1"
             ],
@@ -3516,6 +3717,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 1
         },
         "system_profile": "low",
@@ -3523,7 +3725,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -3537,7 +3741,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -3576,7 +3786,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -3590,8 +3802,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -3629,6 +3846,7 @@
           1
         ],
         "origin_label": "Gate",
+        "start_time": "08:00",
         "goal": [
           4,
           1
@@ -3782,12 +4000,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -3820,8 +4040,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -3838,9 +4060,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -3851,11 +4077,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -3887,11 +4114,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take C: Gate -> Tower.",
-          "recognized_text": "Take C: Gate -> Tower.",
+          "spoken_text": "Take line C from Gate to Tower.",
+          "recognized_text": "Take line C from Gate to Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -3989,7 +4218,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take C: Gate -> Tower.",
-                "token_count": 5
+                "spoken_text": "Take line C from Gate to Tower.",
+                "token_count": 5,
+                "spoken_token_count": 7
               }
             },
             {
@@ -4006,9 +4237,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take C: Gate -> Tower.",
+                "recognized_text": "Take line C from Gate to Tower.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4019,11 +4254,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take C: Gate -> Tower."
+                "text": "Take line C from Gate to Tower."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4064,11 +4300,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -4099,7 +4337,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4118,7 +4358,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4134,6 +4378,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4165,11 +4410,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -4263,7 +4510,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4282,7 +4531,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4298,6 +4551,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4347,11 +4601,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -4382,7 +4638,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4401,7 +4659,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4417,6 +4679,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4448,11 +4711,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -4542,7 +4807,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4561,7 +4828,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4577,6 +4848,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4626,11 +4898,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -4661,7 +4935,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4680,7 +4956,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4696,6 +4976,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -4727,11 +5008,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -4817,7 +5100,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -4836,7 +5121,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -4852,6 +5141,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -5153,7 +5443,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 30,
+        "token_count": 24,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -5196,19 +5486,24 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 3.75,
+        "average_message_length": 3.0,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 40,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -5229,7 +5524,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -5382,7 +5677,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 30,
+            "value": 24,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -5838,7 +6133,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.75,
+            "value": 3.0,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -5921,6 +6216,54 @@
             "warning": "sample size is one run"
           },
           {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_02_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_02_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_02_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_02_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
             "metric_name": "mean_asr_confidence",
             "value": 1.0,
             "definition": "Average ASR confidence reported by turn-level ASR phase events.",
@@ -5987,6 +6330,18 @@
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_000_simple_02_s1"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
             "related_run_ids": [
               "exp_01_baseline_000_simple_02_s1"
             ],
@@ -6009,6 +6364,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 2
         },
         "system_profile": "low",
@@ -6016,7 +6372,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -6030,7 +6388,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -6069,7 +6433,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -6083,8 +6449,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -6122,6 +6493,7 @@
           0
         ],
         "origin_label": "Alpha",
+        "start_time": "08:00",
         "goal": [
           3,
           3
@@ -6294,12 +6666,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -6332,8 +6706,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -6350,9 +6726,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -6363,11 +6743,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -6399,11 +6780,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -6537,7 +6920,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "token_count": 9
+                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "token_count": 9,
+                "spoken_token_count": 14
               }
             },
             {
@@ -6554,9 +6939,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -6567,11 +6956,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -6612,11 +7002,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -6647,7 +7039,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -6666,7 +7060,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -6682,6 +7080,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -6713,11 +7112,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -6847,7 +7248,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -6866,7 +7269,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -6882,6 +7289,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -6931,11 +7339,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -6966,7 +7376,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -6985,7 +7397,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7001,6 +7417,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7032,11 +7449,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -7162,7 +7581,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7181,7 +7602,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7197,6 +7622,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7246,11 +7672,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -7281,7 +7709,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7300,7 +7730,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7316,6 +7750,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7347,11 +7782,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -7473,7 +7910,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7492,7 +7931,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7508,6 +7951,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7557,11 +8001,13 @@
           "turn_id": 8,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -7592,7 +8038,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7611,7 +8059,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7627,6 +8079,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7658,11 +8111,13 @@
           "turn_id": 9,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -7780,7 +8235,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7799,7 +8256,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7815,6 +8276,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7864,11 +8326,13 @@
           "turn_id": 10,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -7899,7 +8363,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -7918,7 +8384,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -7934,6 +8404,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -7965,11 +8436,13 @@
           "turn_id": 11,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -8083,7 +8556,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -8102,7 +8577,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -8118,6 +8597,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -8527,7 +9007,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 38,
+        "token_count": 32,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -8570,19 +9050,24 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 3.1666666666666665,
+        "average_message_length": 2.6666666666666665,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 1.0,
+        "naturalness_proxy_score": 0.5,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -8603,7 +9088,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -8800,7 +9285,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 38,
+            "value": 32,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -9256,7 +9741,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.1666666666666665,
+            "value": 2.6666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -9304,7 +9789,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 1.0,
+            "value": 0.5,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -9330,6 +9815,54 @@
             "metric_name": "tts_audio_coverage",
             "value": 1.0,
             "definition": "Share of turns with a generated audio recording when TTS is enabled.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_01_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_01_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_01_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_01_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
@@ -9405,6 +9938,18 @@
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_01_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
             "related_run_ids": [
               "exp_01_baseline_001_simple_01_s2"
             ],
@@ -9427,6 +9972,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 2
         },
         "system_profile": "low",
@@ -9434,7 +9980,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -9448,7 +9996,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -9487,7 +10041,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -9501,8 +10057,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -9540,6 +10101,7 @@
           1
         ],
         "origin_label": "Gate",
+        "start_time": "08:00",
         "goal": [
           4,
           1
@@ -9693,12 +10255,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -9731,8 +10295,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -9749,9 +10315,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -9762,11 +10332,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -9798,11 +10369,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take C: Gate -> Tower.",
-          "recognized_text": "Take C: Gate -> Tower.",
+          "spoken_text": "Take line C from Gate to Tower.",
+          "recognized_text": "Take line C from Gate to Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -9900,7 +10473,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take C: Gate -> Tower.",
-                "token_count": 5
+                "spoken_text": "Take line C from Gate to Tower.",
+                "token_count": 5,
+                "spoken_token_count": 7
               }
             },
             {
@@ -9917,9 +10492,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take C: Gate -> Tower.",
+                "recognized_text": "Take line C from Gate to Tower.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -9930,11 +10509,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take C: Gate -> Tower."
+                "text": "Take line C from Gate to Tower."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -9975,11 +10555,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -10010,7 +10592,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10029,7 +10613,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10045,6 +10633,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -10076,11 +10665,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -10174,7 +10765,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10193,7 +10786,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10209,6 +10806,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -10258,11 +10856,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -10293,7 +10893,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10312,7 +10914,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10328,6 +10934,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -10359,11 +10966,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -10453,7 +11062,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10472,7 +11083,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10488,6 +11103,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -10537,11 +11153,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -10572,7 +11190,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10591,7 +11211,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10607,6 +11231,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -10638,11 +11263,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -10728,7 +11355,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -10747,7 +11376,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -10763,6 +11396,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -11064,7 +11698,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 30,
+        "token_count": 24,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -11107,19 +11741,24 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 3.75,
+        "average_message_length": 3.0,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 40,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -11140,7 +11779,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -11293,7 +11932,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 30,
+            "value": 24,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -11749,7 +12388,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.75,
+            "value": 3.0,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -11832,6 +12471,54 @@
             "warning": "sample size is one run"
           },
           {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_02_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_02_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_02_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_02_s2"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
             "metric_name": "mean_asr_confidence",
             "value": 1.0,
             "definition": "Average ASR confidence reported by turn-level ASR phase events.",
@@ -11902,6 +12589,18 @@
               "exp_01_baseline_001_simple_02_s2"
             ],
             "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
+            "related_run_ids": [
+              "exp_01_baseline_001_simple_02_s2"
+            ],
+            "warning": "sample size is one run"
           }
         ]
       }
@@ -11920,6 +12619,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 3
         },
         "system_profile": "low",
@@ -11927,7 +12627,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -11941,7 +12643,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -11980,7 +12688,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -11994,8 +12704,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -12033,6 +12748,7 @@
           0
         ],
         "origin_label": "Alpha",
+        "start_time": "08:00",
         "goal": [
           3,
           3
@@ -12205,12 +12921,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Harbor",
           "mentioned_origin": "Alpha",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -12243,8 +12961,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -12261,9 +12981,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -12274,11 +12998,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -12310,11 +13035,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-          "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+          "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+          "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -12448,7 +13175,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
-                "token_count": 9
+                "spoken_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
+                "token_count": 9,
+                "spoken_token_count": 14
               }
             },
             {
@@ -12465,9 +13194,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor.",
+                "recognized_text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -12478,11 +13211,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take R: Alpha -> Bravo; EW2: Bravo -> Harbor."
+                "text": "Take line R from Alpha to Bravo. Then line EW2 from Bravo to Harbor."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -12523,11 +13257,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -12558,7 +13294,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -12577,7 +13315,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -12593,6 +13335,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -12624,11 +13367,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -12758,7 +13503,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -12777,7 +13524,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -12793,6 +13544,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -12842,11 +13594,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -12877,7 +13631,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -12896,7 +13652,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -12912,6 +13672,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -12943,11 +13704,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -13073,7 +13836,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13092,7 +13857,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13108,6 +13877,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13157,11 +13927,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -13192,7 +13964,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13211,7 +13985,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13227,6 +14005,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13258,11 +14037,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -13384,7 +14165,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13403,7 +14186,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13419,6 +14206,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13468,11 +14256,13 @@
           "turn_id": 8,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -13503,7 +14293,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13522,7 +14314,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13538,6 +14334,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13569,11 +14366,13 @@
           "turn_id": 9,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -13691,7 +14490,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13710,7 +14511,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13726,6 +14531,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13775,11 +14581,13 @@
           "turn_id": 10,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -13810,7 +14618,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -13829,7 +14639,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -13845,6 +14659,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -13876,11 +14691,13 @@
           "turn_id": 11,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             3,
@@ -13994,7 +14811,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -14013,7 +14832,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -14029,6 +14852,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_01",
@@ -14438,7 +15262,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 12,
-        "token_count": 38,
+        "token_count": 32,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -14481,19 +15305,24 @@
           "route_proposal": 6,
           "confirmation": 5
         },
-        "average_message_length": 3.1666666666666665,
+        "average_message_length": 2.6666666666666665,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 7,
         "unresolved_reference_count": 0,
-        "naturalness_proxy_score": 1.0,
+        "naturalness_proxy_score": 0.5,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 60,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -14514,7 +15343,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Alpha and get off at Harbor. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Alpha to Harbor. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -14711,7 +15540,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 38,
+            "value": 32,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -15167,7 +15996,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.1666666666666665,
+            "value": 2.6666666666666665,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -15215,7 +16044,7 @@
           },
           {
             "metric_name": "naturalness_proxy_score",
-            "value": 1.0,
+            "value": 0.5,
             "definition": "Computed from transcript field evidence for naturalness_proxy_score.",
             "numerator": null,
             "denominator": null,
@@ -15241,6 +16070,54 @@
             "metric_name": "tts_audio_coverage",
             "value": 1.0,
             "definition": "Share of turns with a generated audio recording when TTS is enabled.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_01_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_01_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_01_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_01_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
@@ -15320,6 +16197,18 @@
               "exp_01_baseline_002_simple_01_s3"
             ],
             "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_01_s3"
+            ],
+            "warning": "sample size is one run"
           }
         ]
       }
@@ -15338,6 +16227,7 @@
           "memory_context_limit": "full",
           "prompt_strategy": "direct",
           "constraint_type": "avoid_blocked",
+          "start_time": "08:00",
           "seed": 3
         },
         "system_profile": "low",
@@ -15345,7 +16235,9 @@
         "speech_pipeline": {
           "asr": {
             "enabled": false,
-            "word_error_rate": 0.0
+            "backend": "transcript_sidecar",
+            "word_error_rate": 0.0,
+            "require_audio": false
           },
           "nlu": {
             "enabled": true,
@@ -15359,7 +16251,13 @@
           },
           "tts": {
             "enabled": false,
-            "sample_rate": 16000
+            "backend": "synthetic_wave",
+            "sample_rate": 16000,
+            "voice": "synthetic-dialogue",
+            "speech_rate_wpm": 185,
+            "min_duration_seconds": 0.55,
+            "max_duration_seconds": 3.5,
+            "write_transcript_sidecar": true
           },
           "measure_latency": false,
           "record_audio": true,
@@ -15398,7 +16296,9 @@
       "speech_pipeline": {
         "asr": {
           "enabled": false,
-          "word_error_rate": 0.0
+          "backend": "transcript_sidecar",
+          "word_error_rate": 0.0,
+          "require_audio": false
         },
         "nlu": {
           "enabled": true,
@@ -15412,8 +16312,13 @@
         },
         "tts": {
           "enabled": false,
+          "backend": "synthetic_wave",
           "sample_rate": 16000,
-          "voice": "synthetic-tone"
+          "voice": "synthetic-dialogue",
+          "speech_rate_wpm": 185,
+          "min_duration_seconds": 0.55,
+          "max_duration_seconds": 3.5,
+          "write_transcript_sidecar": true
         },
         "measure_latency": false,
         "record_audio": true,
@@ -15451,6 +16356,7 @@
           1
         ],
         "origin_label": "Gate",
+        "start_time": "08:00",
         "goal": [
           4,
           1
@@ -15604,12 +16510,14 @@
         {
           "turn_id": 0,
           "speaker": "UserLM",
-          "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-          "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+          "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+          "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
           "dialogue_act": "goal_request",
           "intent": "communicate_goal_and_constraints",
           "mentioned_goal": "Tower",
           "mentioned_origin": "Gate",
+          "mentioned_start_time": "08:00",
           "mentioned_constraints": [
             "avoid_blocked",
             "prefer_shortest"
@@ -15642,8 +16550,10 @@
               "enabled": true,
               "latency_ms": 0.0,
               "payload": {
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
-                "token_count": 19
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "spoken_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
+                "token_count": 13,
+                "spoken_token_count": 13
               }
             },
             {
@@ -15660,9 +16570,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?",
+                "recognized_text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -15673,11 +16587,12 @@
                 "recognized_intent": "communicate_goal_and_constraints",
                 "recognized_dialogue_act": "goal_request",
                 "confidence": 1.0,
-                "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+                "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -15709,11 +16624,13 @@
           "turn_id": 1,
           "speaker": "RuleAgent",
           "text": "Take C: Gate -> Tower.",
-          "recognized_text": "Take C: Gate -> Tower.",
+          "spoken_text": "Take line C from Gate to Tower.",
+          "recognized_text": "Take line C from Gate to Tower.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -15811,7 +16728,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Take C: Gate -> Tower.",
-                "token_count": 5
+                "spoken_text": "Take line C from Gate to Tower.",
+                "token_count": 5,
+                "spoken_token_count": 7
               }
             },
             {
@@ -15828,9 +16747,13 @@
               "enabled": false,
               "latency_ms": 0.0,
               "payload": {
-                "recognized_text": "Take C: Gate -> Tower.",
+                "recognized_text": "Take line C from Gate to Tower.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -15841,11 +16764,12 @@
                 "recognized_intent": "calculate_line_route",
                 "recognized_dialogue_act": "route_proposal",
                 "confidence": 1.0,
-                "text": "Take C: Gate -> Tower."
+                "text": "Take line C from Gate to Tower."
               }
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -15886,11 +16810,13 @@
           "turn_id": 2,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -15921,7 +16847,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -15940,7 +16868,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -15956,6 +16888,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -15987,11 +16920,13 @@
           "turn_id": 3,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -16085,7 +17020,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -16104,7 +17041,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -16120,6 +17061,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -16169,11 +17111,13 @@
           "turn_id": 4,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -16204,7 +17148,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -16223,7 +17169,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -16239,6 +17189,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -16270,11 +17221,13 @@
           "turn_id": 5,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -16364,7 +17317,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -16383,7 +17338,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -16399,6 +17358,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -16448,11 +17408,13 @@
           "turn_id": 6,
           "speaker": "UserLM",
           "text": "Proceed.",
+          "spoken_text": "Proceed.",
           "recognized_text": "Proceed.",
           "dialogue_act": "confirmation",
           "intent": "continue_shared_plan",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": null,
           "interpreted_constraints": [],
@@ -16483,7 +17445,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Proceed.",
-                "token_count": 1
+                "spoken_text": "Proceed.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -16502,7 +17466,11 @@
               "payload": {
                 "recognized_text": "Proceed.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -16518,6 +17486,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -16549,11 +17518,13 @@
           "turn_id": 7,
           "speaker": "RuleAgent",
           "text": "Continue.",
+          "spoken_text": "Continue.",
           "recognized_text": "Continue.",
           "dialogue_act": "route_proposal",
           "intent": "calculate_line_route",
           "mentioned_goal": null,
           "mentioned_origin": null,
+          "mentioned_start_time": null,
           "mentioned_constraints": [],
           "interpreted_goal": [
             4,
@@ -16639,7 +17610,9 @@
               "latency_ms": 0.0,
               "payload": {
                 "text": "Continue.",
-                "token_count": 1
+                "spoken_text": "Continue.",
+                "token_count": 1,
+                "spoken_token_count": 1
               }
             },
             {
@@ -16658,7 +17631,11 @@
               "payload": {
                 "recognized_text": "Continue.",
                 "confidence": 1.0,
-                "audio_path": null
+                "audio_path": null,
+                "sidecar_path": null,
+                "source": "text_channel",
+                "backend": "transcript_sidecar",
+                "word_error_rate": 0.0
               }
             },
             {
@@ -16674,6 +17651,7 @@
             }
           ],
           "audio_path": null,
+          "audio_sidecar_path": null,
           "audio_duration_seconds": 0.0,
           "state_before": {
             "map_id": "simple_02",
@@ -16975,7 +17953,7 @@
         "task_success": 1.0,
         "path_distance_error": 0,
         "turn_count": 8,
-        "token_count": 30,
+        "token_count": 24,
         "repair_count": 0,
         "clarification_count": 0,
         "contradiction_count": 0,
@@ -17018,19 +17996,24 @@
           "route_proposal": 4,
           "confirmation": 3
         },
-        "average_message_length": 3.75,
+        "average_message_length": 3.0,
         "lexical_noise_level": 0.0,
         "explicit_reference_count": 5,
         "unresolved_reference_count": 0,
         "naturalness_proxy_score": 1.0,
         "audio_recording_count": 0,
         "tts_audio_coverage": 1.0,
+        "total_audio_duration_seconds": 0,
+        "mean_audio_duration_seconds": 0.0,
+        "max_audio_duration_seconds": 0.0,
+        "speech_duration_within_limit": 1.0,
         "mean_asr_confidence": 1.0,
         "mean_nlu_confidence": 1.0,
         "mean_pipeline_latency_ms": 0.0,
         "pipeline_phase_count": 40,
         "asr_enabled": 0.0,
         "tts_enabled": 0.0,
+        "asr_audio_backed_rate": 1.0,
         "robustness_by_condition": {
           "condition": {
             "ambiguity_level": 0.0,
@@ -17051,7 +18034,7 @@
             "turn_id": 0,
             "speaker": "UserLM",
             "dialogue_act": "goal_request",
-            "text": "Route request: get on at Gate and get off at Tower. Constraints: avoid_blocked, prefer_shortest. Which line should I take?"
+            "text": "At 08:00, from Gate to Tower. Need avoid blocked and shortest. Which line?"
           }
         ],
         "route_summary": {
@@ -17204,7 +18187,7 @@
           },
           {
             "metric_name": "token_count",
-            "value": 30,
+            "value": 24,
             "definition": "Computed from transcript field evidence for token_count.",
             "numerator": null,
             "denominator": null,
@@ -17660,7 +18643,7 @@
           },
           {
             "metric_name": "average_message_length",
-            "value": 3.75,
+            "value": 3.0,
             "definition": "Computed from transcript field evidence for average_message_length.",
             "numerator": null,
             "denominator": null,
@@ -17743,6 +18726,54 @@
             "warning": "sample size is one run"
           },
           {
+            "metric_name": "total_audio_duration_seconds",
+            "value": 0,
+            "definition": "Computed from transcript field evidence for total_audio_duration_seconds.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_02_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "mean_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Average duration of generated speech recordings.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_02_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "max_audio_duration_seconds",
+            "value": 0.0,
+            "definition": "Longest generated speech recording in one dialogue run.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_02_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "speech_duration_within_limit",
+            "value": 1.0,
+            "definition": "1 when every generated speech turn respects the configured maximum duration.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_02_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
             "metric_name": "mean_asr_confidence",
             "value": 1.0,
             "definition": "Average ASR confidence reported by turn-level ASR phase events.",
@@ -17809,6 +18840,18 @@
             "numerator": null,
             "denominator": null,
             "interpretation": "descriptive",
+            "related_run_ids": [
+              "exp_01_baseline_002_simple_02_s3"
+            ],
+            "warning": "sample size is one run"
+          },
+          {
+            "metric_name": "asr_audio_backed_rate",
+            "value": 1.0,
+            "definition": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
+            "numerator": null,
+            "denominator": null,
+            "interpretation": "higher is better",
             "related_run_ids": [
               "exp_01_baseline_002_simple_02_s3"
             ],

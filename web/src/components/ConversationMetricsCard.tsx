@@ -7,6 +7,9 @@ const KEY_METRICS = [
   'mean_asr_confidence',
   'mean_nlu_confidence',
   'tts_audio_coverage',
+  'asr_audio_backed_rate',
+  'max_audio_duration_seconds',
+  'speech_duration_within_limit',
   'mean_pipeline_latency_ms',
   'turn_count',
   'invalid_action_count'
@@ -64,6 +67,9 @@ export default function ConversationMetricsCard({ run, transcript }: Props) {
                   {!item.turn.valid_action && <span className="bad">invalid</span>}
                 </header>
                 <p>{item.turn.text}</p>
+                {item.turn.audio_duration_seconds ? (
+                  <small>{item.turn.audio_duration_seconds.toFixed(2)}s audio | ASR: {item.turn.recognized_text ?? item.turn.spoken_text ?? item.turn.text}</small>
+                ) : null}
               </article>
             ))
           ) : (
@@ -82,8 +88,8 @@ function speechPipelineStages(run: RunSummary | undefined, transcript: Transcrip
   return [
     {
       label: 'ASR',
-      value: Number(metrics.asr_enabled ?? 0) ? formatMetric(metrics.mean_asr_confidence) : 'off',
-      ok: hasPhase('asr')
+      value: Number(metrics.asr_enabled ?? 0) ? `${formatMetric(metrics.mean_asr_confidence)} / ${formatMetric(metrics.asr_audio_backed_rate)}` : 'off',
+      ok: hasPhase('asr') && Number(metrics.asr_audio_backed_rate ?? 1) >= 1
     },
     {
       label: 'NLU',
@@ -102,8 +108,8 @@ function speechPipelineStages(run: RunSummary | undefined, transcript: Transcrip
     },
     {
       label: 'TTS',
-      value: Number(metrics.tts_enabled ?? 0) ? formatMetric(metrics.tts_audio_coverage) : 'off',
-      ok: hasPhase('tts')
+      value: Number(metrics.tts_enabled ?? 0) ? `${formatMetric(metrics.tts_audio_coverage)} / ${formatMetric(metrics.max_audio_duration_seconds)}s` : 'off',
+      ok: hasPhase('tts') && Number(metrics.speech_duration_within_limit ?? 1) >= 1
     }
   ];
 }

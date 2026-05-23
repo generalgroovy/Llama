@@ -1,7 +1,9 @@
 speech_pipeline:
   asr:
     enabled: false
+    backend: transcript_sidecar
     word_error_rate: 0.0
+    require_audio: false
   nlu:
     enabled: true
     confidence: 1.0
@@ -11,8 +13,13 @@ speech_pipeline:
     enabled: true
   tts:
     enabled: false
+    backend: synthetic_wave
     sample_rate: 16000
-    voice: synthetic-tone
+    voice: synthetic-dialogue
+    speech_rate_wpm: 185
+    min_duration_seconds: 0.55
+    max_duration_seconds: 3.5
+    write_transcript_sidecar: true
   measure_latency: false
   record_audio: true
   audio_dir: data/audio

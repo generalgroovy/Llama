@@ -73,10 +73,12 @@ Every turn logs the complete speech dialogue pipeline:
 Speech components are configurable and are off by default for reproducible low-resource experiments. They can be enabled at runtime:
 
 ```bash
-python scripts/run_experiment.py --config configs/experiments/exp_01_baseline.yaml --out data/runs/baseline_tts.json --enable-asr --enable-tts --audio-dir data/audio
+python scripts/run_experiment.py --config configs/experiments/exp_01_baseline.yaml --out data/runs/baseline_speech.json --speech --audio-dir data/audio
 ```
 
-When TTS is enabled, deterministic `.wav` recordings are written under `data/audio/<run_id>/` and referenced from the transcript. The default synthetic TTS backend is intentionally simple and dependency-free so batch experiments remain runnable on low-end systems.
+When TTS is enabled, deterministic `.wav` recordings are written under `data/audio/<run_id>/` and referenced from the transcript. Each generated recording also gets a JSON sidecar containing the spoken text. The default ASR backend consumes that audio sidecar, applies the configured word-error rate, and passes the recognized text into the next agent turn. This keeps the speech loop reproducible and runnable on low-end systems without requiring an external speech service.
+
+Speech duration is configurable through `speech_pipeline.tts.speech_rate_wpm`, `min_duration_seconds`, and `max_duration_seconds`. The default cap is 3.5 seconds per turn so route dialogue remains natural and short in batch experiments.
 
 Pipeline latencies are recorded as `0.0` by default so committed experiment artifacts are reproducible. Set `speech_pipeline.measure_latency: true` in a config when runtime timing itself is part of the experiment.
 
@@ -103,6 +105,9 @@ Implemented metrics include:
 - ASR confidence
 - NLU confidence
 - TTS audio coverage
+- ASR audio-backed rate
+- mean and maximum audio duration
+- speech duration within configured limit
 - pipeline phase count
 - pipeline latency
 

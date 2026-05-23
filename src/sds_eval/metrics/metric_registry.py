@@ -235,6 +235,32 @@ def tts_audio_coverage(transcript: dict[str, Any]) -> float:
     return audio_recording_count(transcript) / turns
 
 
+def total_audio_duration_seconds(transcript: dict[str, Any]) -> float:
+    return round(sum(float(record.get("duration_seconds", 0.0)) for record in transcript.get("audio_recordings", [])), 3)
+
+
+def mean_audio_duration_seconds(transcript: dict[str, Any]) -> float:
+    recordings = transcript.get("audio_recordings", [])
+    if not recordings:
+        return 0.0
+    return total_audio_duration_seconds(transcript) / len(recordings)
+
+
+def max_audio_duration_seconds(transcript: dict[str, Any]) -> float:
+    durations = [float(record.get("duration_seconds", 0.0)) for record in transcript.get("audio_recordings", [])]
+    return max(durations) if durations else 0.0
+
+
+def speech_duration_within_limit(transcript: dict[str, Any]) -> float:
+    if not transcript.get("speech_pipeline", {}).get("tts", {}).get("enabled", False):
+        return 1.0
+    limit = float(transcript.get("speech_pipeline", {}).get("tts", {}).get("max_duration_seconds", 3.5))
+    durations = [float(record.get("duration_seconds", 0.0)) for record in transcript.get("audio_recordings", [])]
+    if not durations:
+        return 0.0
+    return 1.0 if max(durations) <= limit else 0.0
+
+
 def mean_asr_confidence(transcript: dict[str, Any]) -> float:
     return _mean_phase_payload(transcript, "asr", "confidence", default=1.0)
 
@@ -258,6 +284,19 @@ def asr_enabled(transcript: dict[str, Any]) -> float:
 
 def tts_enabled(transcript: dict[str, Any]) -> float:
     return 1.0 if transcript.get("speech_pipeline", {}).get("tts", {}).get("enabled", False) else 0.0
+
+
+def asr_audio_backed_rate(transcript: dict[str, Any]) -> float:
+    asr_events = [
+        event
+        for turn in transcript.get("turns", [])
+        for event in turn.get("pipeline_events", [])
+        if event.get("phase") == "asr" and event.get("enabled")
+    ]
+    if not asr_events:
+        return 1.0
+    audio_backed = [event for event in asr_events if event.get("payload", {}).get("source") == "audio_transcript_sidecar"]
+    return len(audio_backed) / len(asr_events)
 
 
 def _mean_phase_payload(transcript: dict[str, Any], phase: str, key: str, default: float) -> float:
@@ -335,12 +374,17 @@ METRICS: dict[str, MetricFn] = {
     "naturalness_proxy_score": naturalness_proxy_score,
     "audio_recording_count": audio_recording_count,
     "tts_audio_coverage": tts_audio_coverage,
+    "total_audio_duration_seconds": total_audio_duration_seconds,
+    "mean_audio_duration_seconds": mean_audio_duration_seconds,
+    "max_audio_duration_seconds": max_audio_duration_seconds,
+    "speech_duration_within_limit": speech_duration_within_limit,
     "mean_asr_confidence": mean_asr_confidence,
     "mean_nlu_confidence": mean_nlu_confidence,
     "mean_pipeline_latency_ms": mean_pipeline_latency_ms,
     "pipeline_phase_count": pipeline_phase_count,
     "asr_enabled": asr_enabled,
     "tts_enabled": tts_enabled,
+    "asr_audio_backed_rate": asr_audio_backed_rate,
     "robustness_by_condition": robustness_by_condition,
 }
 
@@ -351,6 +395,10 @@ METRIC_DEFINITIONS: dict[str, str] = {
     "constraint_interpretation_accuracy": "Share of Agent A constraints present in Agent B's final belief.",
     "cooperation_efficiency": "Task success and plan agreement normalized by dialogue length.",
     "tts_audio_coverage": "Share of turns with a generated audio recording when TTS is enabled.",
+    "mean_audio_duration_seconds": "Average duration of generated speech recordings.",
+    "max_audio_duration_seconds": "Longest generated speech recording in one dialogue run.",
+    "speech_duration_within_limit": "1 when every generated speech turn respects the configured maximum duration.",
+    "asr_audio_backed_rate": "Share of enabled ASR events that consumed a generated audio artifact transcript sidecar.",
     "mean_asr_confidence": "Average ASR confidence reported by turn-level ASR phase events.",
     "mean_nlu_confidence": "Average NLU confidence reported by turn-level NLU phase events.",
     "mean_pipeline_latency_ms": "Average measured latency across logged pipeline phase events.",

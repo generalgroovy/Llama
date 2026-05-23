@@ -92,8 +92,10 @@ class DialogueManager:
             user_metadata = {
                 **user_response.metadata,
                 "pipeline_events": user_pipeline.events,
+                "spoken_text": user_pipeline.spoken_text,
                 "recognized_text": user_pipeline.recognized_text,
                 "audio_path": user_pipeline.audio_path,
+                "audio_sidecar_path": user_pipeline.audio_sidecar_path,
                 "audio_duration_seconds": user_pipeline.audio_duration_seconds,
             }
             turns.append(_turn(dialogue_state.turn_id, self.agent_a.name, user_pipeline.text, None, self.environment.state(), self.environment.state(), True, user_metadata))
@@ -134,8 +136,10 @@ class DialogueManager:
             action_metadata = {
                 **sds_response.metadata,
                 "pipeline_events": sds_pipeline.events,
+                "spoken_text": sds_pipeline.spoken_text,
                 "recognized_text": sds_pipeline.recognized_text,
                 "audio_path": sds_pipeline.audio_path,
+                "audio_sidecar_path": sds_pipeline.audio_sidecar_path,
                 "audio_duration_seconds": sds_pipeline.audio_duration_seconds,
                 "selected_action": action,
                 "constraint_satisfied": sds_response.metadata.get("constraint_satisfied", step.valid_action),
@@ -215,11 +219,13 @@ def _turn(
         "turn_id": turn_id,
         "speaker": speaker,
         "text": text,
+        "spoken_text": metadata.get("spoken_text", text),
         "recognized_text": metadata.get("recognized_text", text),
         "dialogue_act": metadata.get("dialogue_act", "action_execution" if action else "message"),
         "intent": metadata.get("intent"),
         "mentioned_goal": metadata.get("mentioned_goal"),
         "mentioned_origin": metadata.get("mentioned_origin"),
+        "mentioned_start_time": metadata.get("mentioned_start_time"),
         "mentioned_constraints": metadata.get("mentioned_constraints", []),
         "interpreted_goal": metadata.get("interpreted_goal"),
         "interpreted_constraints": metadata.get("interpreted_constraints", []),
@@ -231,6 +237,7 @@ def _turn(
         "route_advice": metadata.get("route_advice"),
         "pipeline_events": metadata.get("pipeline_events", []),
         "audio_path": metadata.get("audio_path"),
+        "audio_sidecar_path": metadata.get("audio_sidecar_path"),
         "audio_duration_seconds": metadata.get("audio_duration_seconds", 0.0),
         "state_before": before,
         "state_after": after,
@@ -249,6 +256,7 @@ def _agent_a_private_knowledge(task: dict[str, Any], params: dict[str, Any]) -> 
     return {
         "origin": task["start"],
         "origin_label": station_label(task, task["start"]),
+        "start_time": params.get("start_time", "08:00"),
         "goal": task["goal"],
         "goal_label": station_label(task, task["goal"]),
         "constraints": constraints,
@@ -290,5 +298,6 @@ def _audio_record(turn_id: int, speaker: str, pipeline_result: Any) -> dict[str,
         "turn_id": turn_id,
         "speaker": speaker,
         "audio_path": pipeline_result.audio_path,
+        "audio_sidecar_path": pipeline_result.audio_sidecar_path,
         "duration_seconds": pipeline_result.audio_duration_seconds,
     }
